@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail } from 'lucide-react';
+import Logo from '@/components/shared/Logo';
 
 const sidebarIcons = [
   { icon: HomeIcon, label: 'Home', id: 'hero', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' }, // Purple-ish
@@ -62,14 +63,14 @@ export default function SidebarNavigation() {
       suppressHydrationWarning
     >
       {/* Logo Area */}
-      <div 
-        className="cursor-pointer group flex flex-col items-center justify-center h-24 pt-2"
+      <button 
+        type="button"
+        className="cursor-pointer group flex items-center justify-center h-20"
         onClick={() => handleClick('hero')}
+        aria-label="Cognisa home"
       >
-        <div className="-rotate-90 origin-center whitespace-nowrap font-bold text-xs tracking-[0.25em] text-foreground/80 group-hover:text-foreground transition-colors">
-          COGNISA.
-        </div>
-      </div>
+        <Logo variant="icon" className="h-10 w-10 md:h-12 md:w-12" />
+      </button>
 
       {/* Navigation Icons */}
       <div className="flex flex-col gap-3 w-full items-center">

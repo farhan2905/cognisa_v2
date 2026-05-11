@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Play, Sparkles, Zap, Code } from 'lucide-react';
+import Logo from '@/components/shared/Logo';
 
 const headingWords = ['We', 'think,', 'you', 'grow', '—', "that's", 'the', 'deal.'];
 
@@ -54,7 +55,6 @@ export default function Hero() {
 
   const ringRotation = useTransform(scrollYProgress, [0, 1], [0, 180]);
   const ringScale = useTransform(scrollYProgress, [0, 1], [1, 1.6]);
-  const ringRotation2 = useTransform(scrollYProgress, [0, 1], [45, -135]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 0.2], [0, -60]);
 
@@ -66,6 +66,18 @@ export default function Hero() {
 
   return (
     <section id="hero" ref={heroRef} className="section-anchor relative min-h-screen flex items-center bg-transparent overflow-hidden pt-8 pb-12 md:pt-12 md:pb-16 lg:pt-0 lg:pb-0">
+      {/* Top-left Logo — visible on desktop */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute top-6 left-6 md:top-8 md:left-8 z-30 hidden lg:block"
+      >
+        <a href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+          <Logo className="h-10 md:h-12 w-auto drop-shadow-[0_0_15px_rgba(99,102,241,0.15)]" />
+        </a>
+      </motion.div>
+
       {/* Decorative gradient orbs — lavender/indigo */}
       <div className="absolute top-1/4 left-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-indigo-100 rounded-full blur-[120px] opacity-[0.30] animate-orb-1" />
       <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] md:w-[500px] md:h-[500px] bg-violet-50 rounded-full blur-[120px] opacity-[0.25] animate-orb-2" />
@@ -94,16 +106,6 @@ export default function Hero() {
         <div className="absolute w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] bg-white/20 mix-blend-overlay rounded-full blur-[100px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       </div>
 
-      {/* Second smaller spinning ring — opposite direction */}
-      <motion.div
-        style={{ rotate: ringRotation2 }}
-        className="absolute bottom-[15%] left-[8%] md:left-[10%] w-[120px] h-[120px] md:w-[180px] md:h-[180px] pointer-events-none z-[2]"
-      >
-        <svg viewBox="0 0 200 200" className="w-full h-full" fill="none">
-          <circle cx="100" cy="100" r="90" stroke="rgba(92,99,120,0.1)" strokeWidth="1" />
-          <circle cx="100" cy="100" r="70" stroke="rgba(99,102,241,0.06)" strokeWidth="0.5" strokeDasharray="6 12" />
-        </svg>
-      </motion.div>
 
       <motion.div 
         style={{ y: contentY }}

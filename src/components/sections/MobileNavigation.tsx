@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X } from 'lucide-react';
+import Logo from '@/components/shared/Logo';
 
 const mobileIcons = [
   { icon: HomeIcon, label: 'Home', id: 'hero', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' },
@@ -65,12 +66,14 @@ export default function MobileNavigation() {
       >
         <div className="flex items-center justify-between max-w-[1600px] mx-auto">
           {/* Logo */}
-          <div
-            className="cursor-pointer font-bold text-sm tracking-[0.2em] text-foreground/80 hover:text-foreground transition-colors"
+          <button
+            type="button"
+            className="cursor-pointer flex items-center"
             onClick={() => handleClick('hero')}
+            aria-label="Cognisa home"
           >
-            COGNISA.
-          </div>
+            <Logo className="h-7 md:h-8 w-auto" />
+          </button>
 
           {/* Menu Button */}
           <button

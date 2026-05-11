@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import Logo from '@/components/shared/Logo';
 
 const footerLinks = {
   services: [
@@ -28,8 +29,8 @@ export default function Footer() {
         <div className="glass-surface rounded-3xl p-8 md:p-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             <div className="lg:col-span-1">
-              <a href="/" className="text-foreground font-bold text-2xl tracking-tight">
-                Cognisa<span className="text-indigo-500">.</span>
+              <a href="/" className="inline-flex items-center">
+                <Logo className="h-9 md:h-10 w-auto" />
               </a>
               <p className="text-foreground/40 text-sm leading-relaxed mt-4 max-w-xs">
                 We build digital experiences that drive growth. Strategy, design, development, and marketing — all under one roof.
