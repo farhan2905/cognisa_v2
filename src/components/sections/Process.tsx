@@ -55,9 +55,10 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
   return (
     <div className="flex flex-col gap-6 md:gap-8 w-[72vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
       {/* Website Information Card (Above the browser) */}
-      <div className="w-full bg-white/10 backdrop-blur-2xl border border-white/20 p-5 md:p-8 rounded-2xl md:rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.15)] transition-all duration-500 hover:bg-white/15 relative overflow-hidden">
+      <div className="w-full glass-surface-soft p-5 md:p-8 rounded-2xl md:rounded-3xl transition-all duration-500 hover:bg-white/10 relative overflow-hidden">
         {/* Decorative ambient color blur matching the project */}
         <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none" style={{ backgroundColor: work.color }} />
+        <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none" />
         
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 relative z-10">
           <div>
@@ -83,7 +84,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
         onMouseLeave={() => setIsInteractive(false)}
       >
         {/* Browser Header */}
-        <div className="absolute top-0 left-0 right-0 h-10 bg-white/5 backdrop-blur-xl border-b border-white/10 flex items-center px-6 gap-2 z-30">
+        <div className="absolute top-0 left-0 right-0 h-10 glass-surface border-b border-white/20 border-x-0 border-t-0 flex items-center px-6 gap-2 z-30">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
           <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
@@ -103,7 +104,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
             onClick={() => setIsInteractive(true)}
           >
             {!isInteractive && (
-              <span className="px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-2xl text-sm font-medium rounded-full flex items-center gap-2 transform transition-transform hover:scale-105">
+              <span className="px-6 py-3 glass-surface text-white shadow-2xl text-sm font-medium rounded-full flex items-center gap-2 transform transition-transform hover:scale-105">
                 Tap to interact
               </span>
             )}

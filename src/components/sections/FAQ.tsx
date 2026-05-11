@@ -31,7 +31,7 @@ export default function FAQ() {
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
-              <div key={index} className={`border rounded-2xl overflow-hidden transition-colors duration-300 ${isOpen ? 'glass-card border-foreground/20 shadow-sm' : 'glass-panel border-foreground/5 hover:border-foreground/10'}`}>
+              <div key={index} className={`border rounded-2xl overflow-hidden transition-colors duration-300 ${isOpen ? 'glass-surface-strong border-white/30 shadow-sm' : 'glass-surface border-white/20 hover:border-white/35'}`}>
                 <button onClick={() => setOpenIndex(isOpen ? null : index)} className="w-full flex items-center justify-between p-5 text-left focus:outline-none">
                   <span className={`font-bold text-base md:text-lg transition-colors ${isOpen ? 'text-indigo-500' : 'text-foreground/80'}`}>{faq.question}</span>
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-transform duration-300 shrink-0 ml-4 ${isOpen ? 'bg-indigo-500/20 rotate-180 border border-indigo-500/30' : 'bg-foreground/5 border border-foreground/10'}`}>

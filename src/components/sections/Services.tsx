@@ -116,7 +116,7 @@ export default function Services() {
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, y: -15, filter: 'blur(4px)' }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute inset-0 w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[1.5rem] md:rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] flex flex-col overflow-hidden"
+                className="absolute inset-0 w-full glass-surface-strong rounded-[1.5rem] md:rounded-[2rem] flex flex-col overflow-hidden"
               >
                 {/* Decorative ambient color blur inside card */}
                 <div 
@@ -125,7 +125,7 @@ export default function Services() {
                 />
                 
                 {/* Browser Top Bar */}
-                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 border-b border-white/5 bg-white/[0.02]">
+                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 glass-surface border-b border-white/20 border-x-0 border-t-0">
                   <div className="flex gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -160,7 +160,7 @@ export default function Services() {
                   </div>
 
                   {/* Right Graphic Area (Subservices List) */}
-                  <div className="w-full md:w-[50%] h-[200px] md:h-full bg-white/[0.03] border border-white/5 rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden shadow-inner p-6 md:p-8">
+                  <div className="w-full md:w-[50%] h-[200px] md:h-full glass-surface rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden shadow-inner p-6 md:p-8">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none" />
                     
                     <div className="relative z-10 flex flex-col h-full opacity-[0.9]">

@@ -39,7 +39,7 @@ export default function Insights() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article, i) => (
-            <motion.a key={article.title} href={article.link} custom={i} variants={cardVariants} initial="hidden" animate={isInView ? "visible" : "hidden"} className="group flex flex-col h-full glass-card rounded-3xl p-6 border border-foreground/10 hover:border-indigo-500/30 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+            <motion.a key={article.title} href={article.link} custom={i} variants={cardVariants} initial="hidden" animate={isInView ? "visible" : "hidden"} className="group flex flex-col h-full glass-surface-strong rounded-3xl p-6 border border-white/20 hover:border-white/40 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/0 to-indigo-500/0 group-hover:from-indigo-500/10 group-hover:to-transparent transition-colors duration-500 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6 relative z-10">
                 <span className="bg-foreground/10 text-foreground px-3 py-1 rounded-full text-xs font-mono tracking-wide">{article.category}</span>
