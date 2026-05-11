@@ -54,7 +54,7 @@ export default function About() {
     <section
       id="about"
       ref={ref}
-      className="relative bg-transparent py-16 md:py-24 overflow-hidden"
+      className="section-anchor relative bg-transparent py-16 md:py-24 overflow-hidden"
     >
       {/* Dynamic Background Gradients */}
       <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-200/50 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
@@ -102,7 +102,7 @@ export default function About() {
                 variants={cardVariants}
                 initial="hidden"
                 animate={isInView ? 'visible' : 'hidden'}
-                className="relative overflow-hidden bg-white/40 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[240px] md:min-h-[260px] flex flex-col justify-between rounded-[2rem] border border-white/60 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-700 group hover:-translate-y-3 hover:bg-white/60 hover:border-white/80 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]"
+                className="relative overflow-hidden bg-white/40 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[240px] md:min-h-[260px] flex flex-col justify-between rounded-[2rem] border border-white/60 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-3 hover:bg-white/60 hover:border-white/80 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]"
               >
                 {/* Subtle light sweep & glow on hover */}
                 <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />

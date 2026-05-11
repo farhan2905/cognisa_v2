@@ -52,7 +52,7 @@ export default function Challenges() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="bg-transparent py-16 md:py-24" id="challenges">
+    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24" id="challenges">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           

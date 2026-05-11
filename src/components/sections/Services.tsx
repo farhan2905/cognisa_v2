@@ -71,9 +71,9 @@ export default function Services() {
   const activeService = services[activeIndex];
 
   return (
-    <section id="services" ref={containerRef} className="relative h-[400vh] bg-transparent">
+    <section id="services" ref={containerRef} className="section-anchor relative h-[360vh] md:h-[400vh] bg-transparent">
       {/* Sticky visible area */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center items-center pt-20 pb-10">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center items-center pt-16 pb-8 md:pt-20 md:pb-10">
         
         {/* Background ambient glow */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -108,7 +108,7 @@ export default function Services() {
           </div>
 
           {/* Cards Area */}
-          <div className="w-full relative h-[480px] md:h-[420px] lg:h-[450px] mb-8">
+          <div className="w-full relative h-[420px] sm:h-[460px] md:h-[420px] lg:h-[450px] mb-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}

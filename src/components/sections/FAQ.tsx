@@ -19,7 +19,7 @@ export default function FAQ() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="bg-transparent py-16 md:py-24" id="faq">
+    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24" id="faq">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <SectionTag text="FAQ" variant="light" className="justify-center" />

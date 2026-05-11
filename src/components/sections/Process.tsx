@@ -19,14 +19,14 @@ export default function Process() {
   const x = useTransform(scrollYProgress, [0, 1], ["10%", "-75%"]);
 
   return (
-    <section id="work" ref={targetRef} className="relative h-[400vh] bg-transparent">
+    <section id="work" ref={targetRef} className="section-anchor relative h-[340vh] md:h-[400vh] bg-transparent">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="noise-overlay absolute inset-0 opacity-30 z-[1]" />
         <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-indigo-200 rounded-full blur-[150px] opacity-[0.08] pointer-events-none" />
       </div>
       
       <div className="sticky top-0 h-[100vh] flex flex-col justify-center overflow-hidden z-10">
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-8 mt-12 md:mt-0 flex-shrink-0">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-8 mt-12 md:mt-6 lg:mt-10 flex-shrink-0">
           <SectionTag text="OUR WORK" variant="dark" />
           <motion.h2 
             initial={{ opacity: 0, y: 20 }} 
@@ -39,7 +39,7 @@ export default function Process() {
           </motion.h2>
         </div>
 
-        <motion.div style={{ x }} className="flex gap-16 md:gap-24 lg:gap-32 px-4 md:px-12 lg:px-20 w-fit pb-12 items-center">
+        <motion.div style={{ x }} className="flex gap-12 md:gap-24 lg:gap-32 px-4 md:px-12 lg:px-20 w-fit pb-12 items-center">
           {works.map((work, idx) => (
             <WorkCard key={work.number} work={work} index={idx} total={works.length} />
           ))}
@@ -79,7 +79,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
 
       {/* Browser Window Card */}
       <div 
-        className="w-full h-[55vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
+        className="w-full h-[48vh] sm:h-[52vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
         onMouseLeave={() => setIsInteractive(false)}
       >
         {/* Browser Header */}

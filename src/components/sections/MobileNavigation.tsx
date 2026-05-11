@@ -120,7 +120,7 @@ export default function MobileNavigation() {
                 <button
                   key={id}
                   onClick={() => handleClick(id)}
-                  className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
+                  className={`relative w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive
                       ? `bg-white/15 border border-white/30 shadow-[0_0_15px_rgba(${color},0.25)]`
                       : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'

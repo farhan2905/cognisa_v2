@@ -46,7 +46,7 @@ export default function Solutions() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="bg-transparent py-16 md:py-24 relative overflow-hidden" id="solutions">
+    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24 relative overflow-hidden" id="solutions">
       {/* Dynamic Background Gradients */}
       <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-indigo-200/60 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
       <div className="absolute bottom-1/4 right-[-10%] w-[400px] h-[400px] bg-violet-200/50 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
@@ -82,7 +82,7 @@ export default function Solutions() {
                 variants={cardVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="relative overflow-hidden bg-white/40 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[260px] md:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-white/60 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-700 group hover:-translate-y-4 hover:bg-white/60 hover:border-white/80 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]"
+                className="relative overflow-hidden bg-white/40 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[260px] md:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-white/60 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-4 hover:bg-white/60 hover:border-white/80 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]"
               >
                 {/* Subtle light sweep & glow on hover */}
                 <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/35 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />

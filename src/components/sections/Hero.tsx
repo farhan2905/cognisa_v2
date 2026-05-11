@@ -65,7 +65,7 @@ export default function Hero() {
   const buttonsOpacity = useTransform(scrollYProgress, [0.06, 0.15], [1, 0]);
 
   return (
-    <section id="hero" ref={heroRef} className="relative min-h-screen flex items-center bg-transparent overflow-hidden pt-32 pb-24 lg:pt-0 lg:pb-0">
+    <section id="hero" ref={heroRef} className="section-anchor relative min-h-screen flex items-center bg-transparent overflow-hidden pt-8 pb-12 md:pt-12 md:pb-16 lg:pt-0 lg:pb-0">
       {/* Decorative gradient orbs — lavender/indigo */}
       <div className="absolute top-1/4 left-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-indigo-100 rounded-full blur-[120px] opacity-[0.30] animate-orb-1" />
       <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] md:w-[500px] md:h-[500px] bg-violet-50 rounded-full blur-[120px] opacity-[0.25] animate-orb-2" />
@@ -107,9 +107,9 @@ export default function Hero() {
 
       <motion.div 
         style={{ y: contentY }}
-        className="relative z-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 flex flex-col items-center text-center justify-center pt-24 pb-12 lg:pt-56"
+        className="relative z-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 flex flex-col items-center text-center justify-center pt-4 pb-6 md:pt-8 md:pb-8 lg:pt-48"
       >
-        <div className="w-full max-w-4xl pt-12 lg:pt-32 flex flex-col items-center">
+        <div className="w-full max-w-4xl pt-2 lg:pt-24 flex flex-col items-center">
           {/* Status Badge */}
           <motion.div
             style={{ opacity: badgeOpacity }}
