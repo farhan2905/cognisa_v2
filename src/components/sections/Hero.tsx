@@ -1,49 +1,377 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Play, Sparkles, Zap, Code } from 'lucide-react';
+import { useRef, useEffect, useCallback } from 'react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
 
-const headingWords = ['We', 'think,', 'you', 'grow', '—', "that's", 'the', 'deal.'];
+/* ═══════════════════════════════════════════════
+   NEURAL CONSTELLATION — Canvas visualization
+   Mirrors the Cognisa logo's dendrite / synapse 
+   visual language in blue→purple gradient.
+   ═══════════════════════════════════════════════ */
 
-const containerVariants = {
+interface Node {
+  x: number;
+  y: number;
+  baseX: number;
+  baseY: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  hue: number;
+  phase: number;
+  speed: number;
+  layer: number; // 0=core, 1=mid, 2=outer
+}
+
+interface Branch {
+  from: number;
+  to: number;
+  thickness: number;
+  opacity: number;
+}
+
+function NeuralConstellation() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: 0, y: 0, active: false });
+  const nodesRef = useRef<Node[]>([]);
+  const branchesRef = useRef<Branch[]>([]);
+  const frameRef = useRef(0);
+
+  const initNetwork = useCallback((w: number, h: number) => {
+    const nodes: Node[] = [];
+    const branches: Branch[] = [];
+
+    // Center of the constellation — offset right like the mockup
+    const cx = w * 0.62;
+    const cy = h * 0.42;
+
+    // Core nodes — the central "synapse" cluster
+    for (let i = 0; i < 6; i++) {
+      const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.3;
+      const dist = 15 + Math.random() * 35;
+      nodes.push({
+        x: cx + Math.cos(angle) * dist,
+        y: cy + Math.sin(angle) * dist,
+        baseX: cx + Math.cos(angle) * dist,
+        baseY: cy + Math.sin(angle) * dist,
+        vx: 0, vy: 0,
+        radius: 4 + Math.random() * 3,
+        hue: 220 + Math.random() * 15, // bright blue core
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.25 + Math.random() * 0.35,
+        layer: 0,
+      });
+    }
+
+    // Mid-layer nodes — branching dendrites
+    for (let i = 0; i < 22; i++) {
+      const angle = (i / 22) * Math.PI * 2 + Math.random() * 0.4;
+      const dist = 70 + Math.random() * 140;
+      const px = cx + Math.cos(angle) * dist;
+      const py = cy + Math.sin(angle) * dist;
+      nodes.push({
+        x: px, y: py, baseX: px, baseY: py,
+        vx: 0, vy: 0,
+        radius: 2.5 + Math.random() * 2.5,
+        hue: 235 + Math.random() * 35, // indigo-violet
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.18 + Math.random() * 0.28,
+        layer: 1,
+      });
+    }
+
+    // Outer nodes — terminal synaptic endpoints (like the logo's dots)
+    for (let i = 0; i < 35; i++) {
+      const angle = (i / 35) * Math.PI * 2 + Math.random() * 0.5;
+      const dist = 160 + Math.random() * 250;
+      // Bias toward top-right quadrant like the mockup's dendrite spread
+      const bias = (angle > -Math.PI * 0.4 && angle < Math.PI * 0.9) ? 1.35 : 0.75;
+      const px = cx + Math.cos(angle) * dist * bias;
+      const py = cy + Math.sin(angle) * dist * bias;
+      nodes.push({
+        x: px, y: py, baseX: px, baseY: py,
+        vx: 0, vy: 0,
+        radius: 2 + Math.random() * 3.5,
+        hue: 255 + Math.random() * 50, // violet-purple-pink
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.12 + Math.random() * 0.18,
+        layer: 2,
+      });
+    }
+
+    // Build organic branches — connect layers like dendrites
+    const coreCount = 6;
+    const midStart = coreCount;
+    const midEnd = midStart + 22;
+    const outerStart = midEnd;
+
+    // Core-to-core connections
+    for (let i = 0; i < coreCount; i++) {
+      for (let j = i + 1; j < coreCount; j++) {
+        if (Math.random() > 0.25) {
+          branches.push({ from: i, to: j, thickness: 1.5, opacity: 0.3 });
+        }
+      }
+    }
+
+    // Core-to-mid connections (main dendrite branches)
+    for (let i = midStart; i < midEnd; i++) {
+      const closest = findClosest(nodes[i], nodes.slice(0, coreCount));
+      branches.push({ from: closest, to: i, thickness: 1.0, opacity: 0.22 });
+      // Cross-connections between mid-layer nodes
+      if (Math.random() > 0.55) {
+        const other = midStart + Math.floor(Math.random() * 22);
+        if (other !== i) {
+          branches.push({ from: i, to: other, thickness: 0.6, opacity: 0.1 });
+        }
+      }
+    }
+
+    // Mid-to-outer connections (terminal dendrites)
+    for (let i = outerStart; i < nodes.length; i++) {
+      const closest = findClosest(nodes[i], nodes.slice(midStart, midEnd)) + midStart;
+      branches.push({ from: closest, to: i, thickness: 0.5, opacity: 0.15 });
+    }
+
+    nodesRef.current = nodes;
+    branchesRef.current = branches;
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animId: number;
+    const dpr = Math.min(window.devicePixelRatio, 2);
+
+    const resize = () => {
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      initNetwork(w, h);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        active: true,
+      };
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.active = false;
+    };
+
+    const draw = (time: number) => {
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const nodes = nodesRef.current;
+      const branches = branchesRef.current;
+      const t = time * 0.001;
+
+      // Animate nodes — gentle organic drift
+      nodes.forEach((node) => {
+        const drift = Math.sin(t * node.speed + node.phase);
+        const driftY = Math.cos(t * node.speed * 0.7 + node.phase + 1);
+        const amplitude = node.layer === 0 ? 3 : node.layer === 1 ? 6 : 10;
+
+        node.x = node.baseX + drift * amplitude;
+        node.y = node.baseY + driftY * amplitude * 0.8;
+
+        // Mouse interaction — nodes are attracted toward cursor
+        if (mouseRef.current.active) {
+          const dx = mouseRef.current.x - node.x;
+          const dy = mouseRef.current.y - node.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 280) {
+            const force = (1 - dist / 280) * 0.2;
+            node.x += dx * force * (node.layer === 0 ? 0.2 : 1);
+            node.y += dy * force * (node.layer === 0 ? 0.2 : 1);
+          }
+        }
+      });
+
+      // Draw branches — curved organic lines like dendrites
+      branches.forEach((branch) => {
+        const from = nodes[branch.from];
+        const to = nodes[branch.to];
+        if (!from || !to) return;
+
+        // Pulsing opacity
+        const pulse = 0.5 + 0.5 * Math.sin(t * 1.5 + branch.from * 0.5);
+        const alpha = branch.opacity * (0.6 + 0.4 * pulse);
+
+        // Curved line (quadratic bezier with organic midpoint)
+        const mx = (from.x + to.x) / 2 + Math.sin(t + branch.from) * 8;
+        const my = (from.y + to.y) / 2 + Math.cos(t + branch.to) * 8;
+
+        // Gradient along the branch: blue→purple
+        const grad = ctx.createLinearGradient(from.x, from.y, to.x, to.y);
+        grad.addColorStop(0, `hsla(${from.hue}, 70%, 65%, ${alpha})`);
+        grad.addColorStop(1, `hsla(${to.hue}, 70%, 65%, ${alpha})`);
+
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.quadraticCurveTo(mx, my, to.x, to.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = branch.thickness;
+        ctx.stroke();
+      });
+
+      // Draw nodes — glowing synaptic dots (like the logo's luminous endpoints)
+      nodes.forEach((node) => {
+        const pulse = 0.7 + 0.3 * Math.sin(t * 2 + node.phase);
+        const r = node.radius * pulse;
+
+        // Outer glow halo
+        const glowRadius = r * 5;
+        const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowRadius);
+        glow.addColorStop(0, `hsla(${node.hue}, 85%, 72%, ${0.25 * pulse})`);
+        glow.addColorStop(0.5, `hsla(${node.hue}, 80%, 70%, ${0.08 * pulse})`);
+        glow.addColorStop(1, `hsla(${node.hue}, 80%, 70%, 0)`);
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, glowRadius, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // Core dot — brighter, more saturated
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+        const sat = node.layer === 0 ? 90 : 75;
+        const light = node.layer === 0 ? 62 : 68;
+        ctx.fillStyle = `hsla(${node.hue}, ${sat}%, ${light}%, ${0.7 + 0.3 * pulse})`;
+        ctx.fill();
+
+        // Bright center highlight (for core nodes)
+        if (node.layer === 0) {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, r * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${node.hue}, 100%, 85%, ${0.8 * pulse})`;
+          ctx.fill();
+        }
+      });
+
+      animId = requestAnimationFrame(draw);
+    };
+
+    resize();
+    animId = requestAnimationFrame(draw);
+    window.addEventListener('resize', resize);
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, [initNetwork]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-auto z-[1]"
+    />
+  );
+}
+
+/** Find the index of the closest node in a subset */
+function findClosest(target: { x: number; y: number }, candidates: Node[]): number {
+  let minDist = Infinity;
+  let minIdx = 0;
+  candidates.forEach((c, i) => {
+    const d = Math.hypot(target.x - c.x, target.y - c.y);
+    if (d < minDist) { minDist = d; minIdx = i; }
+  });
+  return minIdx;
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATED COUNTER
+   ═══════════════════════════════════════════════ */
+
+function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const counted = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !counted.current) {
+          counted.current = true;
+          const start = Date.now();
+          const duration = 1800;
+          const tick = () => {
+            const progress = Math.min((Date.now() - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4);
+            el.textContent = `${Math.floor(eased * value)}${suffix}`;
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [value, suffix]);
+
+  return <span ref={ref}>0{suffix}</span>;
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATION VARIANTS
+   ═══════════════════════════════════════════════ */
+
+const stagger = {
   hidden: {},
   visible: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.3,
-    },
+    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
   },
 };
 
-const wordVariants = {
-  hidden: {
-    opacity: 0,
-    y: 60,
-    filter: 'blur(10px)',
-  },
+const wordReveal = {
+  hidden: { opacity: 0, y: 50, filter: 'blur(8px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-  },
+    transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
+  }),
 };
 
+/* ═══════════════════════════════════════════════
+   HERO COMPONENT
+   ═══════════════════════════════════════════════ */
 
+const STATS = [
+  { value: 150, suffix: '+', label: 'Projects Delivered' },
+  { value: 99, suffix: '%', label: 'Client Satisfaction' },
+  { value: 24, suffix: '/7', label: 'Support & Monitoring' },
+];
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null);
@@ -53,150 +381,211 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  const ringRotation = useTransform(scrollYProgress, [0, 1], [0, 180]);
-  const ringScale = useTransform(scrollYProgress, [0, 1], [1, 1.6]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.2], [0, -60]);
-
-  // Step-by-step fades
-  const badgeOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const headingOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
-  const paragraphOpacity = useTransform(scrollYProgress, [0.03, 0.12], [1, 0]);
-  const buttonsOpacity = useTransform(scrollYProgress, [0.06, 0.15], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.4], [0, -80]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
+  const networkOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
+  const networkScale = useTransform(scrollYProgress, [0, 0.35], [1, 1.15]);
 
   return (
-    <section id="hero" ref={heroRef} className="section-anchor relative min-h-screen flex items-center bg-transparent overflow-hidden pt-8 pb-12 md:pt-12 md:pb-16 lg:pt-0 lg:pb-0">
-      {/* Top-left Logo — visible on desktop */}
+    <section
+      id="hero"
+      ref={heroRef}
+      className="section-anchor relative min-h-screen flex items-center bg-transparent overflow-hidden"
+    >
+      {/* ── Logo (desktop) ── */}
       <motion.div
-        initial={{ opacity: 0, x: -20 }}
+        initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="absolute top-6 left-6 md:top-8 md:left-8 z-30 hidden lg:block"
       >
         <a href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <Logo className="h-10 md:h-12 w-auto drop-shadow-[0_0_15px_rgba(99,102,241,0.15)]" />
+          <Logo className="h-10 md:h-12 w-auto" />
         </a>
       </motion.div>
 
-      {/* Decorative gradient orbs — lavender/indigo */}
-      <div className="absolute top-1/4 left-0 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-indigo-100 rounded-full blur-[120px] opacity-[0.30] animate-orb-1" />
-      <div className="absolute bottom-1/4 right-0 w-[350px] h-[350px] md:w-[500px] md:h-[500px] bg-violet-50 rounded-full blur-[120px] opacity-[0.25] animate-orb-2" />
-      
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djI2SDI0VjM0SDBWMjRoMjRWMGgxMnYyNGgyNHYxMEgzNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-[0.15] pointer-events-none" />
+      {/* ── Neural Constellation Canvas ── */}
+      <motion.div
+        style={{ opacity: networkOpacity, scale: networkScale }}
+        className="absolute inset-0 z-[1]"
+      >
+        <NeuralConstellation />
+      </motion.div>
 
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 mt-[-10vh]">
-        <motion.div
-           animate={{ 
-            rotate: [45, 65, 45], 
-            y: [-15, 15, -15],
-          }}
-          transition={{ 
-            rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-            y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-          }}
-          className="w-[50vw] h-[50vw] max-w-[400px] max-h-[400px] opacity-[0.9]"
-          style={{
-            background: 'conic-gradient(from 180deg at 50% 50%, #FFB1ee 0deg, #A8C0FF 120deg, #C2A1E5 240deg, #FFB1ee 360deg)',
-            boxShadow: '0 0 80px rgba(194, 161, 229, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.8)',
-            backdropFilter: 'blur(20px)',
-            borderRadius: '4px'
-          }}
-        />
-        <div className="absolute w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] bg-white/20 mix-blend-overlay rounded-full blur-[100px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      {/* ── Subtle dot-grid texture ── */}
+      <div
+        className="absolute inset-0 z-[0] opacity-[0.025] pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #6366f1 0.8px, transparent 0.8px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+
+      {/* ── Ambient gradient wash (very subtle) ── */}
+      <div className="absolute inset-0 z-[0] pointer-events-none">
+        <div className="absolute top-0 right-0 w-[60%] h-[70%] bg-gradient-to-bl from-indigo-100/40 via-violet-50/20 to-transparent rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-[40%] h-[50%] bg-gradient-to-tr from-blue-50/30 via-transparent to-transparent rounded-full blur-[100px]" />
       </div>
 
-
-      <motion.div 
-        style={{ y: contentY }}
-        className="relative z-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 flex flex-col items-center text-center justify-center pt-4 pb-6 md:pt-8 md:pb-8 lg:pt-48"
+      {/* ── Main Content ── */}
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-20 w-full max-w-[1400px] mx-auto px-5 md:px-8 lg:px-16 flex flex-col items-center text-center min-h-screen justify-center"
       >
-        <div className="w-full max-w-4xl pt-2 lg:pt-24 flex flex-col items-center">
-          {/* Status Badge */}
+        <div className="w-full max-w-4xl flex flex-col items-center">
+
+          {/* Status Pill */}
           <motion.div
-            style={{ opacity: badgeOpacity }}
-            initial={{ y: 20 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-flex items-center justify-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-6 py-2 rounded-full mb-8 shadow-sm"
+            initial={{ opacity: 0, y: 16, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-12"
           >
-            <span className="text-foreground/80 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold">
-              SOFTWARE · DEVELOPMENT · AUTOMATION · AI
-            </span>
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-foreground/[0.06] bg-white/60 backdrop-blur-sm shadow-[0_2px_12px_rgba(99,102,241,0.06)]">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              <span className="text-foreground/50 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
+                Software · Development · Automation · AI
+              </span>
+            </div>
           </motion.div>
 
-          {/* Word-by-word hero heading */}
-          <motion.div style={{ opacity: headingOpacity }}>
-            <motion.h1
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#94a3b8] via-[#e2e8f0] to-[#f8fafc] leading-[1.1] tracking-[-0.04em] mb-6 drop-shadow-xl text-center"
-            >
-              {headingWords.map((word, index) => (
-                <motion.span
-                  key={index}
-                  variants={wordVariants}
-                  className="inline-block whitespace-pre"
-                >
-                  {['think,', 'grow', '—'].includes(word) ? (
-                    <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#c084fc] via-[#60a5fa] to-[#38bdf8] drop-shadow-[0_0_25px_rgba(168,85,247,0.3)]">{word}</span>
-                  ) : (
-                    word
-                  )}
-                  {index !== headingWords.length - 1 && ' '}
-                </motion.span>
-              ))}
+          {/* ── Headline ── */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="mb-6"
+          >
+            {/* Line 1: We think, */}
+            <motion.h1 className="flex items-baseline justify-center gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
+              <motion.span variants={wordReveal} className="text-[#1a1a2e]">
+                We
+              </motion.span>
+              <motion.span variants={wordReveal}>
+                <span className="bg-gradient-to-r from-[#4f8bfa] via-[#6366f1] to-[#a78bfa] bg-clip-text text-transparent">
+                  think,
+                </span>
+              </motion.span>
             </motion.h1>
+
+            {/* Line 2: you grow */}
+            <motion.h1 className="flex items-baseline justify-center gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em] -mt-2 md:-mt-3">
+              <motion.span variants={wordReveal} className="text-[#1a1a2e]">
+                you
+              </motion.span>
+              <motion.span variants={wordReveal}>
+                <span className="bg-gradient-to-r from-[#6366f1] via-[#8b5cf6] to-[#c084fc] bg-clip-text text-transparent">
+                  grow
+                </span>
+              </motion.span>
+            </motion.h1>
+
+            {/* Line 3: — that's the deal. */}
+            <motion.p
+              variants={wordReveal}
+              className="text-[clamp(1.1rem,2.2vw,1.75rem)] font-medium text-foreground/30 mt-2 tracking-[-0.01em]"
+            >
+              — that&apos;s the deal.
+            </motion.p>
           </motion.div>
 
+          {/* ── Subheadline ── */}
           <motion.p
-            style={{ opacity: paragraphOpacity }}
-            variants={fadeUpVariants}
-            className="text-lg md:text-xl lg:text-2xl text-foreground/70 mb-10 max-w-3xl leading-relaxed text-center font-medium"
+            custom={1.0}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="text-base md:text-lg text-foreground/50 mb-12 max-w-xl leading-[1.7] font-medium"
           >
-            End-to-end AI automation and software development that
-            transforms your business. From strategy to deployment, we build
-            systems that scale.
+            End-to-end{' '}
+            <span className="text-foreground/75 font-semibold">AI automation</span> and{' '}
+            <span className="text-foreground/75 font-semibold">software development</span>{' '}
+            that transforms your business.
           </motion.p>
 
+          {/* ── CTAs ── */}
           <motion.div
-            style={{ opacity: buttonsOpacity }}
-            variants={fadeUpVariants}
-            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 justify-center w-full"
+            custom={1.3}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 mb-16"
           >
-            <a
+            {/* Primary */}
+            <motion.a
               href="#contact"
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#6366f1] text-white px-8 py-3.5 md:py-4 rounded-full text-base font-semibold transition-all hover:bg-[#4f46e5] shadow-[0_8px_30px_rgba(99,102,241,0.4)]"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-semibold text-white text-[15px] bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#7c3aed] shadow-[0_6px_30px_rgba(99,102,241,0.35)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.45)] transition-shadow duration-500 overflow-hidden"
             >
-              Get Started
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
+              {/* Shimmer */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+              <span className="relative z-10">Get Started</span>
+              <ArrowRight className="relative z-10 w-[18px] h-[18px] transition-transform group-hover:translate-x-1" />
+            </motion.a>
+
+            {/* Secondary */}
+            <motion.a
               href="#work"
-              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 text-foreground px-8 py-3.5 md:py-4 rounded-full text-base font-medium transition-all hover:bg-white/10"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-foreground/70 text-[15px] border border-foreground/[0.1] bg-white/40 backdrop-blur-sm hover:bg-white/60 hover:border-foreground/[0.18] transition-all duration-300"
             >
-              Our Work
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 opacity-60" />
-            </a>
+              View Our Work
+              <ChevronRight className="w-4 h-4 opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all" />
+            </motion.a>
+          </motion.div>
+
+          {/* ── Stats ── */}
+          <motion.div
+            custom={1.6}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center gap-8 md:gap-12"
+          >
+            {STATS.map((stat, i) => (
+              <div key={i} className="flex flex-col items-center gap-1 relative">
+                {/* Divider (between stats) */}
+                {i > 0 && (
+                  <div className="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 w-px h-8 bg-foreground/[0.08]" />
+                )}
+                <span className="text-xl md:text-2xl font-bold text-foreground/70 tracking-tight">
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                </span>
+                <span className="text-[10px] md:text-[11px] font-medium text-foreground/35 tracking-wider uppercase">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </motion.div>
         </div>
       </motion.div>
-      
-      {/* Scroll indicator - Only visible on desktop */}
+
+      {/* ── Scroll indicator ── */}
       <motion.div
-        style={{ opacity: contentOpacity }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
+        style={{ opacity: contentOpacity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 z-20"
       >
+        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-foreground/25">
+          Scroll
+        </span>
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-6 h-10 border-2 border-slate-300 rounded-full flex justify-center pt-2"
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-[18px] h-7 border border-foreground/[0.12] rounded-full flex justify-center pt-1"
         >
-          <div className="w-1 h-2 bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.8)]" />
+          <motion.div
+            animate={{ opacity: [0.2, 0.8, 0.2], scaleY: [0.5, 1, 0.5] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-[2px] h-[6px] bg-indigo-400/60 rounded-full"
+          />
         </motion.div>
       </motion.div>
     </section>
