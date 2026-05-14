@@ -7,9 +7,10 @@ import { ArrowUpRight } from 'lucide-react';
 
 const works = [
   { number: '01', title: 'Desh Yatraa', description: 'We engineered a comprehensive travel booking and exploration portal for Desh Yatraa. The platform features an intuitive search architecture, seamless booking workflows, and an optimized mobile experience.', detail: 'Travel & Tourism Portal', icon: '✈️', color: '#6366f1', link: 'https://deshyatraa.com' },
-  { number: '02', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#818cf8', link: 'https://voyagehorizon.co.in' },
-  { number: '03', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#4f46e5', link: 'https://kuchnahi.co.in' },
-  { number: '04', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#7c3aed', link: 'https://bhairavsteel.in' },
+  { number: '02', title: 'ProxyUI', description: 'A modern UI component showcase with reusable sections and patterns to help teams ship clean interfaces faster.', detail: 'UI Component Library', icon: '🧩', color: '#60a5fa', link: 'https://proxyui.vercel.app' },
+  { number: '03', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#818cf8', link: 'https://voyagehorizon.co.in' },
+  { number: '04', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#4f46e5', link: 'https://kuchnahi.co.in' },
+  { number: '05', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#7c3aed', link: 'https://bhairavsteel.in' },
 ];
 
 export default function Process() {
@@ -55,7 +56,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
   return (
     <div className="flex flex-col gap-6 md:gap-8 w-[72vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
       {/* Website Information Card (Above the browser) */}
-      <div className="w-full glass-surface-soft p-5 md:p-8 rounded-2xl md:rounded-3xl transition-all duration-500 hover:bg-white/10 relative overflow-hidden">
+      <div className="w-full relative overflow-hidden bg-white/15 backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-500 hover:bg-white/20 hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]">
         {/* Decorative ambient color blur matching the project */}
         <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none" style={{ backgroundColor: work.color }} />
         <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none" />

@@ -39,7 +39,7 @@ export default function Insights() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article, i) => (
-            <motion.a key={article.title} href={article.link} custom={i} variants={cardVariants} initial="hidden" animate={isInView ? "visible" : "hidden"} className="group flex flex-col h-full glass-surface-strong rounded-3xl p-6 border border-white/20 hover:border-white/40 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+            <motion.a key={article.title} href={article.link} custom={i} variants={cardVariants} initial="hidden" animate={isInView ? "visible" : "hidden"} className="group flex flex-col h-full relative overflow-hidden bg-white/15 backdrop-blur-2xl rounded-3xl p-6 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-500 hover:-translate-y-2 hover:bg-white/20 hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/0 to-indigo-500/0 group-hover:from-indigo-500/10 group-hover:to-transparent transition-colors duration-500 pointer-events-none" />
               <div className="flex items-center gap-4 mb-6 relative z-10">
                 <span className="bg-foreground/10 text-foreground px-3 py-1 rounded-full text-xs font-mono tracking-wide">{article.category}</span>

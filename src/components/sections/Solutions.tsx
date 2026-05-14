@@ -82,14 +82,14 @@ export default function Solutions() {
                 variants={cardVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="relative overflow-hidden bg-white/40 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[260px] md:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-white/60 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-4 hover:bg-white/60 hover:border-white/80 hover:shadow-[0_20px_60px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(255,255,255,0.8)]"
+                className="relative overflow-hidden bg-white/15 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[260px] md:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-4 hover:bg-white/20 hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]"
               >
                 {/* Subtle light sweep & glow on hover */}
                 <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/35 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />
                 
                 {/* Content */}
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="w-16 h-16 rounded-2xl bg-white/50 backdrop-blur-xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-50 transition-all duration-500 border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+                  <div className="w-16 h-16 rounded-2xl bg-white/25 backdrop-blur-xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-50/40 transition-all duration-500 border border-indigo-200/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
                     <Icon className="w-7 h-7 text-indigo-500 transition-colors drop-shadow-sm" />
                   </div>
                   <div>

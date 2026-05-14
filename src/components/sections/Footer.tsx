@@ -26,7 +26,7 @@ export default function Footer() {
   return (
     <footer className="bg-transparent border-t border-foreground/10">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-16 md:py-20">
-        <div className="glass-surface rounded-3xl p-8 md:p-12">
+        <div className="bg-white/15 backdrop-blur-2xl rounded-3xl p-8 md:p-12 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             <div className="lg:col-span-1">
               <a href="/" className="inline-flex items-center">
@@ -83,7 +83,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-foreground/10">
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-6">
-          <div className="glass-surface rounded-2xl px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="bg-white/15 backdrop-blur-2xl rounded-2xl px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)]">
             <p className="text-foreground/30 text-xs">&copy; {new Date().getFullYear()} Cognisa. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <a href="#" className="text-foreground/30 text-xs hover:text-foreground/50 transition-colors">Privacy Policy</a>
