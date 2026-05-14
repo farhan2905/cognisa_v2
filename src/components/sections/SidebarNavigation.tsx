@@ -59,17 +59,17 @@ export default function SidebarNavigation() {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center py-6 px-3 bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] rounded-[2.5rem] h-auto gap-8"
+      className="hidden lg:flex fixed left-3 top-1/2 -translate-y-1/2 z-50 flex-col items-center py-7 px-4 bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] rounded-[2.5rem] h-auto gap-8"
       suppressHydrationWarning
     >
       {/* Logo Area */}
       <button 
         type="button"
-        className="cursor-pointer group flex items-center justify-center h-20"
+        className="cursor-pointer group flex items-center justify-center h-28"
         onClick={() => handleClick('hero')}
         aria-label="Cognisa home"
       >
-        <Logo variant="icon" className="h-10 w-10 md:h-12 md:w-12" />
+        <Logo variant="icon" className="h-14 w-14 md:h-18 md:w-18" />
       </button>
 
       {/* Navigation Icons */}
@@ -80,7 +80,7 @@ export default function SidebarNavigation() {
             <button
               key={id}
               onClick={() => handleClick(id)}
-              className={`relative flex items-center justify-center w-11 h-11 rounded-[1rem] transition-all duration-500 overflow-hidden ${
+              className={`relative flex items-center justify-center w-12 h-12 rounded-[1rem] transition-all duration-500 overflow-hidden ${
                 isActive
                   ? `border border-white/20 shadow-[0_0_20px_rgba(${color},0.3)] scale-110 translate-x-1`
                   : 'text-foreground/40 bg-white/5 hover:text-foreground/80 hover:bg-white/10 border border-white/5'
@@ -91,7 +91,7 @@ export default function SidebarNavigation() {
                 <div className={`absolute inset-0 bg-gradient-to-br ${shadow} opacity-20`} />
               )}
               <Icon 
-                className="w-[18px] h-[18px] shrink-0 relative z-10 transition-colors duration-500" 
+                className="w-[21px] h-[21px] shrink-0 relative z-10 transition-colors duration-500" 
                 strokeWidth={isActive ? 2.5 : 1.5} 
                 style={isActive ? { color: `rgb(${color})` } : {}}
               />
@@ -101,7 +101,7 @@ export default function SidebarNavigation() {
       </div>
 
       {/* Bottom Logo */}
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_4px_14px_rgba(99,102,241,0.4)] mt-2">
+      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-[0_4px_14px_rgba(99,102,241,0.4)] mt-2">
         C
       </div>
     </motion.aside>

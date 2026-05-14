@@ -400,14 +400,14 @@ export default function Hero() {
         className="absolute top-6 left-6 md:top-8 md:left-8 z-30 hidden lg:block"
       >
         <a href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <Logo className="h-10 md:h-12 w-auto" />
+          <Logo className="h-14 md:h-18 w-auto origin-top-left scale-125" />
         </a>
       </motion.div>
 
       {/* ── Neural Constellation Canvas ── */}
       <motion.div
         style={{ opacity: networkOpacity, scale: networkScale }}
-        className="absolute inset-0 z-[1]"
+        className="absolute inset-0 z-[1] lg:left-[25%] lg:origin-left"
       >
         <NeuralConstellation />
       </motion.div>
@@ -430,9 +430,10 @@ export default function Hero() {
       {/* ── Main Content ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-20 w-full max-w-[1400px] mx-auto px-5 md:px-8 lg:px-16 flex flex-col items-center text-center min-h-screen justify-center"
+        className="relative z-20 w-full max-w-[1400px] mx-auto px-5 md:px-8 lg:px-16 min-h-screen flex items-center"
       >
-        <div className="w-full max-w-4xl flex flex-col items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center">
+          <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:max-w-xl flex flex-col items-center text-center lg:items-start lg:text-left">
 
           {/* Status Pill */}
           <motion.div
@@ -460,7 +461,7 @@ export default function Hero() {
             className="mb-6"
           >
             {/* Line 1: We think, */}
-            <motion.h1 className="flex items-baseline justify-center gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
+            <motion.h1 className="flex items-baseline justify-center lg:justify-start gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
               <motion.span variants={wordReveal} className="text-[#1a1a2e]">
                 We
               </motion.span>
@@ -472,7 +473,7 @@ export default function Hero() {
             </motion.h1>
 
             {/* Line 2: you grow */}
-            <motion.h1 className="flex items-baseline justify-center gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em] -mt-2 md:-mt-3">
+            <motion.h1 className="flex items-baseline justify-center lg:justify-start gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em] -mt-2 md:-mt-3">
               <motion.span variants={wordReveal} className="text-[#1a1a2e]">
                 you
               </motion.span>
@@ -548,7 +549,7 @@ export default function Hero() {
             className="flex items-center gap-8 md:gap-12"
           >
             {STATS.map((stat, i) => (
-              <div key={i} className="flex flex-col items-center gap-1 relative">
+              <div key={i} className="flex flex-col items-center lg:items-start gap-1 relative">
                 {/* Divider (between stats) */}
                 {i > 0 && (
                   <div className="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 w-px h-8 bg-foreground/[0.08]" />
@@ -562,6 +563,7 @@ export default function Hero() {
               </div>
             ))}
           </motion.div>
+          </div>
         </div>
       </motion.div>
 
