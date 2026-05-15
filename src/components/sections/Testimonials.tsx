@@ -50,7 +50,7 @@ export default function Testimonials() {
 
   return (
     <section ref={ref} className="relative bg-transparent py-24 md:py-32 overflow-hidden">
-      <div className="w-[92vw] max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
+      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

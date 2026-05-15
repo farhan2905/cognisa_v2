@@ -90,7 +90,7 @@ export default function Challenges() {
                     variants={itemVariants}
                     initial="hidden"
                     animate={isInView ? "visible" : "hidden"}
-                    className="relative overflow-hidden bg-gradient-to-br from-blue-600/5 via-indigo-500/[0.02] to-transparent backdrop-blur-2xl rounded-3xl p-6 md:p-8 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]"
+                    className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl rounded-3xl p-6 md:p-8 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]"
                   >
                     <h3 className="text-2xl font-bold text-foreground mb-6">
                       {category.title}

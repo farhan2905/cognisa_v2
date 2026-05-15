@@ -546,13 +546,13 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="flex items-center gap-8 md:gap-12"
+            className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-12"
           >
             {STATS.map((stat, i) => (
               <div key={i} className="flex flex-col items-center lg:items-start gap-1 relative">
                 {/* Divider (between stats) */}
                 {i > 0 && (
-                  <div className="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 w-px h-8 bg-foreground/[0.08]" />
+                  <div className="absolute -left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 w-px h-8 bg-foreground/[0.08] hidden sm:block" />
                 )}
                 <span className="text-xl md:text-2xl font-bold text-foreground/70 tracking-tight">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />

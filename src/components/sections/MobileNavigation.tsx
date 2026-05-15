@@ -115,7 +115,7 @@ export default function MobileNavigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-16 left-4 right-4 z-40 bg-white/10 backdrop-blur-3xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.2)] rounded-2xl p-4 space-y-2"
+            className="fixed top-16 left-4 right-4 z-40 bg-white/15 backdrop-blur-3xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.2)] rounded-2xl p-4 space-y-2"
           >
             {mobileIcons.map(({ icon: Icon, label, id, color, shadow }) => {
               const isActive = activeId === id;

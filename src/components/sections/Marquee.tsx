@@ -26,7 +26,7 @@ export default function Marquee() {
             {repeated.map((item, i) => (
               <span
                 key={i}
-                className="text-indigo-400 text-lg md:text-2xl font-bold tracking-tight mx-4 md:mx-8 flex items-center gap-4 md:gap-8"
+                className="text-indigo-400 text-lg md:text-xl lg:text-2xl font-bold tracking-tight mx-4 md:mx-8 flex items-center gap-4 md:gap-8"
               >
                 {item}
                 <span className="text-indigo-400/30 text-2xl">&#x2022;</span>

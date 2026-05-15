@@ -17,7 +17,7 @@ export default function Process() {
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: targetRef });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["10%", "-75%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-75%"]);
 
   return (
     <section id="work" ref={targetRef} className="section-anchor relative h-[340vh] md:h-[400vh] bg-transparent">
@@ -40,7 +40,7 @@ export default function Process() {
           </motion.h2>
         </div>
 
-        <motion.div style={{ x }} className="flex gap-12 md:gap-24 lg:gap-32 px-4 md:px-12 lg:px-20 w-fit pb-12 items-center">
+        <motion.div style={{ x }} className="flex gap-6 md:gap-24 lg:gap-32 px-4 md:px-12 lg:px-20 w-fit pb-12 items-center">
           {works.map((work, idx) => (
             <WorkCard key={work.number} work={work} index={idx} total={works.length} />
           ))}
@@ -54,9 +54,9 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
   const [isInteractive, setIsInteractive] = useState(false);
 
   return (
-    <div className="flex flex-col gap-6 md:gap-8 w-[72vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
+    <div className="flex flex-col gap-4 md:gap-8 w-[85vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
       {/* Website Information Card (Above the browser) */}
-      <div className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/15 via-indigo-500/10 to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)] transition-all duration-500 hover:from-blue-600/25 hover:via-indigo-500/15 hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]">
+      <div className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)] transition-all duration-500 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]">
         {/* Decorative ambient color blur matching the project */}
         <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none" style={{ backgroundColor: work.color }} />
         <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none" />
@@ -81,7 +81,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
 
       {/* Browser Window Card */}
       <div 
-        className="w-full h-[48vh] sm:h-[52vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
+        className="w-full h-[35vh] sm:h-[42vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
         onMouseLeave={() => setIsInteractive(false)}
       >
         {/* Browser Header */}

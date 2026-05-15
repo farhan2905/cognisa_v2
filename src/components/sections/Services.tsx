@@ -108,7 +108,7 @@ export default function Services() {
           </div>
 
           {/* Cards Area */}
-          <div className="w-full relative h-[420px] sm:h-[460px] md:h-[420px] lg:h-[450px] mb-8">
+          <div className="w-full relative h-[380px] sm:h-[420px] md:h-[420px] lg:h-[450px] mb-4 md:mb-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -131,11 +131,11 @@ export default function Services() {
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
                   </div>
-                  <div className="text-[9px] sm:text-[10px] font-mono text-foreground/40 ml-4">{activeService.url}</div>
+                  <div className="text-[10px] sm:text-[10px] font-mono text-foreground/40 ml-4 truncate max-w-[50%]">{activeService.url}</div>
                 </div>
 
                 {/* Card Content Row */}
-                <div className="flex flex-col-reverse md:flex-row gap-6 md:gap-12 items-stretch p-6 md:p-10 lg:p-12 pb-8 md:pb-12 h-full flex-grow">
+                <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-12 items-stretch p-4 md:p-10 lg:p-12 pb-6 md:pb-12 h-full flex-grow">
                   
                   {/* Left Content */}
                   <div className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-center h-full">
@@ -160,7 +160,7 @@ export default function Services() {
                   </div>
 
                   {/* Right Graphic Area (Subservices List) */}
-                  <div className="w-full md:w-[50%] h-[200px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-6 md:p-8 bg-gradient-to-br from-blue-600/10 via-indigo-500/5 to-transparent border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]">
+                  <div className="w-full md:w-[50%] h-[160px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-8 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none" />
                     
                     <div className="relative z-10 flex flex-col h-full opacity-[0.95]">
@@ -191,8 +191,8 @@ export default function Services() {
                 const isActive = activeIndex === i;
                 
                 // Arch math: Creates an umbrella curve shape
-                const xOffset = (i - activeIndex) * 90; // horizontal separation
-                const yOffset = distance * distance * 15; // parabolic arch downward
+                const xOffset = (i - activeIndex) * (typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 90); // horizontal separation
+                const yOffset = distance * distance * (typeof window !== 'undefined' && window.innerWidth < 640 ? 10 : 15); // parabolic arch downward
                 const scale = Math.max(0.4, 1 - distance * 0.25);
                 const opacity = Math.max(0.1, 1 - distance * 0.6);
                 const rotate = (i - activeIndex) * 15; // outward rotation

@@ -35,8 +35,8 @@ export default function FAQ() {
                 key={index}
                 className={`relative overflow-hidden rounded-2xl transition-all duration-300 backdrop-blur-2xl border ring-1 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)] ${
                   isOpen
-                    ? 'bg-gradient-to-br from-blue-600/15 via-indigo-500/5 to-transparent border-indigo-400/60 ring-indigo-500/30'
-                    : 'bg-gradient-to-br from-blue-600/5 via-indigo-500/[0.02] to-transparent border-indigo-300/50 ring-indigo-400/20 hover:from-blue-600/15 hover:via-indigo-500/5 hover:border-indigo-400/60 hover:ring-indigo-500/30'
+                    ? 'bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.05] to-transparent border-indigo-400/60 ring-indigo-500/30'
+                    : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/50 ring-indigo-400/20 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-400/60 hover:ring-indigo-500/30'
                 }`}
               >
                 <button onClick={() => setOpenIndex(isOpen ? null : index)} className="w-full flex items-center justify-between p-5 text-left focus:outline-none">
