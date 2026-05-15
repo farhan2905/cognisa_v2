@@ -160,21 +160,17 @@ export default function Services() {
                   </div>
 
                   {/* Right Graphic Area (Subservices List) */}
-                  <div className="w-full md:w-[50%] h-[200px] md:h-full glass-surface rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden shadow-inner p-6 md:p-8">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none" />
+                  <div className="w-full md:w-[50%] h-[200px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-6 md:p-8 bg-gradient-to-br from-blue-600/10 via-indigo-500/5 to-transparent border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none" />
                     
-                    <div className="relative z-10 flex flex-col h-full opacity-[0.9]">
-                      <div className="text-[10px] md:text-xs font-mono font-semibold tracking-[0.2em] uppercase mb-4 md:mb-6 text-foreground/50 border-b border-white/5 pb-3">
-                        What we offer
-                      </div>
-                      
-                      <ul className="flex flex-col gap-3 md:gap-4 w-full h-full justify-center">
+                    <div className="relative z-10 flex flex-col h-full opacity-[0.95]">
+                      <ul className="flex flex-col gap-4 md:gap-5 w-full h-full justify-between">
                         {activeService.subservices.map((sub, idx) => (
-                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-white/5 last:border-0 group">
-                            <span className="text-xs md:text-sm font-mono font-bold w-6 opacity-40 group-hover:opacity-80 transition-opacity" style={{ color: activeService.color }}>
+                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-white/10 last:border-0 group">
+                            <span className="text-xs md:text-sm font-mono font-bold w-6 opacity-50 group-hover:opacity-90 transition-opacity" style={{ color: activeService.color }}>
                               0{idx + 1}
                             </span>
-                            <span className="text-sm md:text-base text-foreground/80 font-medium group-hover:text-foreground transition-colors">
+                            <span className="text-sm md:text-base text-foreground/85 font-medium group-hover:text-foreground transition-colors">
                               {sub}
                             </span>
                           </li>

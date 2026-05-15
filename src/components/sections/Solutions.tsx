@@ -82,7 +82,7 @@ export default function Solutions() {
                 variants={cardVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="relative overflow-hidden bg-white/15 backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[260px] md:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-4 hover:bg-white/20 hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]"
+                className="relative overflow-hidden bg-gradient-to-br from-blue-600/5 via-indigo-500/[0.02] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[260px] md:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-4 hover:from-blue-600/15 hover:via-indigo-500/5 hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]"
               >
                 {/* Subtle light sweep & glow on hover */}
                 <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/35 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />

@@ -25,8 +25,8 @@ const footerLinks = {
 export default function Footer() {
   return (
     <footer className="bg-transparent border-t border-foreground/10">
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-16 md:py-20">
-        <div className="bg-white/15 backdrop-blur-2xl rounded-3xl p-8 md:p-12 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)]">
+      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-[4.6rem] md:py-[5.75rem]">
+        <div className="bg-gradient-to-br from-blue-600/5 via-indigo-500/[0.02] to-transparent backdrop-blur-2xl rounded-3xl p-[2.3rem] md:p-[3.45rem] border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             <div className="lg:col-span-1">
               <a href="/" className="inline-flex items-center">
