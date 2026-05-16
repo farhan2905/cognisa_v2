@@ -110,7 +110,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
           </div>
           <div className="flex-shrink-0 flex items-center justify-between md:flex-col md:items-end md:justify-start">
             <span className="text-4xl md:text-5xl font-bold opacity-10">{work.number}</span>
-            <Link href={`/work/${work.slug}`} className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full font-medium text-sm hover:scale-105 hover:bg-indigo-500 hover:text-white transition-all md:mt-6 shadow-sm">
+            <Link href={`/work/${work.slug}`} className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] md:mt-6">
               View Case Study <ArrowUpRight className="w-3 h-3" />
             </Link>
           </div>

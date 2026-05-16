@@ -74,7 +74,7 @@ export default function Solutions() {
             </p>
             <Link 
               href="/process" 
-              className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 rounded-full font-semibold text-sm hover:bg-indigo-500 hover:text-white transition-all group"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] group"
             >
               See Our Process
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
