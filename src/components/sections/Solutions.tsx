@@ -3,7 +3,8 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import SectionTag from '@/components/shared/SectionTag';
-import { ShieldCheck, Target, TrendingUp, Users } from 'lucide-react';
+import { ShieldCheck, Target, TrendingUp, Users, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const solutions = [
   {
@@ -62,14 +63,23 @@ export default function Solutions() {
           >
             Removing the technical roadblocks to your <span className="text-indigo-500 bg-transparent">growth.</span>
           </motion.h2>
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: 0.2, duration: 0.7 }}
-            className="text-foreground/80 text-lg"
+            className="flex flex-col items-center"
           >
-            It&apos;s easy to get overwhelmed by &quot;AI integrations,&quot; &quot;cloud servers,&quot; and confusing software agency pitches. We filter out the tech jargon, focus entirely on what your business actually needs, and build systems that just work.
-          </motion.p>
+            <p className="text-foreground/80 text-lg mb-8">
+              It&apos;s easy to get overwhelmed by &quot;AI integrations,&quot; &quot;cloud servers,&quot; and confusing software agency pitches. We filter out the tech jargon, focus entirely on what your business actually needs, and build systems that just work.
+            </p>
+            <Link 
+              href="/process" 
+              className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 rounded-full font-semibold text-sm hover:bg-indigo-500 hover:text-white transition-all group"
+            >
+              See Our Process
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">

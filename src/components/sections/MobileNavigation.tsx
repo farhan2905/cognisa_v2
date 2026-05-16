@@ -3,15 +3,18 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X } from 'lucide-react';
+import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X, Info, BookOpen, FileText } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
+import Link from 'next/link';
 
-const mobileIcons = [
-  { icon: HomeIcon, label: 'Home', id: 'hero', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' },
-  { icon: Cog, label: 'Approach', id: 'solutions', color: '245,158,11', shadow: 'from-[#f59e0b] to-[#ef4444]' },
-  { icon: LayoutGrid, label: 'Services', id: 'services', color: '16,185,129', shadow: 'from-[#10b981] to-[#3b82f6]' },
-  { icon: FolderOpen, label: 'Work', id: 'work', color: '6,182,212', shadow: 'from-[#06b6d4] to-[#3b82f6]' },
-  { icon: Mail, label: 'Contact', id: 'cta', color: '236,72,153', shadow: 'from-[#ec4899] to-[#8b5cf6]' },
+const mobileItems = [
+  { icon: HomeIcon, label: 'Home', id: 'hero', href: '/', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' },
+  { icon: Cog, label: 'Process', id: 'solutions', href: '/process', color: '245,158,11', shadow: 'from-[#f59e0b] to-[#ef4444]' },
+  { icon: Info, label: 'About', id: 'about', href: '/about', color: '99,102,241', shadow: 'from-[#6366f1] to-[#818cf8]' },
+  { icon: LayoutGrid, label: 'Services', id: 'services', href: '/services', color: '16,185,129', shadow: 'from-[#10b981] to-[#3b82f6]' },
+  { icon: FolderOpen, label: 'Work', id: 'work', href: '/work', color: '6,182,212', shadow: 'from-[#06b6d4] to-[#3b82f6]' },
+  { icon: BookOpen, label: 'Insights', id: 'insights', href: '/insights', color: '59,130,246', shadow: 'from-[#3b82f6] to-[#6366f1]' },
+  { icon: Mail, label: 'Contact', id: 'cta', href: '/contact', color: '236,72,153', shadow: 'from-[#ec4899] to-[#8b5cf6]' },
 ];
 
 export default function MobileNavigation() {
@@ -20,9 +23,21 @@ export default function MobileNavigation() {
   const pathname = usePathname();
   const router = useRouter();
 
+  // Determine active based on pathname
+  useEffect(() => {
+    if (pathname === '/') {
+      // scroll-based on homepage
+    } else {
+      const match = mobileItems.find((item) => item.href !== '/' && pathname.startsWith(item.href));
+      if (match) setActiveId(match.id);
+    }
+  }, [pathname]);
+
+  // Scroll-based tracking on homepage
   useEffect(() => {
     if (pathname !== '/') return;
 
+    const homeSectionIds = ['hero', 'solutions', 'about', 'services', 'work', 'insights', 'cta'];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -31,13 +46,11 @@ export default function MobileNavigation() {
           }
         });
       },
-      {
-        rootMargin: '-30% 0px -70% 0px',
-      }
+      { rootMargin: '-30% 0px -70% 0px' }
     );
 
     setTimeout(() => {
-      mobileIcons.forEach(({ id }) => {
+      homeSectionIds.forEach((id) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });
@@ -46,23 +59,16 @@ export default function MobileNavigation() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  const handleClick = (id: string) => {
-    setActiveId(id);
+  const handleClick = (item: typeof mobileItems[0]) => {
+    setActiveId(item.id);
     setIsOpen(false);
-    
-    if (pathname !== '/') {
-      router.push(`/#${id}`);
-      return;
-    }
-    
-    if (id === 'hero') {
+
+    if (pathname === '/' && item.href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+
+    router.push(item.href);
   };
 
   return (
@@ -76,19 +82,18 @@ export default function MobileNavigation() {
       >
         <div className="flex items-center justify-between max-w-[1600px] mx-auto">
           {/* Logo */}
-          <button
-            type="button"
+          <Link
+            href="/"
             className="cursor-pointer flex items-center"
-            onClick={() => handleClick('hero')}
             aria-label="Cognisa home"
           >
             <Logo className="h-7 md:h-8 w-auto" />
-          </button>
+          </Link>
 
           {/* Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent hover:bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent border border-indigo-300/30 hover:border-indigo-300/40"
+            className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 hover:border-indigo-300/40"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -127,16 +132,16 @@ export default function MobileNavigation() {
             transition={{ duration: 0.3 }}
             className="fixed top-16 left-4 right-4 z-40 bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent backdrop-blur-3xl border border-indigo-300/40 shadow-[0_12px_40px_rgba(59,130,246,0.22)] rounded-2xl p-4 space-y-2"
           >
-            {mobileIcons.map(({ icon: Icon, label, id, color, shadow }) => {
+            {mobileItems.map(({ icon: Icon, label, id, color, shadow, href }) => {
               const isActive = activeId === id;
               return (
                 <button
                   key={id}
-                  onClick={() => handleClick(id)}
+                  onClick={() => handleClick({ icon: Icon, label, id, color, shadow, href })}
                   className={`relative w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive
                       ? `bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent border border-indigo-300/70 shadow-[0_0_15px_rgba(${color},0.25)]`
-                      : 'bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent hover:border-indigo-300/40'
+                      : 'bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 hover:border-indigo-300/40'
                   }`}
                 >
                   {isActive && (

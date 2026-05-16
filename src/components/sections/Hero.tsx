@@ -4,6 +4,7 @@ import { useRef, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
+import Link from 'next/link';
 
 /* ═══════════════════════════════════════════════
    NEURAL CONSTELLATION — Canvas visualization
@@ -516,28 +517,28 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 mb-16"
           >
             {/* Primary */}
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-semibold text-white text-[15px] bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#7c3aed] shadow-[0_6px_30px_rgba(99,102,241,0.35)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.45)] transition-shadow duration-500 overflow-hidden"
-            >
-              {/* Shimmer */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
-              <span className="relative z-10">Get Started</span>
-              <ArrowRight className="relative z-10 w-[18px] h-[18px] transition-transform group-hover:translate-x-1" />
-            </motion.a>
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/contact"
+                className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-semibold text-white text-[15px] bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#7c3aed] shadow-[0_6px_30px_rgba(99,102,241,0.35)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.45)] transition-shadow duration-500 overflow-hidden"
+              >
+                {/* Shimmer */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+                <span className="relative z-10">Get Started</span>
+                <ArrowRight className="relative z-10 w-[18px] h-[18px] transition-transform group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
 
             {/* Secondary */}
-            <motion.a
-              href="#work"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-[#1a1a2e]/70 text-[15px] border border-foreground/[0.1] bg-white/40 backdrop-blur-sm hover:bg-white/60 hover:border-foreground/[0.18] transition-all duration-300"
-            >
-              View Our Work
-              <ChevronRight className="w-4 h-4 opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all" />
-            </motion.a>
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                href="/work"
+                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-[#1a1a2e]/70 text-[15px] border border-foreground/[0.1] bg-white/40 backdrop-blur-sm hover:bg-white/60 hover:border-foreground/[0.18] transition-all duration-300"
+              >
+                View Our Work
+                <ChevronRight className="w-4 h-4 opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all" />
+              </Link>
+            </motion.div>
           </motion.div>
 
           {/* ── Stats ── */}

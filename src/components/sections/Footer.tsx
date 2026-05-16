@@ -1,24 +1,23 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
+import Link from 'next/link';
 
 const footerLinks = {
   services: [
-    { label: 'Digital Marketing', href: '#' },
-    { label: 'Growth Strategy', href: '#' },
-    { label: 'Web Development', href: '#' },
-    { label: 'AI Solutions', href: '#' },
-    { label: 'Brand Identity', href: '#' },
-    { label: 'IT Services', href: '#' },
+    { label: 'Website & Web Apps', href: '/services/web-development' },
+    { label: 'AI & Automation', href: '/services/ai-automation' },
+    { label: 'System Architecture', href: '/services/system-architecture' },
+    { label: 'Cloud Infrastructure', href: '/services/cloud-infrastructure' },
+    { label: 'All Services', href: '/services' },
   ],
   company: [
-    { label: 'About Us', href: '#about' },
-    { label: 'Our Work', href: '#stats' },
-    { label: 'Careers', href: '#' },
-    { label: 'Blog', href: '#' },
-    { label: 'Contact', href: '#cta' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Our Work', href: '/work' },
+    { label: 'Our Process', href: '/process' },
+    { label: 'Insights', href: '/insights' },
+    { label: 'Contact', href: '/contact' },
   ],
 };
 
@@ -29,9 +28,9 @@ export default function Footer() {
         <div className="bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-3xl p-6 md:p-[3.45rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             <div className="lg:col-span-1">
-              <a href="/" className="inline-flex items-center">
+              <Link href="/" className="inline-flex items-center">
                 <Logo className="h-9 md:h-10 w-auto" />
-              </a>
+              </Link>
               <p className="text-foreground/40 text-sm leading-relaxed mt-4 max-w-xs">
                 We build digital experiences that drive growth. Strategy, design, development, and marketing — all under one roof.
               </p>
@@ -47,7 +46,11 @@ export default function Footer() {
               <h4 className="text-foreground font-semibold text-sm uppercase tracking-wider mb-6">Services</h4>
               <ul className="space-y-3">
                 {footerLinks.services.map((link) => (
-                  <li key={link.label}><a href={link.href} className="text-foreground/40 text-sm hover:text-foreground/70 transition-colors">{link.label}</a></li>
+                  <li key={link.label}>
+                    <Link href={link.href} className="text-foreground/40 text-sm hover:text-foreground/70 transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -56,7 +59,9 @@ export default function Footer() {
               <ul className="space-y-3">
                 {footerLinks.company.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} onClick={(e) => { if (link.href.startsWith('#') && link.href !== '#') { e.preventDefault(); const el = document.querySelector(link.href); if (el) el.scrollIntoView({ behavior: 'smooth' }); } }} className="text-foreground/40 text-sm hover:text-foreground/70 transition-colors">{link.label}</a>
+                    <Link href={link.href} className="text-foreground/40 text-sm hover:text-foreground/70 transition-colors">
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -86,8 +91,8 @@ export default function Footer() {
           <div className="bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-2xl rounded-2xl px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)]">
             <p className="text-foreground/30 text-xs">&copy; {new Date().getFullYear()} Cognisa. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <a href="#" className="text-foreground/30 text-xs hover:text-foreground/50 transition-colors">Privacy Policy</a>
-              <a href="#" className="text-foreground/30 text-xs hover:text-foreground/50 transition-colors">Terms of Service</a>
+              <Link href="/privacy" className="text-foreground/30 text-xs hover:text-foreground/50 transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="text-foreground/30 text-xs hover:text-foreground/50 transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

@@ -28,6 +28,8 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         description={service.fullDescription}
         icon={Icon}
         color={service.color}
+        backHref="/services"
+        backText="Back to Services"
       />
       
       <div className="w-full max-w-[1000px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -57,7 +59,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               Unlike traditional agencies, we treat every project like our own product. We focus heavily on scalability, zero-downtime architecture, and perfect design fidelity. The transition from our Figma designs to the actual codebase is practically pixel-perfect.
             </p>
             <Link 
-              href="/#contact"
+              href="/contact"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)]"
             >
               Start Your Project

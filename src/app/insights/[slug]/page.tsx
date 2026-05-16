@@ -28,7 +28,7 @@ export default function InsightDetailPage({ params }: { params: { slug: string }
         description={post.shortDescription}
         icon={Icon}
         color={post.color}
-        backHref="/#insights"
+        backHref="/insights"
         backText="Back to Insights"
       />
       

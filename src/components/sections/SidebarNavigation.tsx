@@ -2,16 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, BookOpen, Info } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
+import Link from 'next/link';
 
-const sidebarIcons = [
-  { icon: HomeIcon, label: 'Home', id: 'hero', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' }, // Purple-ish
-  { icon: Cog, label: 'Approach', id: 'solutions', color: '245,158,11', shadow: 'from-[#f59e0b] to-[#ef4444]' }, // Amber to Red
-  { icon: LayoutGrid, label: 'Services', id: 'services', color: '16,185,129', shadow: 'from-[#10b981] to-[#3b82f6]' }, // Emerald to Blue
-  { icon: FolderOpen, label: 'Work', id: 'work', color: '6,182,212', shadow: 'from-[#06b6d4] to-[#3b82f6]' }, // Cyan to Blue
-  { icon: Mail, label: 'Contact', id: 'cta', color: '236,72,153', shadow: 'from-[#ec4899] to-[#8b5cf6]' }, // Pink to Purple
+const sidebarItems = [
+  { icon: HomeIcon, label: 'Home', id: 'hero', href: '/', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' },
+  { icon: Cog, label: 'Process', id: 'solutions', href: '/process', color: '245,158,11', shadow: 'from-[#f59e0b] to-[#ef4444]' },
+  { icon: Info, label: 'About', id: 'about', href: '/about', color: '99,102,241', shadow: 'from-[#6366f1] to-[#818cf8]' },
+  { icon: LayoutGrid, label: 'Services', id: 'services', href: '/services', color: '16,185,129', shadow: 'from-[#10b981] to-[#3b82f6]' },
+  { icon: FolderOpen, label: 'Work', id: 'work', href: '/work', color: '6,182,212', shadow: 'from-[#06b6d4] to-[#3b82f6]' },
+  { icon: Mail, label: 'Contact', id: 'cta', href: '/contact', color: '236,72,153', shadow: 'from-[#ec4899] to-[#8b5cf6]' },
 ];
 
 export default function SidebarNavigation() {
@@ -19,10 +21,30 @@ export default function SidebarNavigation() {
   const pathname = usePathname();
   const router = useRouter();
 
+  // Determine active item based on pathname
   useEffect(() => {
-    // Only run intersection observer on the homepage
+    if (pathname === '/') {
+      // On homepage, use scroll-based detection
+    } else if (pathname.startsWith('/services')) {
+      setActiveId('services');
+    } else if (pathname.startsWith('/work')) {
+      setActiveId('work');
+    } else if (pathname.startsWith('/about')) {
+      setActiveId('about');
+    } else if (pathname.startsWith('/contact')) {
+      setActiveId('cta');
+    } else if (pathname.startsWith('/process')) {
+      setActiveId('solutions');
+    } else if (pathname.startsWith('/insights')) {
+      setActiveId('hero'); // no specific icon for insights
+    }
+  }, [pathname]);
+
+  // Scroll-based section tracking on homepage only
+  useEffect(() => {
     if (pathname !== '/') return;
 
+    const homeSectionIds = ['hero', 'solutions', 'about', 'services', 'work', 'cta'];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -31,13 +53,11 @@ export default function SidebarNavigation() {
           }
         });
       },
-      {
-        rootMargin: '-30% 0px -70% 0px',
-      }
+      { rootMargin: '-30% 0px -70% 0px' }
     );
 
     setTimeout(() => {
-      sidebarIcons.forEach(({ id }) => {
+      homeSectionIds.forEach((id) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });
@@ -46,23 +66,17 @@ export default function SidebarNavigation() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  const handleClick = (id: string) => {
-    setActiveId(id);
-    
-    // If we're not on the homepage, navigate to the homepage hash
-    if (pathname !== '/') {
-      router.push(`/#${id}`);
-      return;
-    }
+  const handleClick = (item: typeof sidebarItems[0]) => {
+    setActiveId(item.id);
 
-    if (id === 'hero') {
+    // If on homepage, scroll to section for home-based items
+    if (pathname === '/' && item.href === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+
+    // Navigate to the page
+    router.push(item.href);
   };
 
   return (
@@ -74,23 +88,22 @@ export default function SidebarNavigation() {
       suppressHydrationWarning
     >
       {/* Logo Area */}
-      <button 
-        type="button"
+      <Link
+        href="/"
         className="cursor-pointer group flex items-center justify-center h-28"
-        onClick={() => handleClick('hero')}
         aria-label="Cognisa home"
       >
         <Logo variant="icon" className="h-14 w-14 md:h-18 md:w-18" />
-      </button>
+      </Link>
 
       {/* Navigation Icons */}
       <div className="flex flex-col gap-3 w-full items-center">
-        {sidebarIcons.map(({ icon: Icon, label, id, color, shadow }) => {
+        {sidebarItems.map(({ icon: Icon, label, id, color, shadow, href }) => {
           const isActive = activeId === id;
           return (
             <button
               key={id}
-              onClick={() => handleClick(id)}
+              onClick={() => handleClick({ icon: Icon, label, id, color, shadow, href })}
               className={`relative flex items-center justify-center w-12 h-12 rounded-[1rem] transition-all duration-500 overflow-hidden ${
                 isActive
                   ? `border border-white/20 shadow-[0_0_20px_rgba(${color},0.3)] scale-110 translate-x-1`
@@ -101,9 +114,9 @@ export default function SidebarNavigation() {
               {isActive && (
                 <div className={`absolute inset-0 bg-gradient-to-br ${shadow} opacity-20`} />
               )}
-              <Icon 
-                className="w-[21px] h-[21px] shrink-0 relative z-10 transition-colors duration-500" 
-                strokeWidth={isActive ? 2.5 : 1.5} 
+              <Icon
+                className="w-[21px] h-[21px] shrink-0 relative z-10 transition-colors duration-500"
+                strokeWidth={isActive ? 2.5 : 1.5}
                 style={isActive ? { color: `rgb(${color})` } : {}}
               />
             </button>

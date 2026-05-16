@@ -4,6 +4,7 @@ import DetailHero from '@/components/shared/DetailHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import { ExternalLink, CheckCircle2, Award } from 'lucide-react';
 import Link from 'next/link';
+import WorkBrowserPreview from '@/components/shared/WorkBrowserPreview';
 
 export async function generateStaticParams() {
   return worksData.map((work) => ({
@@ -25,6 +26,8 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
         title={work.title}
         description={work.fullDescription}
         color={work.color}
+        backHref="/work"
+        backText="Back to Work"
       />
       
       <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
@@ -33,7 +36,7 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           
           {/* Main Showcase */}
-          <GlassContentBlock className="md:col-span-2 min-h-[350px] flex flex-col relative group p-0 overflow-hidden">
+          <div className="md:col-span-2 min-h-[350px] flex flex-col relative group overflow-hidden rounded-[2rem] border border-indigo-300/40 shadow-[0_20px_60px_rgba(0,0,0,0.4)] bg-zinc-950">
             {/* Browser Header */}
             <div className="h-10 w-full glass-surface border-b border-indigo-300/40 flex items-center px-4 gap-2 absolute top-0 left-0 right-0 z-20">
               <div className="flex gap-1.5">
@@ -46,26 +49,9 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
               </div>
             </div>
 
-            {/* Showcase Image or Gradient Placeholder */}
-            <div className="absolute inset-0 top-10 flex flex-col items-center justify-center overflow-hidden">
-               {/* Ambient Background Glow based on project color */}
-               <div className="absolute inset-0 opacity-20 transition-all duration-700 group-hover:scale-110 group-hover:opacity-30" style={{ background: `radial-gradient(circle at center, ${work.color}, transparent 70%)` }} />
-               
-               <div className="text-4xl md:text-9xl opacity-[0.03] font-bold blur-[1px] select-none absolute z-0">{work.title}</div>
-               
-               {/* Live Site Overlay */}
-               <a 
-                 href={work.link} 
-                 target="_blank" 
-                 rel="noopener noreferrer"
-                 className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/20 backdrop-blur-sm"
-               >
-                 <span className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full shadow-2xl hover:scale-105 transition-transform">
-                   Visit Live Site <ExternalLink className="w-4 h-4" />
-                 </span>
-               </a>
-            </div>
-          </GlassContentBlock>
+            {/* Showcase Live Site (Interactive) */}
+            <WorkBrowserPreview work={work} />
+          </div>
           
           {/* Metrics Column */}
           <div className="flex flex-col gap-6">
@@ -109,7 +95,7 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
               We apply the exact same rigorous engineering standards to every project we take on.
             </p>
             <Link 
-              href="/#contact"
+              href="/contact"
               className="w-full text-center py-3 bg-gradient-to-r from-blue-600/[0.1] to-indigo-500/[0.1] border border-indigo-400/30 rounded-xl font-semibold hover:from-blue-600/[0.2] hover:to-indigo-500/[0.2] transition-colors"
             >
               Let's Discuss Your Project

@@ -7,8 +7,10 @@ import {
   Zap,
   BarChart3,
   Lightbulb,
+  ArrowRight,
 } from 'lucide-react';
 import SectionTag from '@/components/shared/SectionTag';
+import Link from 'next/link';
 
 const benefits = [
   {
@@ -83,11 +85,18 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-end"
+            className="flex flex-col justify-end items-start"
           >
-            <p className="text-foreground/80 text-lg md:text-xl leading-relaxed">
+            <p className="text-foreground/80 text-lg md:text-xl leading-relaxed mb-8">
               Managed solely by the founder of <strong>Cognisa</strong>, we specialize in delivering high-performance custom web applications and AI-driven automation. We partner closely with businesses to transform manual bottlenecks into scalable, automated tech solutions.
             </p>
+            <Link 
+              href="/about" 
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] group"
+            >
+              More About Us
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </motion.div>
         </div>
 
