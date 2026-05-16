@@ -26,7 +26,7 @@ export default function Footer() {
   return (
     <footer className="bg-transparent border-t border-foreground/10">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-[4.6rem] md:py-[5.75rem]">
-        <div className="bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl rounded-3xl p-6 md:p-[3.45rem] border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]">
+        <div className="bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-3xl p-6 md:p-[3.45rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             <div className="lg:col-span-1">
               <a href="/" className="inline-flex items-center">
@@ -83,7 +83,7 @@ export default function Footer() {
       </div>
       <div className="border-t border-foreground/10">
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-6">
-          <div className="bg-white/10 backdrop-blur-2xl rounded-2xl px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)]">
+          <div className="bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-2xl rounded-2xl px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_8px_32px_rgba(31,38,135,0.08),inset_0_1px_0_rgba(255,255,255,0.35)]">
             <p className="text-foreground/30 text-xs">&copy; {new Date().getFullYear()} Cognisa. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <a href="#" className="text-foreground/30 text-xs hover:text-foreground/50 transition-colors">Privacy Policy</a>

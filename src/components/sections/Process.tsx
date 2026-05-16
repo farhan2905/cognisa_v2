@@ -56,7 +56,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
   return (
     <div className="flex flex-col gap-4 md:gap-8 w-[85vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
       {/* Website Information Card (Above the browser) */}
-      <div className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)] transition-all duration-500 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-400/60 hover:ring-indigo-500/30 hover:shadow-[0_20px_60px_rgba(99,102,241,0.18),inset_0_1px_0_rgba(255,255,255,0.5)]">
+      <div className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-500 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30 hover:shadow-[0_16px_40px_rgba(59,130,246,0.20),inset_0_1px_0_rgba(255,255,255,1)]">
         {/* Decorative ambient color blur matching the project */}
         <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none" style={{ backgroundColor: work.color }} />
         <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none" />
@@ -81,11 +81,11 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
 
       {/* Browser Window Card */}
       <div 
-        className="w-full h-[35vh] sm:h-[42vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
+        className="w-full h-[35vh] sm:h-[42vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-indigo-300/40 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
         onMouseLeave={() => setIsInteractive(false)}
       >
         {/* Browser Header */}
-        <div className="absolute top-0 left-0 right-0 h-10 glass-surface border-b border-white/20 border-x-0 border-t-0 flex items-center px-6 gap-2 z-30">
+        <div className="absolute top-0 left-0 right-0 h-10 glass-surface border-b border-indigo-300/40 border-x-0 border-t-0 flex items-center px-6 gap-2 z-30">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
           <div className="w-3 h-3 rounded-full bg-[#27c93f]" />

@@ -74,7 +74,7 @@ export default function Testimonials() {
               variants={cardVariants}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
-              className="glass-surface-strong rounded-2xl p-8 border border-white/20 hover:border-white/40 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-1 flex flex-col"
+              className="glass-surface-strong rounded-2xl p-8 border border-indigo-300/40 hover:border-white/40 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-1 flex flex-col"
             >
               {/* Quote icon */}
               <Quote className="w-8 h-8 text-blue-500 mb-6 flex-shrink-0" />

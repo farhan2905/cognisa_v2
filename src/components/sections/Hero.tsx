@@ -447,7 +447,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-foreground/50 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
+              <span className="text-[#1a1a2e]/50 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
                 Software · Development · Automation · AI
               </span>
             </div>
@@ -487,7 +487,7 @@ export default function Hero() {
             {/* Line 3: — that's the deal. */}
             <motion.p
               variants={wordReveal}
-              className="text-[clamp(1.1rem,2.2vw,1.75rem)] font-medium text-foreground/30 mt-2 tracking-[-0.01em]"
+              className="text-[clamp(1.1rem,2.2vw,1.75rem)] font-medium text-[#1a1a2e]/30 mt-2 tracking-[-0.01em]"
             >
               — that&apos;s the deal.
             </motion.p>
@@ -499,11 +499,11 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="text-base md:text-lg text-foreground/50 mb-12 max-w-xl leading-[1.7] font-medium"
+            className="text-base md:text-lg text-[#1a1a2e]/50 mb-12 max-w-xl leading-[1.7] font-medium"
           >
             End-to-end{' '}
-            <span className="text-foreground/75 font-semibold">AI automation</span> and{' '}
-            <span className="text-foreground/75 font-semibold">software development</span>{' '}
+            <span className="text-[#1a1a2e]/75 font-semibold">AI automation</span> and{' '}
+            <span className="text-[#1a1a2e]/75 font-semibold">software development</span>{' '}
             that transforms your business.
           </motion.p>
 
@@ -533,7 +533,7 @@ export default function Hero() {
               href="#work"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
-              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-foreground/70 text-[15px] border border-foreground/[0.1] bg-white/40 backdrop-blur-sm hover:bg-white/60 hover:border-foreground/[0.18] transition-all duration-300"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-[#1a1a2e]/70 text-[15px] border border-foreground/[0.1] bg-white/40 backdrop-blur-sm hover:bg-white/60 hover:border-foreground/[0.18] transition-all duration-300"
             >
               View Our Work
               <ChevronRight className="w-4 h-4 opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all" />
@@ -554,10 +554,10 @@ export default function Hero() {
                 {i > 0 && (
                   <div className="absolute -left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 w-px h-8 bg-foreground/[0.08] hidden sm:block" />
                 )}
-                <span className="text-xl md:text-2xl font-bold text-foreground/70 tracking-tight">
+                <span className="text-xl md:text-2xl font-bold text-[#1a1a2e]/70 tracking-tight">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </span>
-                <span className="text-[10px] md:text-[11px] font-medium text-foreground/35 tracking-wider uppercase">
+                <span className="text-[10px] md:text-[11px] font-medium text-[#1a1a2e]/35 tracking-wider uppercase">
                   {stat.label}
                 </span>
               </div>
@@ -575,7 +575,7 @@ export default function Hero() {
         style={{ opacity: contentOpacity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 z-20"
       >
-        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-foreground/25">
+        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#1a1a2e]/25">
           Scroll
         </span>
         <motion.div

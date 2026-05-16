@@ -20,7 +20,7 @@ export default function Marquee() {
 
   return (
     <section className="relative bg-transparent py-6 overflow-hidden">
-      <div className="glass-surface rounded-none border-y border-white/20">
+      <div className="glass-surface rounded-none border-y border-indigo-300/40">
         <div className="marquee-mask">
           <div className="animate-marquee flex items-center whitespace-nowrap">
             {repeated.map((item, i) => (

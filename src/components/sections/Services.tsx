@@ -92,7 +92,7 @@ export default function Services() {
           
           {/* Header Area */}
           <div className="text-center max-w-3xl mx-auto px-4 mb-12 md:mb-16 w-full">
-            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-white/20 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6 group">
+            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6 group">
               <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md group-hover:scale-110 transition-transform" />
               <span className="text-sm md:text-base font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
                 OUR SERVICES
@@ -125,7 +125,7 @@ export default function Services() {
                 />
                 
                 {/* Browser Top Bar */}
-                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 glass-surface border-b border-white/20 border-x-0 border-t-0">
+                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 glass-surface border-b border-indigo-300/40 border-x-0 border-t-0">
                   <div className="flex gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -139,7 +139,7 @@ export default function Services() {
                   
                   {/* Left Content */}
                   <div className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-center h-full">
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-4 md:mb-6 w-fit shadow-sm">
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-4 md:mb-6 w-fit shadow-sm">
                       {activeService.category}
                     </div>
                     
@@ -152,7 +152,7 @@ export default function Services() {
                     </p>
                     
                     <div className="mt-auto block">
-                      <button className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
+                      <button className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
                         Explore {activeService.title}
                         <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                       </button>
@@ -160,13 +160,13 @@ export default function Services() {
                   </div>
 
                   {/* Right Graphic Area (Subservices List) */}
-                  <div className="w-full md:w-[50%] h-[160px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-8 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/50 ring-1 ring-indigo-400/20 shadow-[0_10px_30px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.25)]">
+                  <div className="w-full md:w-[50%] h-[160px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-8 bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)]">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none" />
                     
                     <div className="relative z-10 flex flex-col h-full opacity-[0.95]">
                       <ul className="flex flex-col gap-4 md:gap-5 w-full h-full justify-between">
                         {activeService.subservices.map((sub, idx) => (
-                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-white/10 last:border-0 group">
+                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-indigo-300/30 last:border-0 group">
                             <span className="text-xs md:text-sm font-mono font-bold w-6 opacity-50 group-hover:opacity-90 transition-opacity" style={{ color: activeService.color }}>
                               0{idx + 1}
                             </span>
@@ -212,7 +212,7 @@ export default function Services() {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
                       <div 
-                        className={`rounded-full flex items-center justify-center font-bold text-sm md:text-xl transition-colors duration-300 ${isActive ? 'w-16 h-16 md:w-20 md:h-20 bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.4)] border border-white' : 'w-16 h-16 md:w-20 md:h-20 bg-white/5 backdrop-blur-sm border border-white/10 text-foreground/60'}`}
+                        className={`rounded-full flex items-center justify-center font-bold text-sm md:text-xl transition-colors duration-300 ${isActive ? 'w-16 h-16 md:w-20 md:h-20 bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.4)] border border-white' : 'w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/60'}`}
                       >
                         {service.number}
                       </div>

@@ -62,7 +62,7 @@ export default function MobileNavigation() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/5 backdrop-blur-2xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.15)] px-4 py-3"
+        className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent backdrop-blur-2xl border-b border-indigo-300/30 shadow-[0_8px_32px_rgba(59,130,246,0.16)] px-4 py-3"
       >
         <div className="flex items-center justify-between max-w-[1600px] mx-auto">
           {/* Logo */}
@@ -78,7 +78,7 @@ export default function MobileNavigation() {
           {/* Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 bg-white/10 hover:bg-white/15 border border-white/10 hover:border-white/20"
+            className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent hover:bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent border border-indigo-300/30 hover:border-indigo-300/40"
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
@@ -115,7 +115,7 @@ export default function MobileNavigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-16 left-4 right-4 z-40 bg-white/15 backdrop-blur-3xl border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.2)] rounded-2xl p-4 space-y-2"
+            className="fixed top-16 left-4 right-4 z-40 bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent backdrop-blur-3xl border border-indigo-300/40 shadow-[0_12px_40px_rgba(59,130,246,0.22)] rounded-2xl p-4 space-y-2"
           >
             {mobileIcons.map(({ icon: Icon, label, id, color, shadow }) => {
               const isActive = activeId === id;
@@ -125,8 +125,8 @@ export default function MobileNavigation() {
                   onClick={() => handleClick(id)}
                   className={`relative w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
                     isActive
-                      ? `bg-white/15 border border-white/30 shadow-[0_0_15px_rgba(${color},0.25)]`
-                      : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
+                      ? `bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent border border-indigo-300/70 shadow-[0_0_15px_rgba(${color},0.25)]`
+                      : 'bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent hover:border-indigo-300/40'
                   }`}
                 >
                   {isActive && (
