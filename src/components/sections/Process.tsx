@@ -1,33 +1,59 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import SectionTag from '@/components/shared/SectionTag';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 const works = [
-  { slug: 'desh-yatraa', number: '01', title: 'Desh Yatraa', description: 'We engineered a comprehensive travel booking and exploration portal for Desh Yatraa. The platform features an intuitive search architecture, seamless booking workflows, and an optimized mobile experience.', detail: 'Travel & Tourism Portal', icon: '✈️', color: '#6366f1', link: 'https://deshyatraa.com' },
-  { slug: 'proxyui', number: '02', title: 'ProxyUI', description: 'A modern UI component showcase with reusable sections and patterns to help teams ship clean interfaces faster.', detail: 'UI Component Library', icon: '🧩', color: '#60a5fa', link: 'https://proxyui.vercel.app' },
-  { slug: 'voyage-horizon', number: '03', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#818cf8', link: 'https://voyagehorizon.co.in' },
-  { slug: 'kuch-nahi', number: '04', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#4f46e5', link: 'https://kuchnahi.co.in' },
-  { slug: 'bhairav-steel', number: '05', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#7c3aed', link: 'https://bhairavsteel.in' },
+  { slug: 'desh-yatraa', number: '01', title: 'Desh Yatraa', description: 'We engineered a comprehensive travel booking and exploration portal for Desh Yatraa. The platform features an intuitive search architecture, seamless booking workflows, and an optimized mobile experience.', detail: 'Travel & Tourism Portal', icon: '✈️', color: '#6366f1', color2: '#a855f7', link: 'https://deshyatraa.com' },
+  { slug: 'proxyui', number: '02', title: 'ProxyUI', description: 'A modern UI component showcase with reusable sections and patterns to help teams ship clean interfaces faster.', detail: 'UI Component Library', icon: '🧩', color: '#3b82f6', color2: '#06b6d4', link: 'https://proxyui.vercel.app' },
+  { slug: 'voyage-horizon', number: '03', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#f97316', color2: '#f43f5e', link: 'https://voyagehorizon.co.in' },
+  { slug: 'kuch-nahi', number: '04', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#ec4899', color2: '#d946ef', link: 'https://kuchnahi.co.in' },
+  { slug: 'bhairav-steel', number: '05', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#10b981', color2: '#14b8a6', link: 'https://bhairavsteel.in' },
 ];
 
 export default function Process() {
   const targetRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: targetRef });
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  const { scrollYProgress } = useScroll({ 
+    target: targetRef,
+    offset: ["start start", "end end"]
+  });
 
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    let index = Math.floor(latest * 5);
+    if (index >= 5) index = 4;
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+    }
+  });
+
+  const activeColor1 = works[activeIndex].color;
+  const activeColor2 = works[activeIndex].color2;
   const x = useTransform(scrollYProgress, [0, 1], ["5%", "-75%"]);
 
   return (
     <section id="work" ref={targetRef} className="section-anchor relative h-[340vh] md:h-[400vh] bg-transparent">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="noise-overlay absolute inset-0 opacity-30 z-[1]" />
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-indigo-200 rounded-full blur-[150px] opacity-[0.08] pointer-events-none" />
-      </div>
       
       <div className="sticky top-0 h-[100vh] flex flex-col justify-center overflow-hidden z-10">
+        
+        {/* Dynamic color-changing background orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="noise-overlay absolute inset-0 opacity-30 z-[1]" />
+          <motion.div 
+            animate={{ backgroundColor: activeColor1 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="absolute top-[10%] left-[10%] -translate-x-1/4 -translate-y-1/4 w-[70vw] h-[70vw] md:w-[45vw] md:h-[45vw] rounded-full blur-[140px] opacity-[0.22] pointer-events-none" 
+          />
+          <motion.div 
+            animate={{ backgroundColor: activeColor2 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="absolute bottom-[10%] right-[10%] translate-x-1/4 translate-y-1/4 w-[70vw] h-[70vw] md:w-[55vw] md:h-[55vw] rounded-full blur-[140px] opacity-[0.20] pointer-events-none" 
+          />
+        </div>
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-8 mt-12 md:mt-6 lg:mt-10 flex-shrink-0">
           <SectionTag text="OUR WORK" variant="dark" />
           <motion.h2 

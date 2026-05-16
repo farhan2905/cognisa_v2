@@ -33,17 +33,34 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           
           {/* Main Showcase */}
-          <GlassContentBlock className="md:col-span-2 min-h-[300px] flex flex-col justify-center items-center relative group p-0">
-            {/* Pseudo-browser window */}
-            <div className="absolute inset-0 bg-background/50 flex flex-col items-center justify-center">
-               <div className="text-4xl md:text-8xl opacity-10 font-bold blur-[2px]">{work.number}</div>
+          <GlassContentBlock className="md:col-span-2 min-h-[350px] flex flex-col relative group p-0 overflow-hidden">
+            {/* Browser Header */}
+            <div className="h-10 w-full glass-surface border-b border-indigo-300/40 flex items-center px-4 gap-2 absolute top-0 left-0 right-0 z-20">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+              </div>
+              <div className="text-[10px] font-mono text-foreground/40 mx-auto max-w-[50%] truncate">
+                {work.link.replace('https://', '')}
+              </div>
+            </div>
+
+            {/* Showcase Image or Gradient Placeholder */}
+            <div className="absolute inset-0 top-10 flex flex-col items-center justify-center overflow-hidden">
+               {/* Ambient Background Glow based on project color */}
+               <div className="absolute inset-0 opacity-20 transition-all duration-700 group-hover:scale-110 group-hover:opacity-30" style={{ background: `radial-gradient(circle at center, ${work.color}, transparent 70%)` }} />
+               
+               <div className="text-4xl md:text-9xl opacity-[0.03] font-bold blur-[1px] select-none absolute z-0">{work.title}</div>
+               
+               {/* Live Site Overlay */}
                <a 
                  href={work.link} 
                  target="_blank" 
                  rel="noopener noreferrer"
-                 className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 backdrop-blur-[2px]"
+                 className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/20 backdrop-blur-sm"
                >
-                 <span className="flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-full shadow-2xl hover:scale-105 transition-transform">
+                 <span className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-full shadow-2xl hover:scale-105 transition-transform">
                    Visit Live Site <ExternalLink className="w-4 h-4" />
                  </span>
                </a>
@@ -53,11 +70,11 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
           {/* Metrics Column */}
           <div className="flex flex-col gap-6">
             {work.outcomes.map((outcome, idx) => (
-              <GlassContentBlock key={idx} className="flex-1 flex flex-col justify-center items-center text-center p-6" hoverEffect>
-                <div className="text-3xl md:text-4xl font-bold mb-2" style={{ color: work.color }}>
+              <GlassContentBlock key={idx} className="flex-1 flex flex-col justify-center items-center text-center p-6 border-indigo-300/30" hoverEffect>
+                <div className="text-3xl md:text-5xl font-bold mb-3 tracking-tight drop-shadow-sm" style={{ color: work.color }}>
                   {outcome.metric}
                 </div>
-                <div className="text-sm font-medium text-foreground/70">
+                <div className="text-xs md:text-sm font-semibold uppercase tracking-wider text-foreground/60">
                   {outcome.label}
                 </div>
               </GlassContentBlock>
