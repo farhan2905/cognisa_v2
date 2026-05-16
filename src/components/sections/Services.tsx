@@ -3,14 +3,15 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Code2, BrainCircuit, TrendingUp, Server, ArrowRight, Globe } from 'lucide-react';
+import Link from 'next/link';
 
 const services = [
   {
     icon: Globe,
     number: '01',
-    category: 'CUSTOM SOFTWARE',
-    url: 'https://cognisa.io/software-development',
-    title: 'Software Development',
+    category: 'Engineering',
+    slug: 'web-development',
+    title: 'Website & Web Apps',
     description:
       'Build fast, scalable, and custom web applications that solve your precise business bottlenecks. We deliver clean, maintainable code engineered for high performance.',
     subservices: ['Custom Web Applications', 'API Integration', 'Legacy System Modernization', 'E-Commerce & Portals'],
@@ -19,9 +20,9 @@ const services = [
   {
     icon: BrainCircuit,
     number: '02',
-    category: 'AI & AUTOMATION',
-    url: 'https://cognisa.io/ai-automation',
-    title: 'AI Automation Solution',
+    category: 'Intelligence',
+    slug: 'ai-automation',
+    title: 'AI & Automation',
     description:
       'Replace manual data entry and repetitive workflows with intelligent AI agents. We build custom software solutions that operate 24/7 without fatiguing.',
     subservices: ['Workflow Automation', 'Custom AI Agents', 'Data Processing Pipelines', 'Automated Support'],
@@ -30,23 +31,23 @@ const services = [
   {
     icon: TrendingUp,
     number: '03',
-    category: 'STRATEGY',
-    url: 'https://cognisa.io/ai-consultancy',
-    title: 'AI Consultancy',
+    category: 'Infrastructure',
+    slug: 'system-architecture',
+    title: 'System Architecture',
     description:
-      'Not sure how AI fits into your business model? We map out exactly where technology can save you time, cut costs, and unlock new revenue entirely risk-free.',
-    subservices: ['Tech Stack Audits', 'AI Feasibility Studies', 'Digital Transformation Mapping', 'Strategic Implementation'],
+      'Robust system design ensuring zero downtime and infinite scalability. We design and deploy robust architectures that can handle millions of requests.',
+    subservices: ['Scalable Databases', 'Microservices', 'API Development', 'Load Balancing'],
     color: '#6366f1', // indigo-500
   },
   {
     icon: Server,
     number: '04',
-    category: 'INFRASTRUCTURE',
-    url: 'https://cognisa.io/it-services',
-    title: 'IT Services',
+    category: 'DevOps',
+    slug: 'cloud-infrastructure',
+    title: 'Cloud Infrastructure',
     description:
-      'Keep your custom infrastructure secure and running smoothly. From cloud deployment to ongoing server maintenance, we protect and manage your tech investment.',
-    subservices: ['Cloud Architecture', 'System Maintenance', 'Performance Monitoring', 'Technical Support'],
+      'Secure, managed cloud deployments optimized for cost and speed. Keep your custom infrastructure secure and running smoothly with zero downtime.',
+    subservices: ['Managed Hosting', 'CI/CD Pipelines', 'Security & Compliance', 'Edge Networks'],
     color: '#818cf8', // indigo-400
   },
 ];
@@ -131,7 +132,7 @@ export default function Services() {
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
                   </div>
-                  <div className="text-[10px] sm:text-[10px] font-mono text-foreground/40 ml-4 truncate max-w-[50%]">{activeService.url}</div>
+                  <div className="text-[10px] sm:text-[10px] font-mono text-foreground/40 ml-4 truncate max-w-[50%]">cognisa.io/services/{activeService.slug}</div>
                 </div>
 
                 {/* Card Content Row */}
@@ -152,10 +153,10 @@ export default function Services() {
                     </p>
                     
                     <div className="mt-auto block">
-                      <button className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
+                      <Link href={`/services/${activeService.slug}`} className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
                         Explore {activeService.title}
                         <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                      </button>
+                      </Link>
                     </div>
                   </div>
 

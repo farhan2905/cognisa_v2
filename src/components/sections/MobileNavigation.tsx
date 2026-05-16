@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
@@ -16,8 +17,12 @@ const mobileIcons = [
 export default function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeId, setActiveId] = useState('hero');
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
+    if (pathname !== '/') return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -39,11 +44,16 @@ export default function MobileNavigation() {
     }, 100);
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   const handleClick = (id: string) => {
     setActiveId(id);
     setIsOpen(false);
+    
+    if (pathname !== '/') {
+      router.push(`/#${id}`);
+      return;
+    }
     
     if (id === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -4,13 +4,14 @@ import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import SectionTag from '@/components/shared/SectionTag';
 import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 
 const works = [
-  { number: '01', title: 'Desh Yatraa', description: 'We engineered a comprehensive travel booking and exploration portal for Desh Yatraa. The platform features an intuitive search architecture, seamless booking workflows, and an optimized mobile experience.', detail: 'Travel & Tourism Portal', icon: '✈️', color: '#6366f1', link: 'https://deshyatraa.com' },
-  { number: '02', title: 'ProxyUI', description: 'A modern UI component showcase with reusable sections and patterns to help teams ship clean interfaces faster.', detail: 'UI Component Library', icon: '🧩', color: '#60a5fa', link: 'https://proxyui.vercel.app' },
-  { number: '03', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#818cf8', link: 'https://voyagehorizon.co.in' },
-  { number: '04', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#4f46e5', link: 'https://kuchnahi.co.in' },
-  { number: '05', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#7c3aed', link: 'https://bhairavsteel.in' },
+  { slug: 'desh-yatraa', number: '01', title: 'Desh Yatraa', description: 'We engineered a comprehensive travel booking and exploration portal for Desh Yatraa. The platform features an intuitive search architecture, seamless booking workflows, and an optimized mobile experience.', detail: 'Travel & Tourism Portal', icon: '✈️', color: '#6366f1', link: 'https://deshyatraa.com' },
+  { slug: 'proxyui', number: '02', title: 'ProxyUI', description: 'A modern UI component showcase with reusable sections and patterns to help teams ship clean interfaces faster.', detail: 'UI Component Library', icon: '🧩', color: '#60a5fa', link: 'https://proxyui.vercel.app' },
+  { slug: 'voyage-horizon', number: '03', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#818cf8', link: 'https://voyagehorizon.co.in' },
+  { slug: 'kuch-nahi', number: '04', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#4f46e5', link: 'https://kuchnahi.co.in' },
+  { slug: 'bhairav-steel', number: '05', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#7c3aed', link: 'https://bhairavsteel.in' },
 ];
 
 export default function Process() {
@@ -72,9 +73,9 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
           </div>
           <div className="flex-shrink-0 flex items-center justify-between md:flex-col md:items-end md:justify-start">
             <span className="text-4xl md:text-5xl font-bold opacity-10">{work.number}</span>
-            <a href={work.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full font-medium text-sm hover:scale-105 hover:bg-indigo-500 hover:text-white transition-all md:mt-6 shadow-sm">
-              Visit Site <ArrowUpRight className="w-3 h-3" />
-            </a>
+            <Link href={`/work/${work.slug}`} className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full font-medium text-sm hover:scale-105 hover:bg-indigo-500 hover:text-white transition-all md:mt-6 shadow-sm">
+              View Case Study <ArrowUpRight className="w-3 h-3" />
+            </Link>
           </div>
         </div>
       </div>

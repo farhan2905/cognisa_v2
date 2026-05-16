@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
@@ -15,11 +16,15 @@ const sidebarIcons = [
 
 export default function SidebarNavigation() {
   const [activeId, setActiveId] = useState('hero');
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
+    // Only run intersection observer on the homepage
+    if (pathname !== '/') return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        // We only care about intersecting entries to update the active state
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveId(entry.target.id);
@@ -27,11 +32,10 @@ export default function SidebarNavigation() {
         });
       },
       {
-        rootMargin: '-30% 0px -70% 0px', // Trigger when section is near top half of screen
+        rootMargin: '-30% 0px -70% 0px',
       }
     );
 
-    // Give it a tiny timeout to ensure DOM is ready
     setTimeout(() => {
       sidebarIcons.forEach(({ id }) => {
         const el = document.getElementById(id);
@@ -40,10 +44,17 @@ export default function SidebarNavigation() {
     }, 100);
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   const handleClick = (id: string) => {
-    setActiveId(id); // Optimistically update
+    setActiveId(id);
+    
+    // If we're not on the homepage, navigate to the homepage hash
+    if (pathname !== '/') {
+      router.push(`/#${id}`);
+      return;
+    }
+
     if (id === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;

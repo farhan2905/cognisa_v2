@@ -98,12 +98,12 @@
 }
 
 body {
-  /* Neural blue→violet wash to match the hero/logo palette */
+  /* Soft, clean lavender/white wash matching the bottom sections */
   background:
-    radial-gradient(900px circle at 12% 8%, rgba(56, 189, 248, 0.16) 0%, transparent 58%),
-    radial-gradient(820px circle at 92% 18%, rgba(99, 102, 241, 0.18) 0%, transparent 60%),
-    radial-gradient(900px circle at 40% 110%, rgba(192, 132, 252, 0.14) 0%, transparent 62%),
-    linear-gradient(135deg, #cfd6ee 0%, #d8def3 40%, #e2e8f8 70%, #e9edf9 100%);
+    radial-gradient(900px circle at 12% 8%, rgba(56, 189, 248, 0.06) 0%, transparent 58%),
+    radial-gradient(820px circle at 92% 18%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
+    radial-gradient(900px circle at 40% 110%, rgba(192, 132, 252, 0.08) 0%, transparent 62%),
+    linear-gradient(135deg, #e9edf9 0%, #e8ecf8 40%, #e5e9f6 70%, #e2e8f8 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
