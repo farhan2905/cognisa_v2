@@ -2,9 +2,11 @@
 
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, ArrowUpRight } from 'lucide-react';
+import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import ContactForm from '@/components/shared/ContactForm';
+import IridescentBlobBackground from '@/components/shared/fragments/IridescentBlobBackground';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'hello@cognisa.in', href: 'mailto:hello@cognisa.in', color: '#6366f1' },
@@ -21,82 +23,85 @@ const faqs = [
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-transparent">
-      <PageHero
-        tagText="CONTACT US"
-        title="Let's Start a"
-        titleAccent="Conversation."
-        description="Whether you have a clear project in mind or just want to explore possibilities, we're here to help. Tell us about your goals and we'll map out the best path forward."
-        orbColor="#8b5cf6"
-        orbColor2="#6366f1"
-      />
+    <SubPageShell>
+      {/* Hero */}
+      <div className="relative overflow-hidden">
+        <IridescentBlobBackground size="xl" opacity={0.4} className="top-0 right-[-20%]" />
+        <IridescentBlobBackground size="lg" opacity={0.25} className="bottom-0 left-[-10%]" />
+        <PageHero
+          tagText="GET IN TOUCH"
+          title="Let's build something"
+          titleAccent="exceptional."
+          description="Every great project starts with a conversation. Tell us about your vision, and we'll map out a clear path forward."
+          orbColor="#6366f1"
+          orbColor2="#a78bfa"
+        />
+      </div>
 
-      <section className="relative py-8 md:py-16 overflow-hidden">
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Contact Form */}
+      {/* ── Contact Form + Info ── */}
+      <section className="relative py-12 md:py-20 overflow-hidden">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            {/* Form - 2/3 */}
             <div className="lg:col-span-2">
-              <GlassContentBlock>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2 tracking-tight">
-                  Send us a message
-                </h2>
-                <p className="text-foreground/60 mb-8 font-medium">
-                  Fill out the form below and we&apos;ll get back to you within 24 hours.
-                </p>
+              <GlassContentBlock className="p-8 md:p-10 lg:p-12">
                 <ContactForm />
               </GlassContentBlock>
             </div>
 
-            {/* Contact Info Cards */}
-            <div className="flex flex-col gap-5">
+            {/* Info Cards - 1/3 */}
+            <div className="flex flex-col gap-6">
               {contactInfo.map((info, i) => {
                 const Icon = info.icon;
                 return (
                   <motion.div
                     key={info.label}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-500 group hover:-translate-y-1 hover:border-indigo-300/60"
                   >
-                    <GlassContentBlock hoverEffect className="p-5 md:p-6">
-                      <div className="flex items-start gap-4">
-                        <div
-                          className="w-11 h-11 rounded-xl flex items-center justify-center border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent flex-shrink-0"
-                          style={{ boxShadow: `0 4px 12px ${info.color}20` }}
-                        >
-                          <Icon className="w-5 h-5" style={{ color: info.color }} />
-                        </div>
-                        <div>
-                          <p className="text-xs font-mono uppercase tracking-widest text-foreground/40 mb-1">
-                            {info.label}
-                          </p>
-                          {info.href ? (
-                            <a
-                              href={info.href}
-                              className="text-foreground/80 font-semibold text-sm hover:text-indigo-500 transition-colors inline-flex items-center gap-1"
-                            >
-                              {info.value}
-                              <ArrowUpRight className="w-3 h-3" />
-                            </a>
-                          ) : (
-                            <p className="text-foreground/80 font-semibold text-sm">{info.value}</p>
-                          )}
-                        </div>
+                    <div className="flex items-start gap-4">
+                      <motion.div
+                        whileHover={{ rotate: 15, scale: 1.1 }}
+                        className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: `${info.color}15` }}
+                      >
+                        <Icon className="w-5 h-5" style={{ color: info.color }} />
+                      </motion.div>
+                      <div>
+                        <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-wider mb-1">
+                          {info.label}
+                        </p>
+                        {info.href ? (
+                          <a
+                            href={info.href}
+                            className="text-sm font-medium text-foreground/70 hover:text-indigo-500 transition-colors inline-flex items-center gap-1 group/item"
+                          >
+                            {info.value}
+                            <ArrowUpRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+                          </a>
+                        ) : (
+                          <p className="text-sm font-medium text-foreground/70">{info.value}</p>
+                        )}
                       </div>
-                    </GlassContentBlock>
+                    </div>
                   </motion.div>
                 );
               })}
 
               {/* Social Links */}
-              <GlassContentBlock className="p-5 md:p-6">
-                <p className="text-xs font-mono uppercase tracking-widest text-foreground/40 mb-4">Follow Us</p>
+              <GlassContentBlock className="p-6">
+                <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-wider mb-4">
+                  Follow us
+                </p>
                 <div className="flex items-center gap-3">
-                  {['X', 'Li', 'Ig', 'Dr'].map((social) => (
+                  {['X', 'LinkedIn', 'Instagram', 'Dribbble'].map((social) => (
                     <a
                       key={social}
                       href="#"
-                      className="w-10 h-10 rounded-full border border-foreground/10 flex items-center justify-center text-foreground/50 text-xs font-bold hover:border-indigo-500/30 hover:text-indigo-500 hover:bg-indigo-500/5 transition-all duration-300"
+                      className="px-3 py-1.5 rounded-lg bg-foreground/5 border border-foreground/10 text-xs font-medium text-foreground/50 hover:text-indigo-500 hover:border-indigo-300/40 hover:bg-indigo-500/5 transition-all"
                     >
                       {social}
                     </a>
@@ -108,36 +113,29 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="relative py-12 md:py-20">
-        <div className="w-full max-w-[900px] mx-auto px-4 md:px-8 lg:px-12">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight text-center"
-          >
-            Common <span className="bg-indigo-500 text-white px-2 rounded-lg">Questions</span>
-          </motion.h2>
-          <div className="flex flex-col gap-5">
+      {/* ── FAQ ── */}
+      <section className="relative py-12 md:py-20 overflow-hidden">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6">
+              <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md" />
+              <span className="text-sm font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
+                FAQ
+              </span>
+              <span className="h-1 w-12 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">Quick answers to common questions</h2>
+          </div>
+          <div className="max-w-3xl mx-auto space-y-4">
             {faqs.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-              >
-                <GlassContentBlock className="p-6 md:p-8">
-                  <h3 className="text-lg font-bold text-foreground mb-3">{faq.question}</h3>
-                  <p className="text-foreground/70 leading-relaxed font-medium">{faq.answer}</p>
-                </GlassContentBlock>
-              </motion.div>
+              <GlassContentBlock key={i} className="p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
+                <p className="text-foreground/70 leading-relaxed">{faq.answer}</p>
+              </GlassContentBlock>
             ))}
           </div>
         </div>
       </section>
-    </div>
+    </SubPageShell>
   );
 }

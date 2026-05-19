@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { insightsData } from '@/data/insights';
 import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
+import IridescentBlobBackground from '@/components/shared/fragments/IridescentBlobBackground';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -24,7 +25,7 @@ export default function InsightsListingPage() {
   const rest = insightsData.slice(1);
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <>
       <PageHero
         tagText="INSIGHTS & RESOURCES"
         title="Your pocket-sized library of"
@@ -139,6 +140,6 @@ export default function InsightsListingPage() {
           </GlassContentBlock>
         </div>
       </section>
-    </div>
+    </>
   );
 }

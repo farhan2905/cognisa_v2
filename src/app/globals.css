@@ -211,7 +211,7 @@ body {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
-  scrollbar-gutter: stable; /* Prevents layout shift when scrollbar appears/disappears */
+  scrollbar-gutter: stable;
   font-size: 90%;
 }
 
@@ -522,6 +522,46 @@ mark {
 .pill-tag .pill-icon {
   color: #6366f1;
   opacity: 0.7;
+}
+
+/* Terminal cursor blink */
+.terminal-cursor::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  color: #6366f1;
+  margin-left: 2px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Circuit line draw animation */
+.circuit-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 1.5s ease-out;
+}
+.circuit-line.visible {
+  stroke-dashoffset: 0;
+}
+
+/* Status dot pulse */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  animation: status-pulse 2s infinite;
+}
+@keyframes status-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Tech orbit animation */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
 }
 
 /* Base font-size uses browser default (16px) for correct rem scaling at any zoom level */

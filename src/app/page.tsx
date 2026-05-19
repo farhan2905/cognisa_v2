@@ -10,6 +10,7 @@ import About from '@/components/sections/About';
 import Services from '@/components/sections/Services';
 import Process from '@/components/sections/Process';
 import Stats from '@/components/sections/Stats';
+import Testimonials from '@/components/sections/Testimonials';
 import FAQ from '@/components/sections/FAQ';
 import Insights from '@/components/sections/Insights';
 import CTA from '@/components/sections/CTA';
@@ -31,6 +32,7 @@ export default function Home() {
         <Services />
         <Process />
         <Stats />
+        <Testimonials />
         <FAQ />
         <Insights />
         <CTA />

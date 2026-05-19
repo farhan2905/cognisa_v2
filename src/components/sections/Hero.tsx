@@ -400,9 +400,23 @@ export default function Hero() {
         transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="absolute top-6 left-6 md:top-8 md:left-8 z-30 hidden lg:block"
       >
-        <a href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <Logo className="h-14 md:h-18 w-auto origin-top-left scale-125" />
-        </a>
+        <div className="relative w-32 h-32 md:w-36 md:h-36">
+          {/* Static iridescent gradient clipped to circle */}
+          <div
+            className="absolute inset-0 rounded-full overflow-hidden"
+            style={{
+              background: 'conic-gradient(from 180deg at 50% 50%, rgba(99,102,241,0.9) 0deg, rgba(167,139,250,0.9) 72deg, rgba(236,72,153,0.8) 144deg, rgba(139,92,246,0.9) 216deg, rgba(56,189,248,0.8) 288deg, rgba(99,102,241,0.9) 360deg)',
+              boxShadow: 'inset 20px 20px 60px rgba(255,255,255,0.4), inset -20px -20px 60px rgba(0,0,0,0.2), 0 0 60px rgba(99,102,241,0.3)',
+              opacity: 0.5,
+              filter: 'blur(4px)',
+            }}
+          />
+          <a href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <div className="absolute inset-0 rounded-full glass-surface-strong border border-indigo-300/40 flex items-center justify-center shadow-[0_16px_48px_rgba(99,102,241,0.15)]">
+              <Logo className="h-16 md:h-20 w-auto scale-125 drop-shadow-[0_0_30px_rgba(99,102,241,0.3)]" />
+            </div>
+          </a>
+        </div>
       </motion.div>
 
       {/* ── Neural Constellation Canvas ── */}
@@ -431,7 +445,7 @@ export default function Hero() {
       {/* ── Main Content ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-20 w-full max-w-[1400px] mx-auto px-5 md:px-8 lg:px-16 min-h-screen flex items-center"
+        className="relative z-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 min-h-screen flex items-center"
       >
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center">
           <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:max-w-xl flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -547,24 +561,49 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-3 gap-4 md:gap-8 lg:gap-12"
+            className="grid grid-cols-3 gap-3 md:gap-6 lg:gap-8"
           >
             {STATS.map((stat, i) => (
-              <div key={i} className="flex flex-col items-center lg:items-start gap-1 relative">
-                {/* Divider (between stats) */}
-                {i > 0 && (
-                  <div className="absolute -left-2 md:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 w-px h-8 bg-foreground/[0.08] hidden sm:block" />
-                )}
-                <span className="text-xl md:text-2xl font-bold text-[#1a1a2e]/70 tracking-tight">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                </span>
-                <span className="text-[10px] md:text-[11px] font-medium text-[#1a1a2e]/35 tracking-wider uppercase">
-                  {stat.label}
-                </span>
+              <div key={i} className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.02] to-transparent backdrop-blur-xl rounded-2xl p-3 md:p-4 border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,0.5)] group hover:border-indigo-300/50 transition-all duration-500">
+                {/* Micro chart background */}
+                <div className="absolute inset-0 opacity-30 pointer-events-none">
+                  <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                    <motion.path
+                      d={`M0,${35 - i * 5} Q20,${20 - i * 3} 40,${25 - i * 4} T60,${15 - i * 2} T80,${10 - i} T100,${5}`}
+                      fill="none"
+                      stroke="url(#statGrad)"
+                      strokeWidth="1.5"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 1.5, delay: 1.8 + i * 0.2 }}
+                    />
+                    <defs>
+                      <linearGradient id="statGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#6366f1" stopOpacity="0.3" />
+                        <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.1" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className="relative z-10 flex flex-col items-center lg:items-start gap-1">
+                  <span className="text-xl md:text-2xl font-bold text-[#1a1a2e]/70 tracking-tight">
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  </span>
+                  <span className="text-[9px] md:text-[10px] font-medium text-[#1a1a2e]/35 tracking-wider uppercase flex items-center gap-1.5">
+                    {i === 2 && (
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      </span>
+                    )}
+                    {stat.label}
+                  </span>
+                </div>
               </div>
             ))}
           </motion.div>
           </div>
+
         </div>
       </motion.div>
 
@@ -574,9 +613,9 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5, duration: 1 }}
         style={{ opacity: contentOpacity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 z-20"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
       >
-        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#1a1a2e]/25">
+        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#1a1a2e]/25 hidden md:block">
           Scroll
         </span>
         <motion.div

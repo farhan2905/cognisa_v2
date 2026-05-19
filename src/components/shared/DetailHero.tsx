@@ -10,6 +10,7 @@ interface DetailHeroProps {
   title: string;
   description: string;
   icon?: React.ElementType;
+  emoji?: string;
   color?: string;
   backHref?: string;
   backText?: string;
@@ -20,6 +21,7 @@ export default function DetailHero({
   title, 
   description, 
   icon: Icon, 
+  emoji,
   color = '#6366f1',
   backHref = '/',
   backText = 'Back to Home'
@@ -39,7 +41,7 @@ export default function DetailHero({
         </Link>
 
         <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10">
-          {Icon && (
+          {Icon ? (
             <motion.div 
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -48,7 +50,16 @@ export default function DetailHero({
             >
               <Icon className="w-10 h-10 drop-shadow-sm" style={{ color }} />
             </motion.div>
-          )}
+          ) : emoji ? (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="w-20 h-20 md:w-24 md:h-24 rounded-[2rem] bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-xl flex flex-shrink-0 items-center justify-center border border-indigo-300/40 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] ring-1 ring-indigo-400/15"
+            >
+              <span className="text-4xl md:text-5xl">{emoji}</span>
+            </motion.div>
+          ) : null}
           
           <div>
             <SectionTag text={tagText} variant="light" className="mb-4 md:mb-6" />

@@ -12,10 +12,13 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import Link from 'next/link';
+import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import SectionTag from '@/components/shared/SectionTag';
+import MiniNeuralConstellation from '@/components/shared/fragments/MiniNeuralConstellation';
+import LiveMetric from '@/components/shared/LiveMetric';
 
 /* ── Values Data ── */
 const values = [
@@ -54,33 +57,20 @@ const stats = [
 ];
 
 /* ── Animated Counter ── */
-function AnimatedCounter({
-  value,
-  suffix,
-  inView,
-}: {
-  value: number;
-  suffix: string;
-  inView: boolean;
-}) {
+function AnimatedCounter({ value, suffix, inView }: { value: number; suffix: string; inView: boolean }) {
   const [displayValue, setDisplayValue] = useState(0);
   const motionValue = useMotionValue(0);
   const rounded = useTransform(motionValue, (latest) => Math.round(latest));
 
   useEffect(() => {
     if (inView) {
-      const controls = animate(motionValue, value, {
-        duration: 2,
-        ease: [0.22, 1, 0.36, 1],
-      });
+      const controls = animate(motionValue, value, { duration: 2, ease: [0.22, 1, 0.36, 1] });
       return controls.stop;
     }
   }, [inView, motionValue, value]);
 
   useEffect(() => {
-    const unsubscribe = rounded.on('change', (latest) => {
-      setDisplayValue(latest);
-    });
+    const unsubscribe = rounded.on('change', (latest) => { setDisplayValue(latest); });
     return unsubscribe;
   }, [rounded]);
 
@@ -92,41 +82,44 @@ function AnimatedCounter({
   );
 }
 
-/* ── Card Variants ── */
 const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.15,
-      duration: 0.8,
+      delay: i * 0.12,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
     },
   }),
 };
 
 export default function AboutPage() {
-  const valuesRef = useRef<HTMLDivElement>(null);
+  const valuesRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const valuesInView = useInView(valuesRef, { once: true, margin: '-80px' });
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' });
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <SubPageShell showFooter={false}>
       {/* Hero */}
-      <PageHero
-        tagText="ABOUT US"
-        title="We don't just write code. We build"
-        titleAccent="systems that scale."
-        description="Managed solely by the founder of Cognisa, we specialize in delivering high-performance custom web applications and AI-driven automation. We partner closely with businesses to transform manual bottlenecks into scalable, automated tech solutions."
-        orbColor="#6366f1"
-        orbColor2="#a78bfa"
-      />
+      <div className="relative">
+        <MiniNeuralConstellation className="z-10 opacity-40" />
+        <PageHero
+          tagText="ABOUT US"
+          title="We don't just write code. We build"
+          titleAccent="systems that scale."
+          description="Managed solely by the founder of Cognisa, we specialize in delivering high-performance custom web applications and AI-driven automation. We partner closely with businesses to transform manual bottlenecks into scalable, automated tech solutions."
+          orbColor="#6366f1"
+          orbColor2="#a78bfa"
+          align="left"
+        />
+      </div>
 
       {/* ── Brand Story ── */}
       <section className="relative py-12 md:py-20 overflow-hidden">
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
             <GlassContentBlock>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 tracking-tight">
@@ -188,7 +181,7 @@ export default function AboutPage() {
         <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-200/40 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-violet-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-3" />
 
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <SectionTag text="OUR VALUES" variant="light" />
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -236,7 +229,7 @@ export default function AboutPage() {
 
       {/* ── Founder Section ── */}
       <section className="relative py-12 md:py-20 overflow-hidden">
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
           <GlassContentBlock className="p-8 md:p-12 lg:p-16">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
               {/* Avatar */}
@@ -294,7 +287,14 @@ export default function AboutPage() {
       {/* ── Stats ── */}
       <section className="relative py-12 md:py-20 overflow-hidden" ref={statsRef}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-200 rounded-full blur-[200px] opacity-[0.06]" />
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+          {/* Live metrics bar */}
+          <div className="glass-surface rounded-[2rem] p-4 mb-8 flex flex-wrap items-center justify-center gap-6 border border-indigo-300/40 ring-1 ring-indigo-400/15">
+            <LiveMetric label="Active Projects" baseValue={12} variance={2} />
+            <LiveMetric label="Deploys Today" baseValue={8} variance={3} />
+            <LiveMetric label="AI Agents Online" baseValue={5} variance={1} />
+          </div>
+
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {stats.map((stat, i) => (
               <motion.div
@@ -318,6 +318,6 @@ export default function AboutPage() {
         titleAccent="together?"
         description="Let's discuss how Cognisa can help transform your business with custom software and AI-driven solutions."
       />
-    </div>
+    </SubPageShell>
   );
 }

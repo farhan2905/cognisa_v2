@@ -24,7 +24,7 @@ export default function WorkListingPage() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <>
       <PageHero
         tagText="OUR WORK"
         title="Digital systems built for"
@@ -122,6 +122,6 @@ export default function WorkListingPage() {
         titleAccent="similar?"
         description="We apply the exact same rigorous engineering standards to every project. Let's discuss yours."
       />
-    </div>
+    </>
   );
 }

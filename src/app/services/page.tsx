@@ -22,7 +22,7 @@ export default function ServicesListingPage() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <div className="min-h-screen bg-transparent">
+    <>
       <PageHero
         tagText="OUR SERVICES"
         title="End-to-end solutions from"
@@ -115,6 +115,6 @@ export default function ServicesListingPage() {
         titleAccent="solution?"
         description="Tell us about your project and we'll recommend the right combination of services to achieve your goals."
       />
-    </div>
+    </>
   );
 }

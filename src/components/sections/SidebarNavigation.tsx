@@ -93,7 +93,7 @@ export default function SidebarNavigation() {
         className="cursor-pointer group flex items-center justify-center h-28"
         aria-label="Cognisa home"
       >
-        <Logo variant="icon" className="h-14 w-14 md:h-18 md:w-18" />
+        <Logo variant="icon" className="h-[4.2rem] w-[4.2rem] md:h-[5.4rem] md:w-[5.4rem]" />
       </Link>
 
       {/* Navigation Icons */}
@@ -122,11 +122,6 @@ export default function SidebarNavigation() {
             </button>
           );
         })}
-      </div>
-
-      {/* Bottom Logo */}
-      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-[0_4px_14px_rgba(99,102,241,0.4)] mt-2">
-        C
       </div>
     </motion.aside>
   );
