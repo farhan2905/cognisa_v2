@@ -3,58 +3,73 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import SectionTag from '@/components/shared/SectionTag';
-import { ShieldCheck, Target, TrendingUp, Users, ArrowRight } from 'lucide-react';
+import { Terminal, ArrowRight, Play, Pause, RotateCcw, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import ProcessPlaybackConsole from '@/components/shared/ProcessPlaybackConsole';
 
-const solutions = [
+const PHASES = [
   {
-    icon: Target,
-    title: 'We speak human, not jargon',
-    description: 'No confusing acronyms or bloated tech talk — just clear, plain-English explanations of how the software will solve your actual business problems.',
-    color: '#6366f1',
+    id: '01',
+    title: 'Discovery & Strategy',
+    desc: 'Requirements gathering & roadmap scoping',
+    focus: 'Translating business goals into a structured technical plan, defining API scopes, database design, and key milestones.',
+    deliverable: '5-Milestone Roadmap & Cost Blueprint',
+    tools: ['Figma Layouts', 'User Persona Surveys', 'API Contracts'],
   },
   {
-    icon: TrendingUp,
-    title: 'We build for business results',
-    description: "We don't build shiny tools just for the sake of it. Every line of code or automation we write is designed to save you time or increase your bottom line.",
-    color: '#8b5cf6',
+    id: '02',
+    title: 'Architecture & Design',
+    desc: 'System blueprints & database schemas',
+    focus: 'Designing schemas, relationship maps, container orchestrations, and configuring third-party integration contracts.',
+    deliverable: 'ERD Database Blueprints & OpenAPI Specs',
+    tools: ['Prisma Schema', 'Docker Blueprints', 'AWS VPC Maps'],
   },
   {
-    icon: ShieldCheck,
-    title: 'We pick the right tools',
-    description: 'With hands-on experience across modern development and AI, we bypass the hype and select the exact technology that fits your budget and goals.',
-    color: '#a78bfa',
+    id: '03',
+    title: 'Engineering & Development',
+    desc: 'Blazing-fast production code development',
+    focus: 'Structuring high-performance frontend interfaces, writing server-side APIs, and building automated background pipelines.',
+    deliverable: 'Production-ready Next.js & Node.js codebases',
+    tools: ['Next.js App Router', 'TypeScript Core', 'Redis Caches'],
   },
   {
-    icon: Users,
-    title: 'Your dedicated tech partner',
-    description: 'From the first blueprint to managing the servers long after launch, we handle all the technical heavy lifting so you can focus on running your business.',
-    color: '#818cf8',
+    id: '04',
+    title: 'Testing & QA',
+    desc: 'Automated test suite & security audit',
+    focus: 'Deploying isolated testing runners, conducting compliance assessments, and verifying conversion paths via Playwright.',
+    deliverable: '100% Passed Tests & Lighthouse Audits',
+    tools: ['Jest Units', 'Playwright E2E', 'Lighthouse Audits'],
+  },
+  {
+    id: '05',
+    title: 'Launch & Support',
+    desc: 'Global CDN distribution & live release',
+    focus: 'Publishing production builds, configuring real-time error tracking software, and guaranteeing SLA uptime monitors.',
+    deliverable: 'Live Production URL & Edge CDN Caching',
+    tools: ['Vercel Edge CDN', 'Sentry Trackers', 'Datadog Monitors'],
   },
 ];
 
-function TiltCard({
-  solution,
-  index,
-  isInView,
-}: {
-  solution: (typeof solutions)[0];
-  index: number;
-  isInView: boolean;
-}) {
+export default function Solutions() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+  const isInView = useInView(containerRef, { once: true, margin: '-80px' });
+  const [activePhaseIndex, setActivePhaseIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
-    setRotateX((y - 0.5) * -6);
-    setRotateY((x - 0.5) * 6);
+    // Moderate tilt for the wide console card
+    setRotateX((y - 0.5) * -4);
+    setRotateY((x - 0.5) * 4);
     setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
@@ -64,166 +79,184 @@ function TiltCard({
     setIsHovered(false);
   };
 
-  const Icon = solution.icon;
-  const isOffset = index % 2 === 1;
+  const handlePhaseSelect = (idx: number) => {
+    setIsPlaying(false);
+    setActivePhaseIndex(idx);
+  };
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        delay: index * 0.15,
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className={`${isOffset ? 'lg:mt-10' : ''}`}
-      style={{ perspective: 1000 }}
-    >
-      <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        animate={{ rotateX, rotateY }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[220px] md:min-h-[260px] lg:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-700 group hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.55)]"
-        style={{ transformStyle: 'preserve-3d' }}
-      >
-        {/* Spotlight overlay */}
-        {isHovered && (
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
-            style={{
-              background: `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
-            }}
-          />
-        )}
+    <section id="solutions" ref={containerRef} className="relative py-16 md:py-24 overflow-hidden">
+      {/* Background Orbs */}
+      <div className="absolute top-1/3 left-[-10%] w-[450px] h-[450px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
+      <div className="absolute bottom-1/3 right-[-10%] w-[400px] h-[400px] bg-violet-200/20 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
 
-        {/* Subtle light sweep */}
-        <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
-
-        {/* Circuit node dot */}
-        <div
-          className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
-          style={{ backgroundColor: solution.color, boxShadow: `0 0 8px ${solution.color}` }}
-        />
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col h-full">
-          <motion.div
-            className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600/[0.20] via-indigo-500/[0.10] to-transparent backdrop-blur-xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-50/40 transition-all duration-500 border border-indigo-200/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]"
-            whileHover={{ rotate: 360 }}
-            transition={{ duration: 0.6 }}
-            style={{ transform: 'translateZ(42px)', transformStyle: 'preserve-3d' }}
-          >
-            <Icon className="w-7 h-7 text-indigo-500 transition-colors drop-shadow-sm" />
-          </motion.div>
-          <div style={{ transform: 'translateZ(22px)' }}>
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 transition-colors tracking-tight leading-tight">
-              {solution.title}
-            </h3>
-            <p className="text-foreground/75 leading-relaxed text-lg md:text-xl font-medium relative">
-              {solution.description}
-              <span className="block mt-3 text-[10px] font-mono text-indigo-400/30 tracking-wide">
-                {index === 0 && '// clear communication protocol'}
-                {index === 1 && '// optimize: business_impact'}
-                {index === 2 && '// select(stack, budget, goals)'}
-                {index === 3 && '// partner_mode: dedicated'}
-              </span>
-            </p>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-function CircuitLines({ isInView }: { isInView: boolean }) {
-  return (
-    <svg
-      className="absolute inset-0 w-full h-full pointer-events-none z-0"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-    >
-      <motion.path
-        d="M25,25 L50,25 L50,50 L75,50"
-        fill="none"
-        stroke="url(#circuitGrad)"
-        strokeWidth="0.3"
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={isInView ? { pathLength: 1, opacity: 0.3 } : {}}
-        transition={{ duration: 2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      />
-      <motion.path
-        d="M25,75 L50,75 L50,50"
-        fill="none"
-        stroke="url(#circuitGrad)"
-        strokeWidth="0.3"
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={isInView ? { pathLength: 1, opacity: 0.3 } : {}}
-        transition={{ duration: 2, delay: 1, ease: [0.22, 1, 0.36, 1] }}
-      />
-      <defs>
-        <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#6366f1" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#a78bfa" stopOpacity="0.2" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
-export default function Solutions() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  return (
-    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24 relative overflow-hidden" id="solutions">
-      {/* Dynamic Background Gradients */}
-      <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-indigo-200/60 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
-      <div className="absolute bottom-1/4 right-[-10%] w-[400px] h-[400px] bg-violet-200/50 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
-
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-          <SectionTag text="OUR APPROACH" variant="light" className="justify-center" />
+      <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <SectionTag text="INTERACTIVE PIPELINE" variant="light" className="justify-center" />
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="text-2xl md:text-4xl font-bold text-foreground mt-6 mb-6 leading-tight"
-          >
-            Removing the technical roadblocks to your{' '}
-            <span className="text-indigo-500 bg-transparent">growth.</span>
-          </motion.h2>
-          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-            className="flex flex-col items-center"
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-3xl md:text-5xl font-extrabold text-foreground mt-4 tracking-tight leading-tight"
           >
-            <p className="text-foreground/80 text-lg mb-8">
-              It&apos;s easy to get overwhelmed by &quot;AI integrations,&quot; &quot;cloud servers,&quot; and confusing software agency pitches. We filter out the tech jargon, focus entirely on what your business actually needs, and build systems that just work.
-            </p>
-            <Link
-              href="/process"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] group"
-            >
-              See Our Process
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+            Process Simulation{' '}
+            <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-650 to-violet-600 px-3 py-1 rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+              Console
+            </span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.15, duration: 0.6 }}
+            className="text-foreground/60 text-base md:text-lg font-medium max-w-xl mx-auto mt-4"
+          >
+            Bypass the standard black-box agency workflow. Real-time logging of how your projects move from strategy to launch.
+          </motion.p>
         </div>
 
-        <div className="relative">
-          <CircuitLines isInView={isInView} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 relative z-10">
-            {solutions.map((solution, i) => (
-              <TiltCard key={solution.title} solution={solution} index={i} isInView={isInView} />
-            ))}
+        {/* Console Container Card (Same style as Service Bento Cards) */}
+        <motion.div
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          animate={{ rotateX, rotateY }}
+          transition={{ type: 'spring', stiffness: 220, damping: 25 }}
+          className="relative overflow-hidden rounded-[2.5rem] backdrop-blur-2xl border border-indigo-300/30 ring-1 ring-indigo-400/10 bg-gradient-to-br from-blue-600/[0.03] via-indigo-500/[0.015] to-transparent shadow-[0_12px_40px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.45)] hover:border-indigo-300/50 hover:shadow-[0_24px_60px_rgba(99,102,241,0.1),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-500 p-6 md:p-8 lg:p-10"
+          style={{ transformStyle: 'preserve-3d', perspective: 1500 }}
+        >
+          {/* Spotlight background overlay */}
+          {isHovered && (
+            <div
+              className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-300"
+              style={{
+                background: `radial-gradient(700px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
+              }}
+            />
+          )}
+
+          {/* Light Sweep Effect */}
+          <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[35deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
+
+          {/* Ambient color gradient orb */}
+          <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[60px] bg-indigo-500/15 pointer-events-none z-0" />
+
+          {/* Bento grid inside the card */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative z-10 items-stretch">
+            
+            {/* Left Column: Interactive Subcards of Process */}
+            <div className="lg:col-span-5 flex flex-col justify-between" style={{ transform: 'translateZ(30px)' }}>
+              <div>
+                <div className="flex items-center gap-2.5 mb-6">
+                  <Terminal className="w-5 h-5 text-indigo-600" />
+                  <span className="text-[10px] font-mono uppercase tracking-[0.15em] bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-full text-indigo-650 font-bold">
+                    bash - pipeline-simulator
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-bold text-foreground mb-6 tracking-tight">
+                  ACTIVE: {activePhaseIndex === 4 ? 'Launch & Support' : PHASES[activePhaseIndex].title}
+                </h3>
+
+                {/* Subcards list */}
+                <div className="flex flex-col gap-3 mb-8">
+                  {PHASES.map((phase, idx) => {
+                    const isActive = idx === activePhaseIndex;
+                    return (
+                      <button
+                        key={phase.id}
+                        onClick={() => handlePhaseSelect(idx)}
+                        className={`text-left p-3.5 rounded-2xl border transition-all duration-300 flex items-start gap-4 relative group/item ${
+                          isActive
+                            ? 'bg-white border-indigo-200 shadow-[0_4px_16px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.8)] scale-[1.02]'
+                            : 'bg-white/40 border-indigo-100/50 hover:bg-white/70 hover:border-indigo-200'
+                        }`}
+                      >
+                        {isActive && (
+                          <div className="absolute left-0 top-3.5 bottom-3.5 w-1 bg-indigo-600 rounded-r-md" />
+                        )}
+                        <span
+                          className={`text-xs font-mono font-bold px-2 py-0.5 rounded-lg border ${
+                            isActive
+                              ? 'bg-indigo-50 border-indigo-250 text-indigo-650'
+                              : 'bg-foreground/5 border-foreground/10 text-foreground/55 group-hover/item:text-foreground/85'
+                          }`}
+                        >
+                          PHASE {phase.id}
+                        </span>
+                        <div>
+                          <h4
+                            className={`text-xs font-extrabold tracking-tight ${
+                              isActive ? 'text-indigo-950' : 'text-slate-700'
+                            }`}
+                          >
+                            {phase.title}
+                          </h4>
+                          {isActive && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="text-[10px] text-foreground/75 mt-2 pt-2 border-t border-indigo-100 flex flex-col gap-2 font-medium"
+                            >
+                              <p className="leading-normal text-[10.5px] text-slate-600">
+                                {phase.focus}
+                              </p>
+                              <div className="flex flex-col gap-1">
+                                <div className="text-[9px] uppercase tracking-wider font-extrabold text-indigo-650 flex items-center gap-1.5">
+                                  <span>Outcome:</span>
+                                  <span className="bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded text-[8.5px] text-indigo-700 font-bold lowercase first-letter:uppercase">
+                                    {phase.deliverable}
+                                  </span>
+                                </div>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {phase.tools.map((tool) => (
+                                    <span
+                                      key={tool}
+                                      className="text-[8px] font-mono px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-slate-600 rounded"
+                                    >
+                                      {tool}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </div>
+                        <ChevronRight
+                          className={`w-3.5 h-3.5 ml-auto self-center transition-all ${
+                            isActive ? 'text-indigo-600 translate-x-0.5' : 'text-slate-400 opacity-0 group-hover/item:opacity-100'
+                          }`}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <Link
+                href="/process"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 rounded-full font-bold text-sm hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all w-fit shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
+              >
+                Learn More About Process <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {/* Right Column: Console Simulator */}
+            <div className="lg:col-span-7 flex flex-col relative" style={{ transform: 'translateZ(20px)' }}>
+              <ProcessPlaybackConsole
+                activePhaseIndex={activePhaseIndex}
+                setActivePhaseIndex={setActivePhaseIndex}
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+              />
+            </div>
+
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

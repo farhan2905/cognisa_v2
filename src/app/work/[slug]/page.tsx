@@ -5,7 +5,8 @@ import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import RelatedContent from '@/components/shared/fragments/RelatedContent';
 import { ExternalLink, CheckCircle2, Award } from 'lucide-react';
 import Link from 'next/link';
-import WorkBrowserPreview from '@/components/shared/WorkBrowserPreview';
+import DetailWorkShowcase from '@/components/shared/DetailWorkShowcase';
+import OutcomeCard from '@/components/shared/OutcomeCard';
 
 export async function generateStaticParams() {
   return worksData.map((work) => ({
@@ -45,31 +46,17 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
         {/* Bento Grid Layout for Outcomes & Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Main Showcase */}
-          <div className="md:col-span-2 min-h-[350px] flex flex-col relative group overflow-hidden rounded-[2rem] border border-indigo-300/40 shadow-[0_20px_60px_rgba(0,0,0,0.4)] bg-zinc-950">
-            <div className="h-10 w-full glass-surface border-b border-indigo-300/40 flex items-center px-4 gap-2 absolute top-0 left-0 right-0 z-20">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-              </div>
-              <div className="text-[10px] font-mono text-foreground/40 mx-auto max-w-[50%] truncate">
-                {work.link.replace('https://', '')}
-              </div>
-            </div>
-            <WorkBrowserPreview work={work} />
-          </div>
+          <DetailWorkShowcase work={work} />
 
           {/* Metrics Column */}
           <div className="flex flex-col gap-6">
             {work.outcomes.map((outcome, idx) => (
-              <GlassContentBlock key={idx} className="flex-1 flex flex-col justify-center items-center text-center p-6 border-indigo-300/30" hoverEffect>
-                <div className="text-3xl md:text-5xl font-bold mb-3 tracking-tight drop-shadow-sm" style={{ color: work.color }}>
-                  {outcome.metric}
-                </div>
-                <div className="text-xs md:text-sm font-semibold uppercase tracking-wider text-foreground/60">
-                  {outcome.label}
-                </div>
-              </GlassContentBlock>
+              <OutcomeCard 
+                key={idx} 
+                metric={outcome.metric} 
+                label={outcome.label} 
+                color={work.color} 
+              />
             ))}
           </div>
         </div>

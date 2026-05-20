@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
@@ -40,6 +40,13 @@ const techCategories = [
 export default function ProcessPage() {
   const techRef = useRef<HTMLDivElement>(null);
   const techInView = useInView(techRef, { once: true, margin: '-80px' });
+  const [activePhaseIndex, setActivePhaseIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const handlePhaseSelect = (idx: number) => {
+    setIsPlaying(false);
+    setActivePhaseIndex(idx);
+  };
 
   return (
     <SubPageShell showFooter={false}>
@@ -55,7 +62,12 @@ export default function ProcessPage() {
       {/* Playback Console */}
       <section className="relative pt-6 pb-10 overflow-hidden">
         <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 relative z-10">
-          <ProcessPlaybackConsole />
+          <ProcessPlaybackConsole 
+            activePhaseIndex={activePhaseIndex} 
+            setActivePhaseIndex={setActivePhaseIndex}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
         </div>
       </section>
 
@@ -63,7 +75,10 @@ export default function ProcessPage() {
       <section className="relative py-8 md:py-16 overflow-hidden">
         <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
         <div className="w-full max-w-[1000px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-          <ProcessTimeline />
+          <ProcessTimeline 
+            activePhaseIndex={activePhaseIndex} 
+            onPhaseSelect={handlePhaseSelect}
+          />
         </div>
       </section>
 

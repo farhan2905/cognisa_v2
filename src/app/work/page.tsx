@@ -1,14 +1,15 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { worksData } from '@/data/work';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
-import SpatialWorkPreview from '@/components/shared/SpatialWorkPreview';
+import WorkBrowserPreview from '@/components/shared/WorkBrowserPreview';
+import WarpingGridBackground from '@/components/shared/WarpingGridBackground';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -19,9 +20,20 @@ const cardVariants = {
   }),
 };
 
+const categories = ['All', 'Web Portals', 'E-Commerce', 'Systems & UI'];
+
 export default function WorkListingPage() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const filteredWorks = worksData.filter((work) => {
+    if (selectedCategory === 'All') return true;
+    if (selectedCategory === 'Web Portals') return work.category.includes('Portal') || work.category.includes('Platform');
+    if (selectedCategory === 'E-Commerce') return work.category.includes('E-Commerce');
+    if (selectedCategory === 'Systems & UI') return work.category.includes('UI') || work.category.includes('Catalog') || work.category.includes('B2B');
+    return true;
+  });
 
   return (
     <>
@@ -36,11 +48,42 @@ export default function WorkListingPage() {
 
       {/* Portfolio Grid */}
       <section className="relative py-8 md:py-16 overflow-hidden" ref={ref}>
+        {/* Warping speculative math grid background */}
+        <WarpingGridBackground />
+
         <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
 
         <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
+          
+          {/* sliding category selector */}
+          <div className="flex justify-center mb-12">
+            <div className="flex items-center gap-1 bg-white/45 backdrop-blur-md p-1 rounded-2xl border border-indigo-150 shadow-[0_8px_20px_rgba(99,102,241,0.03)] relative z-20">
+              {categories.map((cat) => {
+                const isActive = cat === selectedCategory;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all relative ${
+                      isActive ? 'text-indigo-650' : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeCategoryPill"
+                        className="absolute inset-0 bg-white border border-indigo-100 rounded-xl shadow-[0_4px_12px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.85)] z-0"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{cat}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="flex flex-col gap-8">
-            {worksData.map((work, i) => {
+            {filteredWorks.map((work, i) => {
               const isWide = i % 3 === 0;
               return (
                 <motion.div
@@ -67,8 +110,8 @@ export default function WorkListingPage() {
                         </div>
                       </div>
 
-                      {/* Showcase 3D Spatial Separator (Interactive) */}
-                      <SpatialWorkPreview work={work} />
+                      {/* Showcase Live Site (Interactive) */}
+                      <WorkBrowserPreview work={work} />
                     </div>
 
                     {/* Info Card */}

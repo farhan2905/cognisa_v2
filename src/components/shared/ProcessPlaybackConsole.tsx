@@ -62,9 +62,26 @@ const PHASE_LOGS = [
   }
 ];
 
-export default function ProcessPlaybackConsole() {
-  const [activePhaseIndex, setActivePhaseIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+interface ProcessPlaybackConsoleProps {
+  activePhaseIndex?: number;
+  setActivePhaseIndex?: (idx: number | ((prev: number) => number)) => void;
+  isPlaying?: boolean;
+  setIsPlaying?: (playing: boolean) => void;
+}
+
+export default function ProcessPlaybackConsole({
+  activePhaseIndex: externalActivePhaseIndex,
+  setActivePhaseIndex: externalSetActivePhaseIndex,
+  isPlaying: externalIsPlaying,
+  setIsPlaying: externalSetIsPlaying,
+}: ProcessPlaybackConsoleProps = {}) {
+  const [localActivePhaseIndex, localSetActivePhaseIndex] = useState(0);
+  const [localIsPlaying, localSetIsPlaying] = useState(true);
+
+  const activePhaseIndex = externalActivePhaseIndex !== undefined ? externalActivePhaseIndex : localActivePhaseIndex;
+  const setActivePhaseIndex = externalSetActivePhaseIndex !== undefined ? externalSetActivePhaseIndex : localSetActivePhaseIndex;
+  const isPlaying = externalIsPlaying !== undefined ? externalIsPlaying : localIsPlaying;
+  const setIsPlaying = externalSetIsPlaying !== undefined ? externalSetIsPlaying : localSetIsPlaying;
   const [visibleLinesCount, setVisibleLinesCount] = useState(1);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const lineTimerRef = useRef<NodeJS.Timeout | null>(null);

@@ -19,6 +19,7 @@ import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import SectionTag from '@/components/shared/SectionTag';
 import MiniNeuralConstellation from '@/components/shared/fragments/MiniNeuralConstellation';
 import LiveMetric from '@/components/shared/LiveMetric';
+import ValuesConstellation from '@/components/shared/ValuesConstellation';
 
 /* ── Values Data ── */
 const values = [
@@ -194,7 +195,16 @@ export default function AboutPage() {
             <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">every project.</span>
           </motion.h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={valuesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <ValuesConstellation values={values} />
+          </motion.div>
+
+          {/* Fallback value cards below for mobile */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10 lg:hidden">
             {values.map((val, i) => {
               const Icon = val.icon;
               return (
@@ -204,21 +214,14 @@ export default function AboutPage() {
                   variants={cardVariants}
                   initial="hidden"
                   animate={valuesInView ? 'visible' : 'hidden'}
-                  className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[220px] md:min-h-[260px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-700 group hover:-translate-y-2 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30 hover:shadow-[0_16px_40px_rgba(59,130,246,0.20),inset_0_1px_0_rgba(255,255,255,1)]"
+                  className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 md:p-7 min-h-[180px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-700 group"
                 >
-                  <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />
                   <div className="relative z-10 flex flex-col h-full">
-                    <div className="w-14 h-14 rounded-2xl bg-white/50 backdrop-blur-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-50 transition-all duration-500 border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-                      <Icon className="w-6 h-6 text-indigo-500 drop-shadow-sm" />
+                    <div className="w-12 h-12 rounded-xl bg-white/50 backdrop-blur-xl flex items-center justify-center mb-4 border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
+                      <Icon className="w-5 h-5 text-indigo-500" />
                     </div>
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3 tracking-tight leading-tight">
-                        {val.title}
-                      </h3>
-                      <p className="text-foreground/75 text-base leading-relaxed font-medium">
-                        {val.description}
-                      </p>
-                    </div>
+                    <h3 className="text-lg font-bold text-foreground mb-2 tracking-tight">{val.title}</h3>
+                    <p className="text-foreground/75 text-sm leading-relaxed font-medium">{val.description}</p>
                   </div>
                 </motion.div>
               );
