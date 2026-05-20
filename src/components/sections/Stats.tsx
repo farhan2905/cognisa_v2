@@ -245,12 +245,12 @@ export default function Stats() {
             <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
           </div>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
-            Results that <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">speak</span> for themselves
+            Results that <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">speak</span> for themselves
           </h2>
         </motion.div>
 
         {/* Dashboard Panel */}
-        <div className="glass-surface-strong rounded-[2.5rem] p-6 md:p-10 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_16px_48px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.5)]">
+        <div className="glass-surface-strong rounded-[2.5rem] p-6 md:p-10 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_16px_48px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)]">
           {/* Panel Header */}
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-indigo-300/20">
             <div className="flex items-center gap-3">

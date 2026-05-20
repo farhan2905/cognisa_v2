@@ -86,7 +86,7 @@ function TiltCard({
         onMouseLeave={handleMouseLeave}
         animate={{ rotateX, rotateY }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[220px] md:min-h-[260px] lg:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-700 group hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.85)]"
+        className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[220px] md:min-h-[260px] lg:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-700 group hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.55)]"
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Spotlight overlay */}
@@ -94,7 +94,7 @@ function TiltCard({
           <div
             className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
             style={{
-              background: `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+              background: `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
             }}
           />
         )}
@@ -114,10 +114,11 @@ function TiltCard({
             className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600/[0.20] via-indigo-500/[0.10] to-transparent backdrop-blur-xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-50/40 transition-all duration-500 border border-indigo-200/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]"
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.6 }}
+            style={{ transform: 'translateZ(42px)', transformStyle: 'preserve-3d' }}
           >
             <Icon className="w-7 h-7 text-indigo-500 transition-colors drop-shadow-sm" />
           </motion.div>
-          <div>
+          <div style={{ transform: 'translateZ(22px)' }}>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 transition-colors tracking-tight leading-tight">
               {solution.title}
             </h3>

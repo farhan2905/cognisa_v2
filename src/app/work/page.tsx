@@ -8,7 +8,7 @@ import { worksData } from '@/data/work';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
-import WorkBrowserPreview from '@/components/shared/WorkBrowserPreview';
+import SpatialWorkPreview from '@/components/shared/SpatialWorkPreview';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -53,10 +53,10 @@ export default function WorkListingPage() {
                   <div className={`grid grid-cols-1 ${isWide ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-6`}>
                     {/* Browser Preview */}
                     <div
-                      className={`${isWide ? 'lg:col-span-2' : ''} min-h-[280px] md:min-h-[350px] relative overflow-hidden rounded-[2rem] border border-indigo-300/40 shadow-[0_20px_60px_rgba(0,0,0,0.4)] bg-zinc-950 group`}
+                      className={`${isWide ? 'lg:col-span-2' : ''} min-h-[280px] md:min-h-[350px] relative overflow-hidden rounded-[2rem] border border-indigo-300/30 shadow-[0_15px_40px_rgba(99,102,241,0.06)] bg-indigo-950/[0.03] backdrop-blur-md group`}
                     >
                       {/* Browser Header */}
-                      <div className="h-10 w-full glass-surface border-b border-indigo-300/40 flex items-center px-4 gap-2 absolute top-0 left-0 right-0 z-20">
+                      <div className="h-10 w-full glass-surface border-b border-indigo-300/25 flex items-center px-4 gap-2 absolute top-0 left-0 right-0 z-20">
                         <div className="flex gap-1.5">
                           <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                           <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -67,8 +67,8 @@ export default function WorkListingPage() {
                         </div>
                       </div>
 
-                      {/* Showcase Live Site (Interactive) */}
-                      <WorkBrowserPreview work={work} />
+                      {/* Showcase 3D Spatial Separator (Interactive) */}
+                      <SpatialWorkPreview work={work} />
                     </div>
 
                     {/* Info Card */}
@@ -104,7 +104,7 @@ export default function WorkListingPage() {
 
                       <Link
                         href={`/work/${work.slug}`}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 rounded-full font-semibold text-sm hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all w-fit shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 rounded-full font-semibold text-sm hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all w-fit shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
                       >
                         View Case Study <ArrowUpRight className="w-3.5 h-3.5" />
                       </Link>

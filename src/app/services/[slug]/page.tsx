@@ -8,6 +8,7 @@ import LiveMetric from '@/components/shared/LiveMetric';
 import RadarScanner from '@/components/shared/RadarScanner';
 import { CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import ServiceInteractiveShowcase from '@/components/shared/ServiceInteractiveShowcase';
 
 export async function generateStaticParams() {
   return servicesData.map((service) => ({
@@ -39,7 +40,19 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         />
       </div>
 
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 py-12 md:py-20">
+      {/* Interactive Showcase Section */}
+      <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 pt-12 md:pt-16">
+        <ServiceInteractiveShowcase
+          slug={service.slug}
+          title={service.title}
+          category={service.category}
+          description={service.shortDescription}
+          subservices={service.subservices || []}
+          color={service.color}
+        />
+      </section>
+
+      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12 md:pb-20 pt-8 md:pt-12">
         {/* Main Content */}
         <div className="lg:col-span-2 flex flex-col gap-8">
           <GlassContentBlock>

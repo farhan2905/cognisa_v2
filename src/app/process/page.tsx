@@ -8,6 +8,7 @@ import PageCTA from '@/components/shared/PageCTA';
 import ProcessTimeline from '@/components/shared/ProcessTimeline';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import SectionTag from '@/components/shared/SectionTag';
+import ProcessPlaybackConsole from '@/components/shared/ProcessPlaybackConsole';
 
 const techCategories = [
   {
@@ -51,6 +52,13 @@ export default function ProcessPage() {
         orbColor2="#3b82f6"
       />
 
+      {/* Playback Console */}
+      <section className="relative pt-6 pb-10 overflow-hidden">
+        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 relative z-10">
+          <ProcessPlaybackConsole />
+        </div>
+      </section>
+
       {/* Timeline */}
       <section className="relative py-8 md:py-16 overflow-hidden">
         <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
@@ -74,7 +82,7 @@ export default function ProcessPage() {
               className="text-2xl md:text-4xl font-bold text-foreground mt-6 tracking-tight"
             >
               Tools &{' '}
-              <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">technologies</span> we use
+              <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">technologies</span> we use
             </motion.h2>
           </div>
 

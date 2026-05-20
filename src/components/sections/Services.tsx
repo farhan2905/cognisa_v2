@@ -4,6 +4,10 @@ import { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Code2, BrainCircuit, TrendingUp, Server, ArrowRight, Globe } from 'lucide-react';
 import Link from 'next/link';
+import WebPreviewFrame from '@/components/shared/fragments/WebPreviewFrame';
+import TaskFlowSimulation from '@/components/shared/fragments/TaskFlowSimulation';
+import ServerTopologyMap from '@/components/shared/fragments/ServerTopologyMap';
+import CICDPipelineSimulator from '@/components/shared/fragments/CICDPipelineSimulator';
 
 const services = [
   {
@@ -132,7 +136,7 @@ export default function Services() {
           </div>
 
           {/* Cards Area */}
-          <div className="w-full relative h-[380px] sm:h-[420px] md:h-[420px] lg:h-[450px] mb-4 md:mb-8 px-4">
+          <div className="w-full relative h-[620px] sm:h-[660px] md:h-[460px] lg:h-[490px] mb-4 md:mb-8 px-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -180,57 +184,64 @@ export default function Services() {
                       />
                     )}
 
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-4 md:mb-6 w-fit shadow-sm relative z-10">
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-2 md:mb-6 w-fit shadow-sm relative z-10">
                       {activeService.category}
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-3 tracking-tight relative z-10">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-1.5 md:mb-3 tracking-tight relative z-10">
                       {activeService.title}
                     </h3>
                     
-                    <p className="text-sm md:text-base text-foreground/70 mb-6 leading-relaxed font-medium relative z-10">
+                    <p className="text-sm md:text-base text-slate-700 mb-2 md:mb-6 leading-relaxed font-medium relative z-10">
                       {activeService.description}
                     </p>
                     
                     <div className="mt-auto block relative z-10">
-                      <Link href="/services" className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
+                      <Link href={`/services/${activeService.slug}`} className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
                         Explore {activeService.title}
                         <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                       </Link>
                     </div>
                   </div>
 
-                  {/* Right Graphic Area (Subservices List) with spotlight */}
+                  {/* Right Graphic Area (Bento Visual Simulator) with spotlight */}
                   <div 
                     onMouseMove={handleRightMouseMove}
                     onMouseEnter={() => setRightHovered(true)}
                     onMouseLeave={() => setRightHovered(false)}
-                    className="w-full md:w-[50%] h-[160px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-8 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.85)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08)] group/right"
+                    className="w-full md:w-[50%] h-[290px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-6 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08)] group/right"
                   >
                     {rightHovered && (
                       <div 
                         className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
                         style={{
-                          background: `radial-gradient(350px circle at ${rightCoords.x}px ${rightCoords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+                          background: `radial-gradient(350px circle at ${rightCoords.x}px ${rightCoords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
                         }}
                       />
                     )}
                     
                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none z-0" />
                     
-                    <div className="relative z-10 flex flex-col h-full opacity-[0.95] w-full">
-                      <ul className="flex flex-col gap-4 md:gap-5 w-full h-full justify-between">
+                    <div className="relative z-10 flex flex-col h-full opacity-[0.95] w-full justify-between">
+                      {/* Subservices as flex chips (hidden on mobile, visible on desktop) */}
+                      <div className="hidden md:flex flex-wrap gap-1.5 mb-3">
                         {activeService.subservices.map((sub, idx) => (
-                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-indigo-300/20 last:border-0 group/li">
-                            <span className="text-xs md:text-sm font-mono font-bold w-6 opacity-60 group-hover/li:opacity-100 transition-opacity" style={{ color: activeService.color }}>
-                              0{idx + 1}
-                            </span>
-                            <span className="text-sm md:text-base text-foreground/85 font-medium group-hover/li:text-foreground transition-colors">
-                              {sub}
-                            </span>
-                          </li>
+                          <span 
+                            key={idx} 
+                            className="px-2.5 py-1 text-[9px] md:text-[10px] font-semibold bg-white/40 border border-indigo-200/50 text-slate-700 rounded-lg shadow-sm backdrop-blur-sm"
+                          >
+                            {sub}
+                          </span>
                         ))}
-                      </ul>
+                      </div>
+
+                      {/* Interactive Simulation Block */}
+                      <div className="w-full mt-auto flex-grow flex items-center">
+                        {activeIndex === 0 && <WebPreviewFrame />}
+                        {activeIndex === 1 && <TaskFlowSimulation />}
+                        {activeIndex === 2 && <ServerTopologyMap />}
+                        {activeIndex === 3 && <CICDPipelineSimulator />}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -269,10 +280,10 @@ export default function Services() {
                       <div 
                         className={`rounded-full flex items-center justify-center font-bold text-sm md:text-xl transition-all duration-300 ${
                           isActive 
-                            ? 'w-16 h-16 md:w-20 md:h-20 bg-white/70 backdrop-blur-md border border-indigo-500/20 text-indigo-600 shadow-[0_10px_25px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.7)]' 
+                            ? 'w-16 h-16 md:w-20 md:h-20 bg-white/70 backdrop-blur-md border border-indigo-500/20 text-indigo-600 shadow-[0_10px_25px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.45)]' 
                             : 'w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/50 hover:text-foreground/80 hover:border-indigo-300/50'
                         }`}
-                        style={isActive ? { borderColor: `${service.color}40`, boxShadow: `0 10px 25px ${service.color}25, inset 0 1px 0 rgba(255,255,255,0.7)` } : {}}
+                        style={isActive ? { borderColor: `${service.color}40`, boxShadow: `0 10px 25px ${service.color}25, inset 0 1px 0 rgba(255,255,255,0.45)` } : {}}
                       >
                         {service.number}
                       </div>

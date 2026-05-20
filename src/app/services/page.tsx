@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { servicesData } from '@/data/services';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
+import GlassContentBlock from '@/components/shared/GlassContentBlock';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -51,57 +52,56 @@ export default function ServicesListingPage() {
                 >
                   <Link
                     href={`/services/${service.slug}`}
-                    className="group flex flex-col h-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 md:p-8 lg:p-10 rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-700 hover:-translate-y-2 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30 hover:shadow-[0_16px_40px_rgba(59,130,246,0.20),inset_0_1px_0_rgba(255,255,255,1)]"
+                    className="block h-full group hover:-translate-y-2 transition-transform duration-500"
                   >
-                    {/* Light sweep */}
-                    <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />
+                    <GlassContentBlock hoverEffect className="p-6 md:p-8 lg:p-10 h-full flex flex-col">
+                      {/* Ambient orb */}
+                      <div
+                        className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-15 pointer-events-none z-0"
+                        style={{ backgroundColor: service.color }}
+                      />
 
-                    {/* Ambient orb */}
-                    <div
-                      className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-15 pointer-events-none"
-                      style={{ backgroundColor: service.color }}
-                    />
-
-                    <div className="relative z-10 flex flex-col h-full">
-                      {/* Header */}
-                      <div className="flex items-start justify-between mb-6">
-                        <div
-                          className="w-16 h-16 rounded-2xl flex items-center justify-center border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-xl group-hover:scale-110 transition-transform duration-500"
-                          style={{ boxShadow: `0 4px 16px ${service.color}20` }}
-                        >
-                          <Icon className="w-7 h-7" style={{ color: service.color }} />
-                        </div>
-                        <span className="text-[10px] font-mono uppercase tracking-widest bg-foreground/10 px-3 py-1 rounded-full text-foreground/60">
-                          {service.category}
-                        </span>
-                      </div>
-
-                      {/* Content */}
-                      <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 tracking-tight group-hover:text-indigo-500 transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-foreground/70 leading-relaxed font-medium mb-6 flex-grow">
-                        {service.shortDescription}
-                      </p>
-
-                      {/* Tech Stack */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {service.techStack.slice(0, 4).map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1 text-xs font-medium bg-foreground/5 border border-foreground/10 rounded-lg text-foreground/60"
+                      <div className="relative z-10 flex flex-col h-full">
+                        {/* Header */}
+                        <div className="flex items-start justify-between mb-6">
+                          <div
+                            className="w-16 h-16 rounded-2xl flex items-center justify-center border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-xl group-hover:scale-110 transition-transform duration-500"
+                            style={{ boxShadow: `0 4px 16px ${service.color}20` }}
                           >
-                            {tech}
+                            <Icon className="w-7 h-7" style={{ color: service.color }} />
+                          </div>
+                          <span className="text-[10px] font-mono uppercase tracking-widest bg-foreground/10 px-3 py-1 rounded-full text-foreground/60">
+                            {service.category}
                           </span>
-                        ))}
-                      </div>
+                        </div>
 
-                      {/* CTA */}
-                      <div className="flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors font-semibold text-sm mt-auto">
-                        <span>Explore Service</span>
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        {/* Content */}
+                        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 tracking-tight group-hover:text-indigo-500 transition-colors">
+                          {service.title}
+                        </h3>
+                        <p className="text-foreground/70 leading-relaxed font-medium mb-6 flex-grow">
+                          {service.shortDescription}
+                        </p>
+
+                        {/* Tech Stack */}
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {service.techStack.slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-3 py-1 text-xs font-medium bg-foreground/5 border border-foreground/10 rounded-lg text-foreground/60"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* CTA */}
+                        <div className="flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors font-semibold text-sm mt-auto">
+                          <span>Explore Service</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
                       </div>
-                    </div>
+                    </GlassContentBlock>
                   </Link>
                 </motion.div>
               );

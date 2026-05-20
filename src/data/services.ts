@@ -14,6 +14,7 @@ export const servicesData = [
       { title: 'Complex Workflows', desc: 'Secure user authentication, payment gateways, and custom dashboards.' },
       { title: 'SEO Optimized', desc: 'Server-side rendering for optimal search engine visibility.' },
     ],
+    subservices: ['Custom Web Applications', 'API Integration', 'Legacy System Modernization', 'E-Commerce & Portals'],
     techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
   },
   {
@@ -29,6 +30,7 @@ export const servicesData = [
       { title: 'Workflow Automation', desc: 'Seamlessly connect your CRM, emails, and internal tools.' },
       { title: 'Data Processing', desc: 'Automated data extraction and formatting from unstructured documents.' },
     ],
+    subservices: ['Workflow Automation', 'Custom AI Agents', 'Data Processing Pipelines', 'Automated Support'],
     techStack: ['OpenAI API', 'Python', 'LangChain', 'Vercel AI SDK', 'Make/Zapier'],
   },
   {
@@ -44,6 +46,7 @@ export const servicesData = [
       { title: 'Microservices', desc: 'Decoupled services for maximum reliability and ease of updates.' },
       { title: 'API Development', desc: 'Secure, high-performance REST and GraphQL APIs.' },
     ],
+    subservices: ['Scalable Databases', 'Microservices', 'API Development', 'Load Balancing'],
     techStack: ['Node.js', 'Go', 'PostgreSQL', 'Redis', 'Docker'],
   },
   {
@@ -59,6 +62,7 @@ export const servicesData = [
       { title: 'CI/CD Pipelines', desc: 'Automated testing and zero-downtime deployments.' },
       { title: 'Security & Compliance', desc: 'Strict firewall rules, DDOS protection, and daily backups.' },
     ],
+    subservices: ['Managed Hosting', 'CI/CD Pipelines', 'Security & Compliance', 'Edge Networks'],
     techStack: ['AWS', 'Google Cloud', 'Vercel', 'GitHub Actions', 'Terraform'],
   }
 ];

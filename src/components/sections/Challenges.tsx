@@ -146,7 +146,7 @@ function QuestionItem({
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`w-full text-left relative overflow-hidden bg-gradient-to-br ${config.bg} to-transparent backdrop-blur-2xl rounded-2xl p-4 md:p-5 border ${config.border} ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-500 group hover:shadow-[0_8px_24px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]`}
+        className={`w-full text-left relative overflow-hidden bg-gradient-to-br ${config.bg} to-transparent backdrop-blur-2xl rounded-2xl p-4 md:p-5 border ${config.border} ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 group hover:shadow-[0_8px_24px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.55)]`}
         whileHover={{ scale: 1.01, y: -1 }}
         whileTap={{ scale: 0.99 }}
       >
@@ -155,7 +155,7 @@ function QuestionItem({
           <div
             className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
             style={{
-              background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+              background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
             }}
           />
         )}
@@ -241,7 +241,7 @@ export default function Challenges() {
                   className="text-3xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mt-6 mb-6"
                 >
                   Scanning business{' '}
-                  <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">bottlenecks.</span>
+                  <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">bottlenecks.</span>
                 </motion.h2>
 
                 <motion.div

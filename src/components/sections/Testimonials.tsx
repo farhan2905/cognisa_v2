@@ -102,8 +102,8 @@ function TestimonialCard({
       onMouseLeave={() => setIsHovered(false)}
       className={`relative overflow-hidden rounded-[2rem] p-8 border cursor-pointer transition-all duration-500 flex flex-col ${
         isActive
-          ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-400/60 ring-2 ring-indigo-400/20 shadow-[0_16px_40px_rgba(99,102,241,0.12)] scale-[1.02]'
-          : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/40 hover:border-white/45 hover:shadow-[0_12px_36px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.8)] opacity-75 md:opacity-100'
+          ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-400/60 ring-2 ring-indigo-400/20 shadow-[0_16px_40px_rgba(99,102,241,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] scale-[1.02]'
+          : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/40 hover:border-indigo-300/60 hover:shadow-[0_12px_36px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.55)] opacity-75 md:opacity-100'
       }`}
     >
       {/* Spotlight overlay */}
@@ -111,7 +111,7 @@ function TestimonialCard({
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
           style={{
-            background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+            background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
           }}
         />
       )}
@@ -185,7 +185,7 @@ export default function Testimonials() {
             <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
-            Loved by <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">leaders</span> worldwide
+            Loved by <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">leaders</span> worldwide
           </h2>
         </motion.div>
 

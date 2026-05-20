@@ -43,7 +43,7 @@ export default function InsightsListingPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="flex items-center gap-4 mb-6">
-                    <span className="bg-indigo-500/10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-indigo-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+                    <span className="bg-indigo-500/10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-indigo-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
                       Featured
                     </span>
                     <span className="text-foreground/40 text-xs font-mono flex items-center gap-1.5">
@@ -89,27 +89,29 @@ export default function InsightsListingPage() {
               >
                 <Link
                   href={`/insights/${article.slug}`}
-                  className="group flex flex-col h-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-3xl p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-500 hover:-translate-y-2 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30"
+                  className="block h-full group hover:-translate-y-2 transition-transform duration-500"
                 >
-                  <div className="flex items-center gap-4 mb-6 relative z-10">
-                    <span className="bg-foreground/10 text-foreground px-3 py-1 rounded-full text-xs font-mono tracking-wide">
-                      {article.category}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-foreground/40 text-xs font-mono">
-                      <Clock className="w-3.5 h-3.5" />
-                      {article.readTime}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-indigo-500 transition-colors leading-snug relative z-10">
-                    {article.title}
-                  </h3>
-                  <p className="text-foreground/70 leading-relaxed mt-auto relative z-10 text-sm">
-                    {article.shortDescription}
-                  </p>
-                  <div className="mt-6 flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors relative z-10 font-medium text-sm">
-                    Read more
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <GlassContentBlock hoverEffect className="p-6 h-full flex flex-col rounded-3xl">
+                    <div className="flex items-center gap-4 mb-6">
+                      <span className="bg-foreground/10 text-foreground px-3 py-1 rounded-full text-xs font-mono tracking-wide">
+                        {article.category}
+                      </span>
+                      <span className="flex items-center gap-1.5 text-foreground/40 text-xs font-mono">
+                        <Clock className="w-3.5 h-3.5" />
+                        {article.readTime}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-indigo-500 transition-colors leading-snug">
+                      {article.title}
+                    </h3>
+                    <p className="text-foreground/70 leading-relaxed mt-auto text-sm">
+                      {article.shortDescription}
+                    </p>
+                    <div className="mt-6 flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors font-medium text-sm">
+                      Read more
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </GlassContentBlock>
                 </Link>
               </motion.div>
             ))}

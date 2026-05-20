@@ -38,6 +38,21 @@ const faqs: FAQItem[] = [
     answer: "Absolutely. We specialize in identifying bottlenecks and implementing custom AI solutions that automate repetitive tasks, enhance data analysis, and improve overall operational efficiency without disrupting your core business.",
     category: 'services',
   },
+  {
+    question: "What is your communication protocol during a project?",
+    answer: "We establish a dedicated Slack/Discord channel for real-time collaboration. We hold structured weekly sprint reviews with interactive build demonstrations. Detailed sprint reports are shared via our client dashboard so you are never left guessing.",
+    category: 'process',
+  },
+  {
+    question: "Do we own the source code and intellectual property?",
+    answer: "Yes, 100%. Upon completion and final payment, full ownership of the source code, design assets, and intellectual property is transferred directly to your organization. Everything is cleanly cataloged on GitHub repositories.",
+    category: 'services',
+  },
+  {
+    question: "Are there any hidden fees or extra maintenance costs?",
+    answer: "No. All license requirements, hosting costs, or third-party API limits are modeled and agreed upon during our discovery phase. We structure clear post-launch support retainers so you know exactly what to budget.",
+    category: 'pricing',
+  }
 ];
 
 const categories = [
@@ -76,10 +91,10 @@ function FAQCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden rounded-2xl transition-all duration-500 backdrop-blur-2xl border ring-1 shadow-[0_10px_30px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.8)] ${
+      className={`relative overflow-hidden rounded-2xl transition-all duration-500 backdrop-blur-2xl border ring-1 shadow-[0_10px_30px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.45)] ${
         isOpen
-          ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-300/50 ring-indigo-400/20 border-l-4 border-l-indigo-500 shadow-[0_16px_40px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]'
-          : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/30 ring-indigo-400/10 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.85)]'
+          ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-300/50 ring-indigo-400/20 border-l-4 border-l-indigo-500 shadow-[0_16px_40px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.55)]'
+          : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/30 ring-indigo-400/10 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.55)]'
       }`}
     >
       {/* Spotlight overlay */}
@@ -87,7 +102,7 @@ function FAQCard({
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
           style={{
-            background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+            background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
           }}
         />
       )}
@@ -173,13 +188,18 @@ function FAQCard({
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [activeCategory, setActiveCategory] = useState<'all' | 'services' | 'process' | 'pricing'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
   const [helpfulVotes, setHelpfulVotes] = useState<Record<number, 'up' | 'down' | null>>({});
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const filteredFaqs = activeCategory === 'all'
-    ? faqs
-    : faqs.filter((f) => f.category === activeCategory);
+  const filteredFaqs = faqs.filter((faq) => {
+    const matchesCategory = activeCategory === 'all' || faq.category === activeCategory;
+    const matchesSearch =
+      faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   const handleVote = (index: number, vote: 'up' | 'down') => {
     setHelpfulVotes((prev) => ({
@@ -199,7 +219,7 @@ export default function FAQ() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-2xl md:text-4xl font-bold text-foreground mt-6 leading-tight"
           >
-            Got questions? <br />We&apos;ve got <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">answers.</span>
+            Got questions? <br />We&apos;ve got <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">answers.</span>
           </motion.h2>
 
           {/* Terminal intro */}
@@ -222,54 +242,108 @@ export default function FAQ() {
           </motion.div>
         </div>
 
-        {/* Category Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.2, duration: 0.7 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
-        >
-          {categories.map((cat) => (
-            <button
-              key={cat.key}
-              onClick={() => {
-                setActiveCategory(cat.key);
+        {/* Search & Filter Controls */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-4xl mx-auto mb-8 relative z-20">
+          {/* Category Tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+            className="flex flex-wrap gap-2 order-2 md:order-1"
+          >
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => {
+                  setActiveCategory(cat.key);
+                  setOpenIndex(null);
+                }}
+                className={`px-4.5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
+                  activeCategory === cat.key
+                    ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white shadow-[0_4px_16px_rgba(99,102,241,0.25)]'
+                    : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.02] to-transparent text-foreground/60 border border-indigo-300/30 hover:border-indigo-300/50 hover:text-foreground/80'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Real-time Search Input */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="relative w-full md:w-80 order-1 md:order-2"
+          >
+            <input
+              type="text"
+              placeholder="Search questions or answers..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
                 setOpenIndex(null);
               }}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === cat.key
-                  ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white shadow-[0_4px_16px_rgba(99,102,241,0.25)]'
-                  : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.02] to-transparent text-foreground/60 border border-indigo-300/30 hover:border-indigo-300/50 hover:text-foreground/80'
-              }`}
+              className="w-full pl-10 pr-10 py-2.5 rounded-full border border-indigo-300/30 bg-white/40 text-foreground text-sm font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/10 placeholder:text-foreground/35 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.45)]"
+            />
+            <span className="absolute left-3.5 top-3 flex items-center justify-center text-foreground/35 pointer-events-none">
+              🔍
+            </span>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-2.5 p-1 rounded-full hover:bg-foreground/5 text-foreground/45 hover:text-foreground transition-all text-[10px] font-bold"
+              >
+                ✕
+              </button>
+            )}
+          </motion.div>
+        </div>
+
+        {filteredFaqs.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-12 p-8 border border-dashed border-indigo-300/30 rounded-2xl bg-indigo-950/[0.02]"
+          >
+            <div className="text-3xl mb-3">🔍</div>
+            <h4 className="text-lg font-bold text-foreground mb-1">No matching questions found</h4>
+            <p className="text-foreground/50 text-sm mb-4">Try checking another keyword or reset the search filters.</p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setActiveCategory('all');
+              }}
+              className="px-4 py-2 text-xs font-semibold text-indigo-600 border border-indigo-500/20 hover:border-indigo-500/40 rounded-full hover:bg-indigo-500/5 transition-all"
             >
-              {cat.label}
+              Reset all filters
             </button>
-          ))}
-        </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="flex flex-col gap-4"
+          >
+            {filteredFaqs.map((faq) => {
+              const globalIndex = faqs.indexOf(faq);
+              const vote = helpfulVotes[globalIndex];
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-          className="flex flex-col gap-4"
-        >
-          {filteredFaqs.map((faq) => {
-            const globalIndex = faqs.indexOf(faq);
-            const vote = helpfulVotes[globalIndex];
-
-            return (
-              <FAQCard 
-                key={globalIndex}
-                faq={faq} 
-                globalIndex={globalIndex} 
-                openIndex={openIndex} 
-                setOpenIndex={setOpenIndex} 
-                vote={vote} 
-                handleVote={handleVote} 
-              />
-            );
-          })}
-        </motion.div>
+              return (
+                <FAQCard 
+                  key={globalIndex}
+                  faq={faq} 
+                  globalIndex={globalIndex} 
+                  openIndex={openIndex} 
+                  setOpenIndex={setOpenIndex} 
+                  vote={vote} 
+                  handleVote={handleVote} 
+                />
+              );
+            })}
+          </motion.div>
+        )}
       </div>
     </section>
   );

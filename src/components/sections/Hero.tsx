@@ -564,7 +564,7 @@ export default function Hero() {
             className="grid grid-cols-3 gap-3 md:gap-6 lg:gap-8"
           >
             {STATS.map((stat, i) => (
-              <div key={i} className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.02] to-transparent backdrop-blur-xl rounded-2xl p-3 md:p-4 border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,0.5)] group hover:border-indigo-300/50 transition-all duration-500">
+              <div key={i} className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.02] to-transparent backdrop-blur-xl rounded-2xl p-3 md:p-4 border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,0.45)] group hover:border-indigo-300/50 transition-all duration-500">
                 {/* Micro chart background */}
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
                   <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
