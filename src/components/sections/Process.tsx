@@ -56,7 +56,7 @@ export default function Process() {
         </div>
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-8 mt-12 md:mt-6 lg:mt-10 flex-shrink-0 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <SectionTag text="OUR WORK" variant="dark" />
+            <SectionTag text="OUR WORK" variant="light" />
             <motion.h2 
               initial={{ opacity: 0, y: 20 }} 
               whileInView={{ opacity: 1, y: 0 }} 
@@ -90,14 +90,36 @@ export default function Process() {
 
 function WorkCard({ work, index, total }: { work: typeof works[0], index: number, total: number }) {
   const [isInteractive, setIsInteractive] = useState(false);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
   return (
     <div className="flex flex-col gap-4 md:gap-8 w-[85vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
       {/* Website Information Card (Above the browser) */}
-      <div className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-500 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30 hover:shadow-[0_16px_40px_rgba(59,130,246,0.20),inset_0_1px_0_rgba(255,255,255,1)]">
+      <div 
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.85)]"
+      >
+        {/* Spotlight overlay */}
+        {isHovered && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+            style={{
+              background: `radial-gradient(350px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+            }}
+          />
+        )}
+
         {/* Decorative ambient color blur matching the project */}
-        <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none" style={{ backgroundColor: work.color }} />
-        <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none" />
+        <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none z-0" style={{ backgroundColor: work.color }} />
+        <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none z-0" />
         
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 relative z-10">
           <div>
@@ -119,11 +141,14 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
 
       {/* Browser Window Card */}
       <div 
-        className="w-full h-[35vh] sm:h-[42vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-indigo-300/40 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden bg-zinc-950"
+        className="w-full h-[35vh] sm:h-[42vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-indigo-300/30 shadow-[0_20px_60px_rgba(0,0,0,0.15)] relative overflow-hidden bg-zinc-950 transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(99,102,241,0.15)]"
         onMouseLeave={() => setIsInteractive(false)}
+        style={{
+          boxShadow: `0 20px 60px rgba(0,0,0,0.15), 0 0 30px ${work.color}10`
+        }}
       >
         {/* Browser Header */}
-        <div className="absolute top-0 left-0 right-0 h-10 glass-surface border-b border-indigo-300/40 border-x-0 border-t-0 flex items-center px-6 gap-2 z-30">
+        <div className="absolute top-0 left-0 right-0 h-10 glass-surface border-b border-indigo-300/20 border-x-0 border-t-0 flex items-center px-6 gap-2 z-30">
           <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
           <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
           <div className="w-3 h-3 rounded-full bg-[#27c93f]" />

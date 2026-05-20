@@ -56,6 +56,12 @@ export default function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // Spotlight coordinates states
+  const [leftCoords, setLeftCoords] = useState({ x: 0, y: 0 });
+  const [leftHovered, setLeftHovered] = useState(false);
+  const [rightCoords, setRightCoords] = useState({ x: 0, y: 0 });
+  const [rightHovered, setRightHovered] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -71,6 +77,16 @@ export default function Services() {
 
   const activeService = services[activeIndex];
 
+  const handleLeftMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setLeftCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleRightMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setRightCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
   return (
     <section id="services" ref={containerRef} className="section-anchor relative h-[360vh] md:h-[400vh] bg-transparent">
       {/* Sticky visible area */}
@@ -81,9 +97,9 @@ export default function Services() {
           <div className="noise-overlay absolute inset-0 opacity-30" />
           <motion.div 
             animate={{ 
-              background: `radial-gradient(circle at 50% 50%, ${activeService.color}15 0%, transparent 50%)`
+              background: `radial-gradient(circle at 50% 50%, ${activeService.color}10 0%, transparent 60%)`
             }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8 }}
             className="absolute inset-0 w-full h-full"
           />
         </div>
@@ -116,7 +132,7 @@ export default function Services() {
           </div>
 
           {/* Cards Area */}
-          <div className="w-full relative h-[380px] sm:h-[420px] md:h-[420px] lg:h-[450px] mb-4 md:mb-8">
+          <div className="w-full relative h-[380px] sm:h-[420px] md:h-[420px] lg:h-[450px] mb-4 md:mb-8 px-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -124,16 +140,19 @@ export default function Services() {
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, y: -15, filter: 'blur(4px)' }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute inset-0 w-full glass-surface-strong rounded-[1.5rem] md:rounded-[2rem] flex flex-col overflow-hidden"
+                className="absolute inset-0 w-[calc(100%-2rem)] left-4 glass-surface-strong rounded-[1.5rem] md:rounded-[2rem] flex flex-col overflow-hidden border border-indigo-300/40 shadow-[0_20px_50px_rgba(99,102,241,0.06)]"
+                style={{
+                  boxShadow: `0 24px 60px rgba(99,102,241,0.05), 0 0 25px ${activeService.color}15, inset 0 1px 0 rgba(255, 255, 255, 0.45)`
+                }}
               >
                 {/* Decorative ambient color blur inside card */}
                 <div 
-                  className="absolute -top-32 -left-32 w-64 h-64 rounded-full blur-[90px] opacity-30 pointer-events-none" 
+                  className="absolute -top-32 -left-32 w-64 h-64 rounded-full blur-[90px] opacity-25 pointer-events-none" 
                   style={{ backgroundColor: activeService.color }} 
                 />
                 
                 {/* Browser Top Bar */}
-                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 glass-surface border-b border-indigo-300/40 border-x-0 border-t-0">
+                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 glass-surface border-b border-indigo-300/30 border-x-0 border-t-0">
                   <div className="flex gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -143,23 +162,37 @@ export default function Services() {
                 </div>
 
                 {/* Card Content Row */}
-                <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-12 items-stretch p-4 md:p-10 lg:p-12 pb-6 md:pb-12 h-full flex-grow">
+                <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-12 items-stretch p-4 md:p-10 lg:p-12 pb-6 md:pb-12 h-full flex-grow relative">
                   
-                  {/* Left Content */}
-                  <div className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-center h-full">
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-4 md:mb-6 w-fit shadow-sm">
+                  {/* Left Content with spotlight */}
+                  <div 
+                    onMouseMove={handleLeftMouseMove}
+                    onMouseEnter={() => setLeftHovered(true)}
+                    onMouseLeave={() => setLeftHovered(false)}
+                    className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-center h-full p-4 md:p-6 rounded-2xl transition-all duration-500 overflow-hidden"
+                  >
+                    {leftHovered && (
+                      <div 
+                        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+                        style={{
+                          background: `radial-gradient(280px circle at ${leftCoords.x}px ${leftCoords.y}px, rgba(99, 102, 241, 0.07), transparent 80%)`,
+                        }}
+                      />
+                    )}
+
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-4 md:mb-6 w-fit shadow-sm relative z-10">
                       {activeService.category}
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-3 tracking-tight">
+                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-3 tracking-tight relative z-10">
                       {activeService.title}
                     </h3>
                     
-                    <p className="text-sm md:text-base text-foreground/70 mb-6 leading-relaxed font-medium">
+                    <p className="text-sm md:text-base text-foreground/70 mb-6 leading-relaxed font-medium relative z-10">
                       {activeService.description}
                     </p>
                     
-                    <div className="mt-auto block">
+                    <div className="mt-auto block relative z-10">
                       <Link href="/services" className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
                         Explore {activeService.title}
                         <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
@@ -167,18 +200,32 @@ export default function Services() {
                     </div>
                   </div>
 
-                  {/* Right Graphic Area (Subservices List) */}
-                  <div className="w-full md:w-[50%] h-[160px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-8 bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)]">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none" />
+                  {/* Right Graphic Area (Subservices List) with spotlight */}
+                  <div 
+                    onMouseMove={handleRightMouseMove}
+                    onMouseEnter={() => setRightHovered(true)}
+                    onMouseLeave={() => setRightHovered(false)}
+                    className="w-full md:w-[50%] h-[160px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-8 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.85)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08)] group/right"
+                  >
+                    {rightHovered && (
+                      <div 
+                        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+                        style={{
+                          background: `radial-gradient(350px circle at ${rightCoords.x}px ${rightCoords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+                        }}
+                      />
+                    )}
                     
-                    <div className="relative z-10 flex flex-col h-full opacity-[0.95]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none z-0" />
+                    
+                    <div className="relative z-10 flex flex-col h-full opacity-[0.95] w-full">
                       <ul className="flex flex-col gap-4 md:gap-5 w-full h-full justify-between">
                         {activeService.subservices.map((sub, idx) => (
-                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-indigo-300/30 last:border-0 group">
-                            <span className="text-xs md:text-sm font-mono font-bold w-6 opacity-50 group-hover:opacity-90 transition-opacity" style={{ color: activeService.color }}>
+                          <li key={idx} className="flex items-center gap-4 py-2 border-b border-indigo-300/20 last:border-0 group/li">
+                            <span className="text-xs md:text-sm font-mono font-bold w-6 opacity-60 group-hover/li:opacity-100 transition-opacity" style={{ color: activeService.color }}>
                               0{idx + 1}
                             </span>
-                            <span className="text-sm md:text-base text-foreground/85 font-medium group-hover:text-foreground transition-colors">
+                            <span className="text-sm md:text-base text-foreground/85 font-medium group-hover/li:text-foreground transition-colors">
                               {sub}
                             </span>
                           </li>
@@ -220,7 +267,12 @@ export default function Services() {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
                       <div 
-                        className={`rounded-full flex items-center justify-center font-bold text-sm md:text-xl transition-colors duration-300 ${isActive ? 'w-16 h-16 md:w-20 md:h-20 bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.4)] border border-white' : 'w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/60'}`}
+                        className={`rounded-full flex items-center justify-center font-bold text-sm md:text-xl transition-all duration-300 ${
+                          isActive 
+                            ? 'w-16 h-16 md:w-20 md:h-20 bg-white/70 backdrop-blur-md border border-indigo-500/20 text-indigo-600 shadow-[0_10px_25px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.7)]' 
+                            : 'w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/50 hover:text-foreground/80 hover:border-indigo-300/50'
+                        }`}
+                        style={isActive ? { borderColor: `${service.color}40`, boxShadow: `0 10px 25px ${service.color}25, inset 0 1px 0 rgba(255,255,255,0.7)` } : {}}
                       >
                         {service.number}
                       </div>

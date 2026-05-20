@@ -43,7 +43,7 @@ export default function InsightsListingPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="flex items-center gap-4 mb-6">
-                    <span className="bg-indigo-500/10 text-indigo-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-indigo-500/20">
+                    <span className="bg-indigo-500/10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-indigo-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
                       Featured
                     </span>
                     <span className="text-foreground/40 text-xs font-mono flex items-center gap-1.5">
@@ -133,7 +133,7 @@ export default function InsightsListingPage() {
                 placeholder="your@email.com"
                 className="flex-1 px-5 py-3.5 rounded-full bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/40 ring-1 ring-indigo-400/10 text-foreground placeholder:text-foreground/35 focus:outline-none focus:border-indigo-400/60 transition-all text-sm font-medium"
               />
-              <button className="px-6 py-3.5 bg-indigo-500 text-white rounded-full font-semibold text-sm hover:bg-indigo-600 transition-colors shadow-[0_4px_14px_rgba(99,102,241,0.35)]">
+              <button className="px-6 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white rounded-full font-semibold text-sm hover:opacity-95 transition-all shadow-[0_4px_16px_rgba(99,102,241,0.25)]">
                 Subscribe
               </button>
             </div>

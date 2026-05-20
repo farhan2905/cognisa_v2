@@ -28,7 +28,7 @@ export default function TableOfContents({ sections, className = '' }: TableOfCon
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
-      <div className="sticky top-32 glass-surface rounded-[2rem] p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)]">
+      <div className="sticky top-32 glass-surface rounded-[2rem] p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)]">
         <div className="flex items-center gap-2 mb-4 pb-3 border-b border-indigo-300/20">
           <Hash className="w-4 h-4 text-indigo-500" />
           <span className="text-xs font-mono font-bold text-foreground/50 uppercase tracking-wider">

@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, useMotionValue, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import SectionTag from '@/components/shared/SectionTag';
 import { ShieldCheck, Target, TrendingUp, Users, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -45,6 +45,8 @@ function TiltCard({
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -53,11 +55,13 @@ function TiltCard({
     const y = (e.clientY - rect.top) / rect.height;
     setRotateX((y - 0.5) * -6);
     setRotateY((x - 0.5) * 6);
+    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
   const handleMouseLeave = () => {
     setRotateX(0);
     setRotateY(0);
+    setIsHovered(false);
   };
 
   const Icon = solution.icon;
@@ -78,18 +82,29 @@ function TiltCard({
     >
       <motion.div
         onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         animate={{ rotateX, rotateY }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[220px] md:min-h-[260px] lg:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-700 group hover:-translate-y-2 md:hover:-translate-y-4 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30 hover:shadow-[0_16px_40px_rgba(59,130,246,0.20),inset_0_1px_0_rgba(255,255,255,1)]"
+        className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-6 md:p-7 lg:p-9 min-h-[220px] md:min-h-[260px] lg:min-h-[280px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-700 group hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.85)]"
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Subtle light sweep & glow on hover */}
-        <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/35 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />
+        {/* Spotlight overlay */}
+        {isHovered && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+            style={{
+              background: `radial-gradient(320px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+            }}
+          />
+        )}
+
+        {/* Subtle light sweep */}
+        <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
 
         {/* Circuit node dot */}
         <div
-          className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
           style={{ backgroundColor: solution.color, boxShadow: `0 0 8px ${solution.color}` }}
         />
 
@@ -171,7 +186,7 @@ export default function Solutions() {
 
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-          <SectionTag text="OUR APPROACH" variant="dark" className="justify-center" />
+          <SectionTag text="OUR APPROACH" variant="light" className="justify-center" />
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}

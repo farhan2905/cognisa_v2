@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion';
 import {
   Search,
   Layers,
@@ -101,14 +101,109 @@ const cardVariants = {
   }),
 };
 
-export default function ProcessTimeline() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+function PhaseCard({ phase, index, isInView }: { phase: typeof phases[0]; index: number; isInView: boolean }) {
+  const Icon = phase.icon;
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
   return (
-    <div ref={ref} className="relative">
-      {/* Vertical connection line */}
-      <div className="absolute left-6 md:left-10 top-0 bottom-0 w-px bg-gradient-to-b from-indigo-400/40 via-violet-400/30 to-emerald-400/20 hidden md:block" />
+    <div 
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="flex-1 relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-6 md:p-8 lg:p-10 rounded-[2rem] border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-700 group hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.85)]"
+    >
+      {/* Spotlight overlay */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+          style={{
+            background: `radial-gradient(350px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+          }}
+        />
+      )}
+
+      {/* Light sweep */}
+      <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
+
+      {/* Ambient orb */}
+      <div
+        className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-15 pointer-events-none z-0"
+        style={{ backgroundColor: phase.color }}
+      />
+
+      <div className="relative z-10">
+        {/* Mobile icon */}
+        <div className="md:hidden w-12 h-12 rounded-2xl flex items-center justify-center border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-xl mb-4">
+          <Icon className="w-6 h-6" style={{ color: phase.color }} />
+        </div>
+
+        <div className="flex items-center gap-4 mb-4">
+          <span
+            className="text-xs font-mono font-bold uppercase tracking-widest"
+            style={{ color: phase.color }}
+          >
+            Phase {phase.number}
+          </span>
+          <span className="text-xs text-foreground/45 font-mono">
+            {phase.duration}
+          </span>
+        </div>
+
+        <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 tracking-tight">
+          {phase.title}
+        </h3>
+
+        <p className="text-foreground/70 leading-relaxed mb-6 font-medium text-base">
+          {phase.description}
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {phase.deliverables.map((item, idx) => (
+            <div
+              key={idx}
+              className="flex items-center gap-3 text-sm text-foreground/60 font-medium"
+            >
+              <div
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                style={{ backgroundColor: phase.color }}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ProcessTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: '-80px' });
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 60%', 'end 60%']
+  });
+
+  const heightTransform = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const heightSpring = useSpring(heightTransform, { stiffness: 120, damping: 25, restDelta: 0.001 });
+
+  return (
+    <div ref={containerRef} className="relative">
+      {/* Background tracking line */}
+      <div className="absolute left-6 md:left-[27px] top-6 bottom-6 w-0.5 bg-indigo-100/50 hidden md:block" />
+      
+      {/* Scroll-linked glowing line */}
+      <motion.div 
+        className="absolute left-6 md:left-[27px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-indigo-500 via-purple-500 to-emerald-400 origin-top hidden md:block"
+        style={{ height: heightSpring }}
+      />
 
       <div className="flex flex-col gap-8 md:gap-12">
         {phases.map((phase, i) => {
@@ -125,7 +220,7 @@ export default function ProcessTimeline() {
               {/* Timeline node */}
               <div className="flex-shrink-0 relative z-10 hidden md:flex flex-col items-center">
                 <div
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center border border-indigo-300/40 shadow-[0_4px_16px_rgba(99,102,241,0.15)] bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-xl"
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-xl transition-colors duration-500"
                   style={{
                     boxShadow: `0 4px 16px ${phase.color}25, inset 0 1px 0 rgba(255,255,255,1)`,
                   }}
@@ -134,59 +229,8 @@ export default function ProcessTimeline() {
                 </div>
               </div>
 
-              {/* Card */}
-              <div className="flex-1 relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 md:p-8 lg:p-10 rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-700 group hover:-translate-y-1 hover:from-blue-600/[0.12] hover:via-indigo-500/[0.05] hover:border-indigo-300/60 hover:ring-indigo-400/30 hover:shadow-[0_16px_40px_rgba(59,130,246,0.20),inset_0_1px_0_rgba(255,255,255,1)]">
-                {/* Light sweep */}
-                <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/25 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none" />
-
-                {/* Ambient orb */}
-                <div
-                  className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-15 pointer-events-none"
-                  style={{ backgroundColor: phase.color }}
-                />
-
-                <div className="relative z-10">
-                  {/* Mobile icon */}
-                  <div className="md:hidden w-12 h-12 rounded-2xl flex items-center justify-center border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent backdrop-blur-xl mb-4">
-                    <Icon className="w-6 h-6" style={{ color: phase.color }} />
-                  </div>
-
-                  <div className="flex items-center gap-4 mb-4">
-                    <span
-                      className="text-xs font-mono font-bold uppercase tracking-widest"
-                      style={{ color: phase.color }}
-                    >
-                      Phase {phase.number}
-                    </span>
-                    <span className="text-xs text-foreground/40 font-mono">
-                      {phase.duration}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 tracking-tight">
-                    {phase.title}
-                  </h3>
-
-                  <p className="text-foreground/70 leading-relaxed mb-6 font-medium text-base">
-                    {phase.description}
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {phase.deliverables.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-3 text-sm text-foreground/60 font-medium"
-                      >
-                        <div
-                          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                          style={{ backgroundColor: phase.color }}
-                        />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              {/* Phase Card with Spotlight hover effect */}
+              <PhaseCard phase={phase} index={i} isInView={isInView} />
             </motion.div>
           );
         })}

@@ -65,7 +65,7 @@ export default function RelatedContent({
             >
               <Link
                 href={`${basePath}/${item.slug}`}
-                className="group flex flex-col h-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-2xl p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-500 hover:-translate-y-2 hover:border-indigo-300/60 hover:ring-indigo-400/30"
+                className="group flex flex-col h-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-2xl p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:-translate-y-2 hover:border-indigo-300/60 hover:ring-indigo-400/30"
               >
                 <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-indigo-500 transition-colors">
                   {item.title}

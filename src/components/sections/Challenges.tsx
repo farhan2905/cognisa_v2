@@ -89,9 +89,9 @@ const questions: Question[] = [
 ];
 
 const categoryConfig = {
-  website: { color: 'from-blue-500 to-indigo-500', border: 'border-blue-300/40', bg: 'from-blue-600/[0.06] via-indigo-500/[0.025]', label: 'Website & Apps' },
-  ai: { color: 'from-violet-500 to-purple-500', border: 'border-violet-300/40', bg: 'from-violet-600/[0.06] via-purple-500/[0.025]', label: 'AI & Automation' },
-  cost: { color: 'from-amber-500 to-orange-500', border: 'border-amber-300/40', bg: 'from-amber-600/[0.06] via-orange-500/[0.025]', label: 'Cost & Management' },
+  website: { color: 'from-blue-500 to-indigo-500', border: 'border-blue-300/30', bg: 'from-blue-600/[0.04] via-indigo-500/[0.015]', label: 'Website & Apps' },
+  ai: { color: 'from-violet-500 to-purple-500', border: 'border-violet-300/30', bg: 'from-violet-600/[0.04] via-purple-500/[0.015]', label: 'AI & Automation' },
+  cost: { color: 'from-amber-500 to-orange-500', border: 'border-amber-300/30', bg: 'from-amber-600/[0.04] via-orange-500/[0.015]', label: 'Cost & Management' },
 };
 
 const itemVariants = {
@@ -108,6 +108,108 @@ const itemVariants = {
   }),
 };
 
+function QuestionItem({ 
+  q, 
+  index, 
+  isInView, 
+  expandedId, 
+  setExpandedId 
+}: { 
+  q: Question; 
+  index: number; 
+  isInView: boolean; 
+  expandedId: string | null; 
+  setExpandedId: (id: string | null) => void;
+}) {
+  const config = categoryConfig[q.category];
+  const isExpanded = expandedId === q.id;
+  const isOffset = index % 3 === 1;
+
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.div
+      custom={index}
+      variants={itemVariants}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      className={`${isOffset ? 'lg:ml-8' : ''}`}
+    >
+      <motion.button
+        onClick={() => setExpandedId(isExpanded ? null : q.id)}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`w-full text-left relative overflow-hidden bg-gradient-to-br ${config.bg} to-transparent backdrop-blur-2xl rounded-2xl p-4 md:p-5 border ${config.border} ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.8)] transition-all duration-500 group hover:shadow-[0_8px_24px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]`}
+        whileHover={{ scale: 1.01, y: -1 }}
+        whileTap={{ scale: 0.99 }}
+      >
+        {/* Spotlight overlay */}
+        {isHovered && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+            style={{
+              background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+            }}
+          />
+        )}
+
+        {/* Category badge & Chevron */}
+        <div className="flex items-center justify-between mb-3 relative z-10">
+          <div className="flex items-center gap-3">
+            <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gradient-to-r ${config.color} text-white`}>
+              {q.id}
+            </span>
+            <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-wider font-bold">
+              {config.label}
+            </span>
+          </div>
+
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-6 h-6 rounded-full bg-foreground/5 flex items-center justify-center shrink-0 group-hover:bg-indigo-500/10 transition-colors"
+          >
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="text-foreground/40 group-hover:text-indigo-500 transition-colors">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </motion.div>
+        </div>
+
+        <div className="relative z-10">
+          <p className="text-sm md:text-base text-foreground/80 group-hover:text-foreground transition-colors font-semibold pr-4 leading-relaxed">
+            {q.question}
+          </p>
+
+          <AnimatePresence initial={false}>
+            {isExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                animate={{ height: 'auto', opacity: 1, marginTop: 12 }}
+                exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <div className="pt-3 border-t border-indigo-300/20">
+                  <p className="text-sm md:text-base text-foreground/70 leading-relaxed font-medium pl-1 border-l-2 border-indigo-500/30">
+                    {q.answer}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.button>
+    </motion.div>
+  );
+}
+
 export default function Challenges() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -116,7 +218,7 @@ export default function Challenges() {
   return (
     <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24" id="challenges">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="glass-surface rounded-[2.5rem] p-6 md:p-10">
+        <div className="glass-surface rounded-[2.5rem] p-6 md:p-10 border border-white/40 shadow-[0_15px_40px_rgba(99,102,241,0.04)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
             {/* Left Column - Scanner */}
             <div className="lg:col-span-5">
@@ -139,7 +241,7 @@ export default function Challenges() {
                   className="text-3xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mt-6 mb-6"
                 >
                   Scanning business{' '}
-                  <span className="bg-indigo-500 text-white px-2 rounded-lg">bottlenecks.</span>
+                  <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">bottlenecks.</span>
                 </motion.h2>
 
                 <motion.div
@@ -174,72 +276,16 @@ export default function Challenges() {
             {/* Right Column - Masonry Pills */}
             <div className="lg:col-span-7">
               <div className="flex flex-col gap-3">
-                {questions.map((q, i) => {
-                  const config = categoryConfig[q.category];
-                  const isExpanded = expandedId === q.id;
-                  const isOffset = i % 3 === 1;
-
-                  return (
-                    <motion.div
-                      key={q.id}
-                      custom={i}
-                      variants={itemVariants}
-                      initial="hidden"
-                      animate={isInView ? 'visible' : 'hidden'}
-                      className={`${isOffset ? 'lg:ml-8' : ''}`}
-                    >
-                      <motion.button
-                        onClick={() => setExpandedId(isExpanded ? null : q.id)}
-                        className={`w-full text-left relative overflow-hidden bg-gradient-to-br ${config.bg} to-transparent backdrop-blur-2xl rounded-2xl p-4 md:p-5 border ${config.border} ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,0.5)] transition-all duration-500 group hover:shadow-[0_8px_24px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.6)]`}
-                        whileHover={{ scale: 1.01, y: -1 }}
-                        whileTap={{ scale: 0.99 }}
-                      >
-                        {/* Category badge */}
-                        <div className="flex items-center gap-3 mb-2">
-                          <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gradient-to-r ${config.color} text-white`}>
-                            {q.id}
-                          </span>
-                          <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-wider">
-                            {config.label}
-                          </span>
-                        </div>
-
-                        <div className="flex items-start justify-between gap-4">
-                          <p className="text-sm md:text-base text-foreground/80 group-hover:text-foreground transition-colors font-medium leading-relaxed">
-                            {q.question}
-                          </p>
-                          <motion.div
-                            animate={{ rotate: isExpanded ? 180 : 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="w-6 h-6 rounded-full bg-foreground/5 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-indigo-500/10 transition-colors"
-                          >
-                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="text-foreground/40 group-hover:text-indigo-500 transition-colors">
-                              <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </motion.div>
-                        </div>
-
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: 'auto', opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                              className="overflow-hidden"
-                            >
-                              <div className="pt-3 mt-3 border-t border-indigo-300/20">
-                                <p className="text-sm text-foreground/70 leading-relaxed">
-                                  {q.answer}
-                                </p>
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.button>
-                    </motion.div>
-                  );
-                })}
+                {questions.map((q, i) => (
+                  <QuestionItem 
+                    key={q.id}
+                    q={q} 
+                    index={i} 
+                    isInView={isInView} 
+                    expandedId={expandedId} 
+                    setExpandedId={setExpandedId} 
+                  />
+                ))}
               </div>
             </div>
           </div>

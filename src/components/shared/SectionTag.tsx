@@ -24,8 +24,8 @@ export default function SectionTag({ text, variant = 'light', className }: Secti
       <div className={cn(
         'inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] transition-all duration-500',
         isLight 
-          ? 'bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-white/20 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)]'
-          : 'bg-gradient-to-r from-white/6 via-white/3 to-white/1 border-white/15 hover:border-white/30 shadow-[inset_0_2px_2px_rgba(255,255,255,0.25),0_8px_24px_rgba(31,38,135,0.08)]'
+          ? 'bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-indigo-400/60 shadow-[inset_0_2px_2px_rgba(255,255,255,0.4),0_8px_24px_rgba(99,102,241,0.05)]'
+          : 'bg-gradient-to-r from-white/6 via-white/3 to-white/1 border-indigo-300/30 hover:border-indigo-400/50 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(99,102,241,0.04)]'
       )}>
         <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md flex-shrink-0 group-hover:scale-110 transition-transform" />
         <span

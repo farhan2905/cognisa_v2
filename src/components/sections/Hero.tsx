@@ -457,12 +457,12 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-12"
           >
-            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-foreground/[0.06] bg-white/60 backdrop-blur-sm shadow-[0_2px_12px_rgba(99,102,241,0.06)]">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-indigo-300/40 bg-gradient-to-r from-white/8 via-white/4 to-white/2 shadow-[inset_0_1.5px_1.5px_rgba(255,255,255,0.35),0_8px_24px_rgba(31,38,135,0.05)] backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-[#1a1a2e]/50 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
+              <span className="text-foreground/50 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
                 Software · Development · Automation · AI
               </span>
             </div>
@@ -477,7 +477,7 @@ export default function Hero() {
           >
             {/* Line 1: We think, */}
             <motion.h1 className="flex items-baseline justify-center lg:justify-start gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
-              <motion.span variants={wordReveal} className="text-[#1a1a2e]">
+              <motion.span variants={wordReveal} className="text-foreground">
                 We
               </motion.span>
               <motion.span variants={wordReveal}>
@@ -486,10 +486,10 @@ export default function Hero() {
                 </span>
               </motion.span>
             </motion.h1>
-
+ 
             {/* Line 2: you grow */}
             <motion.h1 className="flex items-baseline justify-center lg:justify-start gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em] -mt-2 md:-mt-3">
-              <motion.span variants={wordReveal} className="text-[#1a1a2e]">
+              <motion.span variants={wordReveal} className="text-foreground">
                 you
               </motion.span>
               <motion.span variants={wordReveal}>
@@ -498,30 +498,30 @@ export default function Hero() {
                 </span>
               </motion.span>
             </motion.h1>
-
+ 
             {/* Line 3: — that's the deal. */}
             <motion.p
               variants={wordReveal}
-              className="text-[clamp(1.1rem,2.2vw,1.75rem)] font-medium text-[#1a1a2e]/30 mt-2 tracking-[-0.01em]"
+              className="text-[clamp(1.1rem,2.2vw,1.75rem)] font-medium text-foreground/35 mt-2 tracking-[-0.01em]"
             >
               — that&apos;s the deal.
             </motion.p>
           </motion.div>
-
+ 
           {/* ── Subheadline ── */}
           <motion.p
             custom={1.0}
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="text-base md:text-lg text-[#1a1a2e]/50 mb-12 max-w-xl leading-[1.7] font-medium"
+            className="text-base md:text-lg text-foreground/60 mb-12 max-w-xl leading-[1.7] font-medium"
           >
             End-to-end{' '}
-            <span className="text-[#1a1a2e]/75 font-semibold">AI automation</span> and{' '}
-            <span className="text-[#1a1a2e]/75 font-semibold">software development</span>{' '}
+            <span className="text-foreground/80 font-semibold">AI automation</span> and{' '}
+            <span className="text-foreground/80 font-semibold">software development</span>{' '}
             that transforms your business.
           </motion.p>
-
+ 
           {/* ── CTAs ── */}
           <motion.div
             custom={1.3}
@@ -534,7 +534,7 @@ export default function Hero() {
             <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-semibold text-white text-[15px] bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#7c3aed] shadow-[0_6px_30px_rgba(99,102,241,0.35)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.45)] transition-shadow duration-500 overflow-hidden"
+                className="group relative inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-semibold text-white text-[15px] bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-[0_6px_30px_rgba(99,102,241,0.25)] hover:opacity-95 transition-all duration-300 overflow-hidden"
               >
                 {/* Shimmer */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
@@ -542,19 +542,19 @@ export default function Hero() {
                 <ArrowRight className="relative z-10 w-[18px] h-[18px] transition-transform group-hover:translate-x-1" />
               </Link>
             </motion.div>
-
+ 
             {/* Secondary */}
             <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
               <Link
                 href="/work"
-                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-[#1a1a2e]/70 text-[15px] border border-foreground/[0.1] bg-white/40 backdrop-blur-sm hover:bg-white/60 hover:border-foreground/[0.18] transition-all duration-300"
+                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-foreground/70 text-[15px] border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm hover:border-indigo-300/60 hover:text-foreground transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
               >
                 View Our Work
                 <ChevronRight className="w-4 h-4 opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all" />
               </Link>
             </motion.div>
           </motion.div>
-
+ 
           {/* ── Stats ── */}
           <motion.div
             custom={1.6}
@@ -586,10 +586,10 @@ export default function Hero() {
                   </svg>
                 </div>
                 <div className="relative z-10 flex flex-col items-center lg:items-start gap-1">
-                  <span className="text-xl md:text-2xl font-bold text-[#1a1a2e]/70 tracking-tight">
+                  <span className="text-xl md:text-2xl font-bold text-foreground/80 tracking-tight">
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                   </span>
-                  <span className="text-[9px] md:text-[10px] font-medium text-[#1a1a2e]/35 tracking-wider uppercase flex items-center gap-1.5">
+                  <span className="text-[9px] md:text-[10px] font-medium text-foreground/45 tracking-wider uppercase flex items-center gap-1.5">
                     {i === 2 && (
                       <span className="relative flex h-1.5 w-1.5">
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -603,10 +603,10 @@ export default function Hero() {
             ))}
           </motion.div>
           </div>
-
+ 
         </div>
       </motion.div>
-
+ 
       {/* ── Scroll indicator ── */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -615,7 +615,7 @@ export default function Hero() {
         style={{ opacity: contentOpacity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
       >
-        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#1a1a2e]/25 hidden md:block">
+        <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-foreground/35 hidden md:block">
           Scroll
         </span>
         <motion.div

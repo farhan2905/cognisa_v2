@@ -74,7 +74,7 @@ export default function ProcessPage() {
               className="text-2xl md:text-4xl font-bold text-foreground mt-6 tracking-tight"
             >
               Tools &{' '}
-              <span className="bg-indigo-500 text-white px-2 rounded-lg">technologies</span> we use
+              <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">technologies</span> we use
             </motion.h2>
           </div>
 

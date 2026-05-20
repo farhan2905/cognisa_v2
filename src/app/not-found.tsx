@@ -21,9 +21,9 @@ export default function NotFound() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mb-8"
         >
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-foreground/[0.06] bg-white/40 backdrop-blur-sm mb-8">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-indigo-300/40 bg-gradient-to-r from-white/8 via-white/4 to-white/2 shadow-[inset_0_1.5px_1.5px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.05)] backdrop-blur-sm mb-8">
             <Terminal className="w-4 h-4 text-indigo-500" />
-            <span className="text-[#1a1a2e]/40 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
+            <span className="text-foreground/45 font-mono text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold">
               cognisa@dev:~$
             </span>
           </div>
@@ -53,14 +53,14 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/"
-                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#7c3aed] shadow-[0_6px_30px_rgba(99,102,241,0.35)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.45)] transition-shadow duration-500"
+                className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-[0_6px_30px_rgba(99,102,241,0.25)] hover:opacity-95 transition-all duration-300"
               >
                 Return Home
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-foreground/70 border border-foreground/10 bg-white/40 backdrop-blur-sm hover:border-foreground/20 transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium text-foreground/70 border border-indigo-300/40 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm hover:border-indigo-300/60 hover:text-foreground transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
               >
                 Contact Us
               </Link>

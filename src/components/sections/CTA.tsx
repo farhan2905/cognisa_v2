@@ -55,7 +55,7 @@ export default function CTA() {
                   <Link
                     href="/contact"
                     onClick={handleRipple}
-                    className="group relative inline-flex items-center gap-2 bg-indigo-500 text-white px-10 py-4 rounded-full text-base font-semibold hover:bg-indigo-600 transition-all duration-300 hover:gap-3 shadow-[0_4px_14px_rgba(99,102,241,0.35)] overflow-hidden"
+                    className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white px-10 py-4 rounded-full text-base font-semibold hover:opacity-95 transition-all duration-300 hover:gap-3 shadow-[0_4px_16px_rgba(99,102,241,0.25)] overflow-hidden"
                   >
                     {ripples.map((ripple) => (
                       <span
@@ -90,11 +90,6 @@ export default function CTA() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="relative flex items-center justify-center"
             >
-              {/* Iridescent blob background */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-64 h-64 md:w-80 md:h-80 iridescent-blob opacity-50 scale-75 blur-sm" />
-              </div>
-
               {/* Metrics Panel */}
               <div className="relative glass-panel rounded-[2rem] p-6 md:p-8 w-full max-w-sm shadow-[0_16px_48px_rgba(99,102,241,0.15)]">
                 <div className="flex items-center gap-2 mb-6 pb-4 border-b border-indigo-300/20">

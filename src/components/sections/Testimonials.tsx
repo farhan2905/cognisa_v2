@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import VoiceWave from '@/components/shared/VoiceWave';
 
@@ -12,7 +12,7 @@ const testimonials = [
     name: 'Sarah Chen',
     role: 'CEO, TechFlow Inc.',
     initials: 'SC',
-    color: 'bg-blue-500/20 text-blue-400',
+    color: 'bg-blue-500/10 text-blue-600',
     waveColor: '#6366f1',
   },
   {
@@ -21,7 +21,7 @@ const testimonials = [
     name: 'Marcus Rodriguez',
     role: 'Founder, GreenLeaf Co.',
     initials: 'MR',
-    color: 'bg-indigo-400/15 text-indigo-300',
+    color: 'bg-indigo-500/10 text-indigo-600',
     waveColor: '#8b5cf6',
   },
   {
@@ -30,7 +30,7 @@ const testimonials = [
     name: 'Emily Watson',
     role: 'VP of Operations, DataSphere',
     initials: 'EW',
-    color: 'bg-blue-500/15 text-blue-400',
+    color: 'bg-violet-500/10 text-violet-600',
     waveColor: '#818cf8',
   },
 ];
@@ -68,6 +68,92 @@ function GenerativeAvatar({ initials, color, index }: { initials: string; color:
   );
 }
 
+function TestimonialCard({ 
+  testimonial, 
+  index, 
+  active, 
+  setActive, 
+  isInView 
+}: { 
+  testimonial: typeof testimonials[0]; 
+  index: number; 
+  active: number; 
+  setActive: (idx: number) => void;
+  isInView: boolean;
+}) {
+  const isActive = active === index;
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.div
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      onClick={() => setActive(index)}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`relative overflow-hidden rounded-[2rem] p-8 border cursor-pointer transition-all duration-500 flex flex-col ${
+        isActive
+          ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-400/60 ring-2 ring-indigo-400/20 shadow-[0_16px_40px_rgba(99,102,241,0.12)] scale-[1.02]'
+          : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/40 hover:border-white/45 hover:shadow-[0_12px_36px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.8)] opacity-75 md:opacity-100'
+      }`}
+    >
+      {/* Spotlight overlay */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+          style={{
+            background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.08), transparent 80%)`,
+          }}
+        />
+      )}
+
+      {/* Subtle light sweep */}
+      <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
+
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Voice wave */}
+        <VoiceWave color={testimonial.waveColor} className="mb-4" />
+
+        {/* Quote icon */}
+        <Quote className="w-8 h-8 text-indigo-400/60 mb-4 flex-shrink-0" />
+
+        {/* Quote text */}
+        <p className="text-foreground/70 text-base leading-relaxed mb-8 flex-grow [text-wrap:balance]">
+          <span className="font-serif italic text-lg text-foreground/90">&ldquo;{testimonial.quote}&rdquo;</span>
+        </p>
+
+        {/* Author */}
+        <div className="flex items-center gap-4 pt-6 border-t border-foreground/5">
+          <GenerativeAvatar
+            initials={testimonial.initials}
+            color={testimonial.color}
+            index={index}
+          />
+          <div>
+            <p className="text-foreground font-semibold text-sm flex items-center gap-2">
+              {testimonial.name}
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              </span>
+            </p>
+            <p className="text-foreground/60 text-xs">{testimonial.role}</p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Testimonials() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -99,59 +185,21 @@ export default function Testimonials() {
             <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
-            Loved by <span className="bg-indigo-500 text-white px-2 rounded-lg">leaders</span> worldwide
+            Loved by <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">leaders</span> worldwide
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {testimonials.map((testimonial, i) => {
-            const isActive = active === i;
-            return (
-            <motion.div
+          {testimonials.map((testimonial, i) => (
+            <TestimonialCard 
               key={testimonial.name}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              animate={isInView ? 'visible' : 'hidden'}
-              onClick={() => setActive(i)}
-              className={`glass-surface-strong rounded-[2rem] p-8 border cursor-pointer transition-all duration-500 hover:-translate-y-1 flex flex-col ${
-                isActive
-                  ? 'border-indigo-400/60 ring-2 ring-indigo-400/20 shadow-[0_16px_40px_rgba(99,102,241,0.15)] scale-[1.02]'
-                  : 'border-indigo-300/40 hover:border-white/40 hover:shadow-xl hover:shadow-blue-500/10 opacity-70 md:opacity-100'
-              }`}
-            >
-              {/* Voice wave */}
-              <VoiceWave color={testimonial.waveColor} className="mb-4" />
-
-              {/* Quote icon */}
-              <Quote className="w-8 h-8 text-indigo-400/60 mb-4 flex-shrink-0" />
-
-              {/* Quote text */}
-              <p className="text-foreground/70 text-base leading-relaxed mb-8 flex-grow [text-wrap:balance]">
-                <span className="font-serif italic text-lg text-foreground/90">&ldquo;{testimonial.quote}&rdquo;</span>
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4 pt-6 border-t border-foreground/5">
-                <GenerativeAvatar
-                  initials={testimonial.initials}
-                  color={testimonial.color}
-                  index={i}
-                />
-                <div>
-                  <p className="text-foreground font-semibold text-sm flex items-center gap-2">
-                    {testimonial.name}
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    </span>
-                  </p>
-                  <p className="text-foreground/60 text-xs">{testimonial.role}</p>
-                </div>
-              </div>
-            </motion.div>
-            );
-          })}
+              testimonial={testimonial}
+              index={i}
+              active={active}
+              setActive={setActive}
+              isInView={isInView}
+            />
+          ))}
         </div>
       </div>
     </section>

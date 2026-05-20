@@ -148,6 +148,60 @@ const cardVariants = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] } }),
 };
 
+function StatCard({ stat, index, isInView }: { stat: typeof stats[0]; index: number; isInView: boolean }) {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.div
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="text-center relative overflow-hidden bg-gradient-to-br from-blue-600/[0.03] via-indigo-500/[0.015] to-transparent backdrop-blur-xl rounded-2xl p-4 md:p-6 border border-indigo-300/20 ring-1 ring-indigo-400/10 group transition-all duration-500 hover:border-indigo-300/40"
+    >
+      {/* Spotlight overlay */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+          style={{
+            background: `radial-gradient(200px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.06), transparent 80%)`,
+          }}
+        />
+      )}
+
+      {/* Subtle light sweep */}
+      <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/10 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
+
+      <div className="relative z-10">
+        <AnimatedCounter value={stat.value} suffix={stat.suffix} inView={isInView} />
+        <p className="text-foreground/55 text-sm mt-3 font-medium">{stat.label}</p>
+        <MicroChart
+          type={stat.type}
+          bars={stat.bars}
+          dots={stat.dots}
+          ticks={stat.ticks}
+          inView={isInView}
+        />
+        {/* Hover tooltip */}
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="text-[9px] font-mono text-indigo-400/60 bg-white/80 backdrop-blur-sm px-2 py-0.5 rounded-md border border-indigo-300/30">
+            Updated 2m ago
+          </span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Stats() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -191,7 +245,7 @@ export default function Stats() {
             <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
           </div>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground tracking-tight">
-            Results that <span className="bg-indigo-500 text-white px-2 rounded-lg">speak</span> for themselves
+            Results that <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">speak</span> for themselves
           </h2>
         </motion.div>
 
@@ -217,30 +271,7 @@ export default function Stats() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-                className="text-center relative overflow-hidden bg-gradient-to-br from-blue-600/[0.03] via-indigo-500/[0.015] to-transparent backdrop-blur-xl rounded-2xl p-4 md:p-6 border border-indigo-300/20 ring-1 ring-indigo-400/10 group"
-              >
-                <AnimatedCounter value={stat.value} suffix={stat.suffix} inView={isInView} />
-                <p className="text-foreground/55 text-sm mt-3 font-medium">{stat.label}</p>
-                <MicroChart
-                  type={stat.type}
-                  bars={stat.bars}
-                  dots={stat.dots}
-                  ticks={stat.ticks}
-                  inView={isInView}
-                />
-                {/* Hover tooltip */}
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-[9px] font-mono text-indigo-400/60 bg-white/80 backdrop-blur-sm px-2 py-0.5 rounded-md border border-indigo-300/30">
-                    Updated 2m ago
-                  </span>
-                </div>
-              </motion.div>
+              <StatCard key={stat.label} stat={stat} index={i} isInView={isInView} />
             ))}
           </div>
         </div>
