@@ -196,6 +196,7 @@ body {
       scroll-margin-top: 4rem;
     }
   }
+
 }
 
 @layer base {
@@ -217,12 +218,12 @@ body {
 html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
-  font-size: 90%;
+  font-size: 75%;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 85%;
+    font-size: 77.5%;
   }
 }
 

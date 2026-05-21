@@ -38,7 +38,7 @@ export default function Process() {
   return (
     <section id="work" ref={targetRef} className="section-anchor relative h-[340vh] md:h-[400vh] bg-transparent">
       
-      <div className="sticky top-0 h-[100vh] flex flex-col justify-center overflow-hidden z-10">
+      <div className="sticky top-0 h-[100vh] flex flex-col justify-start lg:justify-center overflow-hidden z-10 pt-16 md:pt-20 lg:pt-0">
         
         {/* Dynamic color-changing background orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -54,7 +54,7 @@ export default function Process() {
             className="absolute bottom-[10%] right-[10%] translate-x-1/4 translate-y-1/4 w-[70vw] h-[70vw] md:w-[55vw] md:h-[55vw] rounded-full blur-[140px] opacity-[0.20] pointer-events-none" 
           />
         </div>
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-8 mt-12 md:mt-6 lg:mt-10 flex-shrink-0 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-4 mt-6 md:mb-8 md:mt-6 lg:mt-10 flex-shrink-0 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <SectionTag text="OUR WORK" variant="light" />
             <motion.h2 
@@ -62,7 +62,7 @@ export default function Process() {
               whileInView={{ opacity: 1, y: 0 }} 
               viewport={{ once: true }} 
               transition={{ duration: 0.6 }} 
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70 leading-tight tracking-tight drop-shadow-sm mt-4"
+              className="text-xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70 leading-tight tracking-tight drop-shadow-sm mt-2 md:mt-4"
             >
               Digital <span className="text-gradient-accent drop-shadow-sm">systems</span> built for real businesses.
             </motion.h2>
@@ -99,13 +99,13 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
   };
 
   return (
-    <div className="flex flex-col gap-4 md:gap-8 w-[85vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
+    <div className="flex flex-col gap-3 md:gap-8 w-[85vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
       {/* Website Information Card (Above the browser) */}
       <div 
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.55)]"
+        className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-4 sm:p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.55)]"
       >
         {/* Spotlight overlay */}
         {isHovered && (
@@ -121,7 +121,7 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
         <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none z-0" style={{ backgroundColor: work.color }} />
         <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none z-0" />
         
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 md:gap-4 relative z-10">
           <div>
             <div className="flex items-center gap-3 mb-3">
               <span className="text-xl">{work.icon}</span>
@@ -132,16 +132,21 @@ function WorkCard({ work, index, total }: { work: typeof works[0], index: number
           </div>
           <div className="flex-shrink-0 flex items-center justify-between md:flex-col md:items-end md:justify-start">
             <span className="text-4xl md:text-5xl font-bold opacity-10">{work.number}</span>
-            <Link href={`/work/${work.slug}`} className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] md:mt-6">
-              View Case Study <ArrowUpRight className="w-3 h-3" />
-            </Link>
+            <a 
+              href={work.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] md:mt-6"
+            >
+              Visit Website <ArrowUpRight className="w-3 h-3" />
+            </a>
           </div>
         </div>
       </div>
 
       {/* Browser Window Card */}
       <div 
-        className="w-full h-[35vh] sm:h-[42vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-indigo-300/30 shadow-[0_20px_60px_rgba(0,0,0,0.15)] relative overflow-hidden bg-zinc-950 transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(99,102,241,0.15)]"
+        className="w-full h-[28vh] sm:h-[38vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-indigo-300/30 shadow-[0_20px_60px_rgba(0,0,0,0.15)] relative overflow-hidden bg-zinc-950 transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(99,102,241,0.15)]"
         onMouseLeave={() => setIsInteractive(false)}
         style={{
           boxShadow: `0 20px 60px rgba(0,0,0,0.15), 0 0 30px ${work.color}10`

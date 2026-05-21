@@ -85,14 +85,14 @@ export default function Solutions() {
   };
 
   return (
-    <section id="solutions" ref={containerRef} className="relative py-16 md:py-24 overflow-hidden">
+    <section id="solutions" ref={containerRef} className="relative py-10 md:py-16 lg:py-24 overflow-hidden">
       {/* Background Orbs */}
       <div className="absolute top-1/3 left-[-10%] w-[450px] h-[450px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
       <div className="absolute bottom-1/3 right-[-10%] w-[400px] h-[400px] bg-violet-200/20 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
 
       <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <SectionTag text="INTERACTIVE PIPELINE" variant="light" className="justify-center" />
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

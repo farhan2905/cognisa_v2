@@ -391,16 +391,16 @@ export default function Hero() {
     <section
       id="hero"
       ref={heroRef}
-      className="section-anchor relative min-h-screen flex items-center bg-transparent overflow-hidden"
+      className="section-anchor relative min-h-0 lg:min-h-screen pt-8 pb-2 md:py-12 lg:py-0 flex items-center bg-transparent overflow-hidden"
     >
-      {/* ── Logo (desktop) ── */}
+      {/* ── Logo (desktop & mobile landing) ── */}
       <motion.div
         initial={{ opacity: 0, x: -16 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute top-6 left-6 md:top-8 md:left-8 z-30 hidden lg:block"
+        className="absolute top-6 left-6 md:top-8 md:left-8 z-30"
       >
-        <div className="relative w-32 h-32 md:w-36 md:h-36">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36">
           {/* Static iridescent gradient clipped to circle */}
           <div
             className="absolute inset-0 rounded-full overflow-hidden"
@@ -413,7 +413,7 @@ export default function Hero() {
           />
           <a href="#hero" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
             <div className="absolute inset-0 rounded-full glass-surface-strong border border-indigo-300/40 flex items-center justify-center shadow-[0_16px_48px_rgba(99,102,241,0.15)]">
-              <Logo className="h-16 md:h-20 w-auto scale-125 drop-shadow-[0_0_30px_rgba(99,102,241,0.3)]" />
+              <Logo className="h-10 sm:h-12 md:h-20 w-auto scale-125 drop-shadow-[0_0_30px_rgba(99,102,241,0.3)]" />
             </div>
           </a>
         </div>
@@ -445,7 +445,7 @@ export default function Hero() {
       {/* ── Main Content ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 min-h-screen flex items-center"
+        className="relative z-20 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 min-h-0 lg:min-h-screen flex items-center"
       >
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center">
           <div className="w-full max-w-4xl mx-auto lg:mx-0 lg:max-w-xl flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -455,7 +455,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-12"
+            className="mb-6 md:mb-12"
           >
             <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-indigo-300/40 bg-gradient-to-r from-white/8 via-white/4 to-white/2 shadow-[inset_0_1.5px_1.5px_rgba(255,255,255,0.35),0_8px_24px_rgba(31,38,135,0.05)] backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
@@ -473,7 +473,7 @@ export default function Hero() {
             variants={stagger}
             initial="hidden"
             animate="visible"
-            className="mb-6"
+            className="mb-4 md:mb-6"
           >
             {/* Line 1: We think, */}
             <motion.h1 className="flex items-baseline justify-center lg:justify-start gap-[0.3em] text-[clamp(3rem,8vw,7rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
@@ -514,7 +514,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="text-base md:text-lg text-foreground/60 mb-12 max-w-xl leading-[1.7] font-medium"
+            className="text-base md:text-lg text-foreground/60 mb-6 md:mb-12 max-w-xl leading-[1.7] font-medium"
           >
             End-to-end{' '}
             <span className="text-foreground/80 font-semibold">AI automation</span> and{' '}
@@ -528,7 +528,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 mb-16"
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 mb-6 md:mb-16"
           >
             {/* Primary */}
             <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
@@ -561,7 +561,7 @@ export default function Hero() {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-3 gap-3 md:gap-6 lg:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 lg:gap-8"
           >
             {STATS.map((stat, i) => (
               <div key={i} className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.02] to-transparent backdrop-blur-xl rounded-2xl p-3 md:p-4 border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_4px_16px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,0.45)] group hover:border-indigo-300/50 transition-all duration-500">
@@ -613,7 +613,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5, duration: 1 }}
         style={{ opacity: contentOpacity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 hidden md:flex"
       >
         <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-foreground/35 hidden md:block">
           Scroll

@@ -216,9 +216,9 @@ export default function Challenges() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   return (
-    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24" id="challenges">
+    <section ref={ref} className="section-anchor bg-transparent py-10 md:py-16 lg:py-24" id="challenges">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="glass-surface rounded-[2.5rem] p-6 md:p-10 border border-white/40 shadow-[0_15px_40px_rgba(99,102,241,0.04)]">
+        <div className="glass-surface rounded-[1.5rem] md:rounded-[2.5rem] p-4 sm:p-6 md:p-10 border border-white/40 shadow-[0_15px_40px_rgba(99,102,241,0.04)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
             {/* Left Column - Scanner */}
             <div className="lg:col-span-5">
@@ -229,7 +229,7 @@ export default function Challenges() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative w-48 h-48 md:w-56 md:h-56 mx-auto lg:mx-0 my-8"
+                  className="relative w-36 h-36 md:w-56 md:h-56 mx-auto lg:mx-0 my-4 md:my-8"
                 >
                   <RadarScanner className="w-full h-full" />
                 </motion.div>
@@ -238,7 +238,7 @@ export default function Challenges() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-3xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mt-6 mb-6"
+                  className="text-2xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mt-4 mb-4 md:mt-6 md:mb-6"
                 >
                   Scanning business{' '}
                   <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">bottlenecks.</span>

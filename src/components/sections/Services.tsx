@@ -94,7 +94,7 @@ export default function Services() {
   return (
     <section id="services" ref={containerRef} className="section-anchor relative h-[360vh] md:h-[400vh] bg-transparent">
       {/* Sticky visible area */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center items-center pt-16 pb-8 md:pt-20 md:pb-10">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-start lg:justify-center items-center pt-16 pb-6 md:pt-20 md:pb-10 lg:pt-0">
         
         {/* Background ambient glow */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -112,15 +112,15 @@ export default function Services() {
         <div className="relative z-10 w-full max-w-[1200px] mx-auto flex flex-col items-center">
           
           {/* Header Area */}
-          <div className="text-center max-w-3xl mx-auto px-4 mb-12 md:mb-16 w-full">
-            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6 group">
+          <div className="text-center max-w-3xl mx-auto px-4 mb-4 sm:mb-8 md:mb-16 w-full">
+            <div className="inline-flex items-center gap-4 px-6 py-2 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-3 sm:mb-6 group">
               <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md group-hover:scale-110 transition-transform" />
               <span className="text-sm md:text-base font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
                 OUR SERVICES
               </span>
               <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
             </div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#818cf8] to-[#c084fc] drop-shadow-sm mb-4 leading-tight tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#818cf8] to-[#c084fc] drop-shadow-sm mb-2 sm:mb-4 leading-tight tracking-tight">
               Services that drive growth.
             </h2>
             <p className="text-foreground/70 text-base md:text-lg leading-relaxed mb-6 font-medium hidden md:block">
@@ -136,7 +136,7 @@ export default function Services() {
           </div>
 
           {/* Cards Area */}
-          <div className="w-full relative h-[620px] sm:h-[660px] md:h-[460px] lg:h-[490px] mb-4 md:mb-8 px-4">
+          <div className="w-full relative h-[480px] sm:h-[520px] md:h-[460px] lg:h-[490px] mb-4 md:mb-8 px-4">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -166,14 +166,14 @@ export default function Services() {
                 </div>
 
                 {/* Card Content Row */}
-                <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-12 items-stretch p-4 md:p-10 lg:p-12 pb-6 md:pb-12 h-full flex-grow relative">
+                <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-12 items-stretch p-4 md:p-10 lg:p-12 pb-4 md:pb-12 h-full flex-grow relative">
                   
                   {/* Left Content with spotlight */}
                   <div 
                     onMouseMove={handleLeftMouseMove}
                     onMouseEnter={() => setLeftHovered(true)}
                     onMouseLeave={() => setLeftHovered(false)}
-                    className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-center h-full p-4 md:p-6 rounded-2xl transition-all duration-500 overflow-hidden"
+                    className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-start md:justify-center flex-grow md:h-full p-2 pb-0 md:p-6 rounded-2xl transition-all duration-500 overflow-hidden"
                   >
                     {leftHovered && (
                       <div 
@@ -184,20 +184,20 @@ export default function Services() {
                       />
                     )}
 
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-2 md:mb-6 w-fit shadow-sm relative z-10">
+                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[10px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-2 md:mb-6 w-fit shadow-sm relative z-10">
                       {activeService.category}
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-1.5 md:mb-3 tracking-tight relative z-10">
+                    <h3 className="text-[26px] sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-2 md:mb-3 tracking-tight leading-tight relative z-10">
                       {activeService.title}
                     </h3>
                     
-                    <p className="text-sm md:text-base text-slate-700 mb-2 md:mb-6 leading-relaxed font-medium relative z-10">
+                    <p className="text-[15px] sm:text-base md:text-base text-slate-700 mb-3 md:mb-6 leading-relaxed font-medium relative z-10">
                       {activeService.description}
                     </p>
                     
-                    <div className="mt-auto block relative z-10">
-                      <Link href={`/services/${activeService.slug}`} className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-xs md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
+                    <div className="mt-auto pt-3 md:pt-0 block relative z-10">
+                      <Link href={`/services/${activeService.slug}`} className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-sm md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
                         Explore {activeService.title}
                         <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                       </Link>
@@ -209,7 +209,7 @@ export default function Services() {
                     onMouseMove={handleRightMouseMove}
                     onMouseEnter={() => setRightHovered(true)}
                     onMouseLeave={() => setRightHovered(false)}
-                    className="w-full md:w-[50%] h-[290px] md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-4 md:p-6 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08)] group/right"
+                    className="w-full md:w-[50%] h-52 sm:h-60 md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-0 md:p-6 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08)] group/right"
                   >
                     {rightHovered && (
                       <div 
@@ -250,15 +250,15 @@ export default function Services() {
           </div>
 
           {/* Arched Pagination Overlay */}
-          <div className="flex flex-col items-center justify-center relative w-full h-[140px] pointer-events-none mt-4">
+          <div className="flex flex-col items-center justify-center relative w-full h-[100px] md:h-[140px] pointer-events-none mt-2 md:mt-4">
             <div className="relative w-full h-full flex justify-center items-start">
               {services.map((service, i) => {
                 const distance = Math.abs(activeIndex - i);
                 const isActive = activeIndex === i;
                 
                 // Arch math: Creates an umbrella curve shape
-                const xOffset = (i - activeIndex) * (typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 90); // horizontal separation
-                const yOffset = distance * distance * (typeof window !== 'undefined' && window.innerWidth < 640 ? 10 : 15); // parabolic arch downward
+                const xOffset = (i - activeIndex) * (typeof window !== 'undefined' && window.innerWidth < 640 ? 45 : 90); // horizontal separation
+                const yOffset = distance * distance * (typeof window !== 'undefined' && window.innerWidth < 640 ? 5 : 15); // parabolic arch downward
                 const scale = Math.max(0.4, 1 - distance * 0.25);
                 const opacity = Math.max(0.1, 1 - distance * 0.6);
                 const rotate = (i - activeIndex) * 15; // outward rotation
@@ -278,10 +278,10 @@ export default function Services() {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
                       <div 
-                        className={`rounded-full flex items-center justify-center font-bold text-sm md:text-xl transition-all duration-300 ${
+                        className={`rounded-full flex items-center justify-center font-bold text-xs md:text-xl transition-all duration-300 ${
                           isActive 
-                            ? 'w-16 h-16 md:w-20 md:h-20 bg-white/70 backdrop-blur-md border border-indigo-500/20 text-indigo-600 shadow-[0_10px_25px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.45)]' 
-                            : 'w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/50 hover:text-foreground/80 hover:border-indigo-300/50'
+                            ? 'w-10 h-10 md:w-20 md:h-20 bg-white/70 backdrop-blur-md border border-indigo-500/20 text-indigo-600 shadow-[0_10px_25px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.45)]' 
+                            : 'w-10 h-10 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/50 hover:text-foreground/80 hover:border-indigo-300/50'
                         }`}
                         style={isActive ? { borderColor: `${service.color}40`, boxShadow: `0 10px 25px ${service.color}25, inset 0 1px 0 rgba(255,255,255,0.45)` } : {}}
                       >

@@ -75,9 +75,9 @@ export default function Insights() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24" id="insights">
+    <section ref={ref} className="section-anchor bg-transparent py-10 md:py-16 lg:py-24" id="insights">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-8">
           <div className="max-w-2xl">
             <SectionTag text="INSIGHTS & RESOURCES" variant="light" />
             <motion.h2 initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="text-2xl md:text-4xl font-bold text-foreground mt-6 leading-tight">

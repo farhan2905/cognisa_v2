@@ -145,12 +145,14 @@ export default function WorkListingPage() {
                         </div>
                       </div>
 
-                      <Link
-                        href={`/work/${work.slug}`}
+                      <a
+                        href={work.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 rounded-full font-semibold text-sm hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all w-fit shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
                       >
-                        View Case Study <ArrowUpRight className="w-3.5 h-3.5" />
-                      </Link>
+                        Visit Website <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
                     </GlassContentBlock>
                   </div>
                 </motion.div>

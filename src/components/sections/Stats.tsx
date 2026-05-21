@@ -220,7 +220,7 @@ export default function Stats() {
   }, []);
 
   return (
-    <section id="stats" ref={ref} className="section-anchor relative bg-transparent py-16 md:py-24 overflow-hidden">
+    <section id="stats" ref={ref} className="section-anchor relative bg-transparent py-10 md:py-16 lg:py-24 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-200 rounded-full blur-[200px] opacity-[0.06]" />
       {/* Radar scanner behind counter */}
       <div className="absolute right-[5%] top-1/2 -translate-y-1/2 w-72 h-72 md:w-96 md:h-96 opacity-[0.06] pointer-events-none hidden lg:block">
@@ -232,7 +232,7 @@ export default function Stats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6 group">
             <span className="relative flex h-2.5 w-2.5">

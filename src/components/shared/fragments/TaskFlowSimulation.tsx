@@ -15,7 +15,7 @@ export default function TaskFlowSimulation() {
   }, []);
 
   return (
-    <div className="w-full h-56 sm:h-64 md:h-72 rounded-2xl border border-indigo-100 bg-white/45 backdrop-blur-md p-4 sm:p-5 font-mono text-[10px] sm:text-xs text-slate-800 flex flex-col justify-between overflow-hidden relative shadow-[0_8px_30px_rgba(99,102,241,0.02),inset_0_1px_0_rgba(255,255,255,0.8)]">
+    <div className="w-full h-full rounded-2xl border border-indigo-100 bg-white/45 backdrop-blur-md p-4 sm:p-5 font-mono text-[10px] sm:text-xs text-slate-800 flex flex-col justify-between overflow-hidden relative shadow-[0_8px_30px_rgba(99,102,241,0.02),inset_0_1px_0_rgba(255,255,255,0.8)]">
       {/* Background terminal watermark */}
       <div className="absolute top-3 right-3 text-indigo-500/5 pointer-events-none">
         <Terminal className="w-16 h-16" />

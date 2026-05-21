@@ -139,14 +139,14 @@ export default function ProcessPlaybackConsole({
   };
 
   return (
-    <div className="w-full max-w-[900px] mx-auto rounded-[2rem] border border-indigo-100 bg-white/45 backdrop-blur-md p-6 shadow-[0_20px_50px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.7)]">
+    <div className="w-full max-w-[900px] mx-auto rounded-[2rem] border border-indigo-100 bg-white/45 backdrop-blur-md p-4 sm:p-6 shadow-[0_20px_50px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.7)]">
       {/* Console Title Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-indigo-100 pb-4 mb-6">
         <div>
           <span className="text-[10px] font-mono tracking-widest text-indigo-600 font-bold uppercase block mb-1">
             interactive pipeline
           </span>
-          <h4 className="text-xl font-bold text-slate-900 tracking-tight">
+          <h4 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
             Process Simulation Console
           </h4>
         </div>
@@ -178,7 +178,7 @@ export default function ProcessPlaybackConsole({
       </div>
 
       {/* Steps Navigation Bar */}
-      <div className="grid grid-cols-5 gap-2 mb-6">
+      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mb-6">
         {PHASE_LOGS.map((p, idx) => {
           const isActive = idx === activePhaseIndex;
           return (
@@ -188,14 +188,14 @@ export default function ProcessPlaybackConsole({
                 setIsPlaying(false); // Pause auto-loop on manual select
                 setActivePhaseIndex(idx);
               }}
-              className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all ${
+              className={`flex flex-col items-center justify-center p-1.5 sm:p-3 rounded-xl border text-center transition-all ${
                 isActive
                   ? 'bg-white border-indigo-200 shadow-[0_8px_20px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.85)]'
                   : 'bg-transparent border-indigo-100 text-slate-500 hover:text-slate-850 hover:border-indigo-200'
               }`}
             >
               <span
-                className="text-[10px] font-mono font-bold"
+                className="text-[8.5px] sm:text-[10px] font-mono font-bold"
                 style={{ color: isActive ? p.color : 'inherit' }}
               >
                 PHASE {p.phase}

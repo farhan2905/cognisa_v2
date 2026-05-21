@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X, Info, BookOpen, FileText } from 'lucide-react';
+import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X, Info, BookOpen, Phone } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
 import Link from 'next/link';
 
@@ -26,7 +26,7 @@ export default function MobileNavigation() {
   // Determine active based on pathname
   useEffect(() => {
     if (pathname === '/') {
-      // scroll-based on homepage
+      // scroll-based on homepage handles active section
     } else {
       const match = mobileItems.find((item) => item.href !== '/' && pathname.startsWith(item.href));
       if (match) setActiveId(match.id);
@@ -73,91 +73,50 @@ export default function MobileNavigation() {
 
   return (
     <div className="lg:hidden">
-      {/* Top Navigation Bar */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent backdrop-blur-2xl border-b border-indigo-300/30 shadow-[0_8px_32px_rgba(59,130,246,0.16)] px-4 py-3"
-      >
-        <div className="flex items-center justify-between max-w-[1600px] mx-auto">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="cursor-pointer flex items-center"
-            aria-label="Cognisa home"
-          >
-            <Logo className="h-7 md:h-8 w-auto" />
-          </Link>
-
-          {/* Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 hover:border-indigo-300/40"
-          >
-            <AnimatePresence mode="wait">
-              {isOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X className="w-5 h-5 text-foreground" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu className="w-5 h-5 text-foreground" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </button>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Dropdown (Floats above the bottom trigger) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-16 left-4 right-4 z-40 bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent backdrop-blur-3xl border border-indigo-300/40 shadow-[0_12px_40px_rgba(59,130,246,0.22)] rounded-2xl p-4 space-y-2"
+            initial={{ opacity: 0, scale: 0.95, y: 15, x: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 15, x: 15 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-24 right-6 w-72 z-40 bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent backdrop-blur-3xl border border-indigo-300/40 shadow-[0_12px_40px_rgba(59,130,246,0.22)] rounded-2xl p-4 space-y-2 origin-bottom-right"
           >
-            {mobileItems.map(({ icon: Icon, label, id, color, shadow, href }) => {
-              const isActive = activeId === id;
-              return (
-                <button
-                  key={id}
-                  onClick={() => handleClick({ icon: Icon, label, id, color, shadow, href })}
-                  className={`relative w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
-                    isActive
-                      ? `bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent border border-indigo-300/70 shadow-[0_0_15px_rgba(${color},0.25)]`
-                      : 'bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 hover:border-indigo-300/40'
-                  }`}
-                >
-                  {isActive && (
-                    <div className={`absolute left-0 w-1 h-8 bg-gradient-to-b ${shadow} rounded-r`} />
-                  )}
-                  <Icon
-                    className="w-5 h-5 shrink-0 transition-colors duration-300"
-                    strokeWidth={isActive ? 2.5 : 1.5}
-                    style={isActive ? { color: `rgb(${color})` } : {}}
-                  />
-                  <span className={`text-sm font-medium transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-foreground/60'}`}>
-                    {label}
-                  </span>
-                </button>
-              );
-            })}
+            {/* Branding Logo in dropdown */}
+            <div className="flex items-center justify-center pb-3 border-b border-indigo-300/20 mb-2">
+              <Logo className="h-10 w-auto" />
+            </div>
+
+            {/* Menu Items */}
+            <div className="space-y-1">
+              {mobileItems.map(({ icon: Icon, label, id, color, shadow, href }) => {
+                const isActive = activeId === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => handleClick({ icon: Icon, label, id, color, shadow, href })}
+                    className={`relative w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 ${
+                      isActive
+                        ? `bg-gradient-to-br from-blue-600/[0.12] via-indigo-500/[0.06] to-transparent border border-indigo-300/70 shadow-[0_0_15px_rgba(${color},0.25)]`
+                        : 'bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 hover:border-indigo-300/40'
+                    }`}
+                  >
+                    {isActive && (
+                      <div className={`absolute left-0 w-1 h-8 bg-gradient-to-b ${shadow} rounded-r`} />
+                    )}
+                    <Icon
+                      className="w-5 h-5 shrink-0 transition-colors duration-300"
+                      strokeWidth={isActive ? 2.5 : 1.5}
+                      style={isActive ? { color: `rgb(${color})` } : {}}
+                    />
+                    <span className={`text-sm font-medium transition-colors duration-300 ${isActive ? 'text-foreground' : 'text-foreground/60'}`}>
+                      {label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -174,6 +133,49 @@ export default function MobileNavigation() {
           />
         )}
       </AnimatePresence>
+
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        {/* Call FAB */}
+        <a
+          href="tel:+1234567890"
+          className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-[0_8px_24px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95 transition-all border border-emerald-400/20"
+          aria-label="Call Cognisa"
+        >
+          <Phone className="w-6 h-6 animate-pulse" />
+        </a>
+
+        {/* Menu FAB (Toggles open/close state) */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-[0_8px_24px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 transition-all border border-indigo-500/20"
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="w-6 h-6 text-white" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu className="w-6 h-6 text-white" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
+      </div>
     </div>
   );
 }

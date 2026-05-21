@@ -100,7 +100,7 @@ function TestimonialCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden rounded-[2rem] p-8 border cursor-pointer transition-all duration-500 flex flex-col ${
+      className={`relative overflow-hidden rounded-[2rem] p-5 sm:p-8 border cursor-pointer transition-all duration-500 flex flex-col ${
         isActive
           ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-400/60 ring-2 ring-indigo-400/20 shadow-[0_16px_40px_rgba(99,102,241,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] scale-[1.02]'
           : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/40 hover:border-indigo-300/60 hover:shadow-[0_12px_36px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.55)] opacity-75 md:opacity-100'
@@ -121,18 +121,18 @@ function TestimonialCard({
 
       <div className="relative z-10 flex flex-col h-full">
         {/* Voice wave */}
-        <VoiceWave color={testimonial.waveColor} className="mb-4" />
+        <VoiceWave color={testimonial.waveColor} className="mb-3 sm:mb-4" />
 
         {/* Quote icon */}
-        <Quote className="w-8 h-8 text-indigo-400/60 mb-4 flex-shrink-0" />
+        <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400/60 mb-3 sm:mb-4 flex-shrink-0" />
 
         {/* Quote text */}
-        <p className="text-foreground/70 text-base leading-relaxed mb-8 flex-grow [text-wrap:balance]">
+        <p className="text-foreground/70 text-base leading-relaxed mb-4 sm:mb-8 flex-grow [text-wrap:balance]">
           <span className="font-serif italic text-lg text-foreground/90">&ldquo;{testimonial.quote}&rdquo;</span>
         </p>
 
         {/* Author */}
-        <div className="flex items-center gap-4 pt-6 border-t border-foreground/5">
+        <div className="flex items-center gap-4 pt-4 sm:pt-6 border-t border-foreground/5">
           <GenerativeAvatar
             initials={testimonial.initials}
             color={testimonial.color}
@@ -168,14 +168,14 @@ export default function Testimonials() {
   }, [isInView]);
 
   return (
-    <section id="testimonials" ref={ref} className="section-anchor relative bg-transparent py-16 md:py-24 overflow-hidden">
+    <section id="testimonials" ref={ref} className="section-anchor relative bg-transparent py-10 md:py-16 lg:py-24 overflow-hidden">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6 group">
             <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md group-hover:scale-110 transition-transform" />

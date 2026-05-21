@@ -21,13 +21,13 @@ export default function CTA() {
   };
 
   return (
-    <section id="cta" className="section-anchor relative bg-transparent py-16 md:py-24 overflow-hidden">
+    <section id="cta" className="section-anchor relative bg-transparent py-10 md:py-16 lg:py-24 overflow-hidden">
       <div className="noise-overlay absolute inset-0 z-[1]" />
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-indigo-200 rounded-full blur-[150px] opacity-[0.10] animate-orb-1" />
       <div className="absolute bottom-0 right-1/4 w-[350px] h-[350px] bg-violet-200 rounded-full blur-[150px] opacity-[0.08] animate-orb-2" />
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="glass-surface-strong rounded-[2.5rem] p-8 md:p-12 lg:p-16 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_16px_48px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)]">
+        <div className="glass-surface-strong rounded-[2.5rem] p-6 md:p-12 lg:p-16 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_16px_48px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left: Content */}
             <motion.div

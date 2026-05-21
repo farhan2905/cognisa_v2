@@ -209,9 +209,9 @@ export default function FAQ() {
   };
 
   return (
-    <section ref={ref} className="section-anchor bg-transparent py-16 md:py-24" id="faq">
+    <section ref={ref} className="section-anchor bg-transparent py-10 md:py-16 lg:py-24" id="faq">
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <SectionTag text="FAQ" variant="light" className="justify-center" />
           <motion.h2
             initial={{ opacity: 0, y: 30 }}

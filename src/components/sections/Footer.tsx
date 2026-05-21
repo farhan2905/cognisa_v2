@@ -144,8 +144,8 @@ export default function Footer() {
     <>
       <BackToTop />
       <footer className="bg-transparent border-t border-foreground/10">
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-16 md:py-24">
-          <div className="bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-[2.5rem] p-6 md:p-[3.45rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] overflow-hidden">
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 py-10 md:py-16 lg:py-24">
+          <div className="bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2.5rem] p-4 sm:p-6 md:p-[3.45rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] overflow-hidden">
             {/* Status Bar */}
             <StatusBar />
 

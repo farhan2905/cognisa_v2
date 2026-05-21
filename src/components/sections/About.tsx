@@ -127,7 +127,7 @@ export default function About() {
     <section
       id="about"
       ref={ref}
-      className="section-anchor relative bg-transparent py-16 md:py-24 overflow-hidden"
+      className="section-anchor relative bg-transparent py-10 md:py-16 lg:py-24 overflow-hidden"
     >
       {/* Dynamic Background Gradients */}
       <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-200/50 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
@@ -135,7 +135,7 @@ export default function About() {
 
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16 md:mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8 md:mb-16 lg:mb-20">
           <div>
             <SectionTag text="WHY CHOOSE US" variant="light" />
             <motion.h2
