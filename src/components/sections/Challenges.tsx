@@ -155,7 +155,7 @@ export default function Challenges() {
             })}
           </div>
 
-          <div className="relative min-h-[520px] overflow-hidden rounded-lg border border-slate-200 bg-white/82 shadow-[0_24px_70px_rgba(15,23,42,0.10)] backdrop-blur-xl">
+          <div className="relative min-h-[520px] overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white/86 shadow-[0_24px_70px_rgba(15,23,42,0.10)] backdrop-blur-xl">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -232,6 +232,39 @@ export default function Challenges() {
                         >
                           {signal}
                         </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-8 overflow-hidden rounded-lg border border-slate-200 bg-white p-4">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="h-4 w-4 text-cyan-700" />
+                        <p className="text-xs font-black uppercase text-slate-600">Agent handoff preview</p>
+                      </div>
+                      <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-black uppercase text-emerald-700">
+                        Governed
+                      </span>
+                    </div>
+                    <div className="relative h-28">
+                      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 420 112" fill="none" aria-hidden="true">
+                        <path className="agent-route-line" d="M34 56 C126 16 166 16 210 56 C254 96 296 96 386 56" stroke="rgba(8,145,178,0.36)" strokeWidth="1.5" />
+                        <path className="agent-route-line" d="M34 56 C126 96 166 96 210 56 C254 16 296 16 386 56" stroke="rgba(16,185,129,0.28)" strokeWidth="1.5" style={{ animationDelay: '-1s' }} />
+                      </svg>
+                      {['Intake', 'AI route', 'Human check', 'System update'].map((node, index) => (
+                        <motion.div
+                          key={node}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.08 * index, duration: 0.28 }}
+                          className="absolute top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
+                          style={{ left: `${index * 30 + 2}%` }}
+                        >
+                          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-950 text-xs font-black text-white shadow-sm">
+                            {index + 1}
+                          </span>
+                          <span className="whitespace-nowrap text-[10px] font-black uppercase text-slate-500">{node}</span>
+                        </motion.div>
                       ))}
                     </div>
                   </div>

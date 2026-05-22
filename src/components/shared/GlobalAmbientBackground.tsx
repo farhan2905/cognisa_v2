@@ -7,8 +7,9 @@ import { motion } from 'framer-motion';
  * GlobalAmbientBackground
  * 
  * Fixed-position ambient layer behind the entire homepage.
- * Combines the /work page's interactive warping grid net with
- * floating gradient orbs and a mouse-following spotlight.
+ * Combines a subtle interactive warping grid net with
+ * very restrained gradient orbs and a mouse-following spotlight.
+ * Calmed to feel mostly white/ice with selective cyan-green accents.
  */
 export default function GlobalAmbientBackground() {
   // ─── Spotlight lerp ───
@@ -59,8 +60,8 @@ export default function GlobalAmbientBackground() {
     const GRID_SIZE = 55;
     const INFLUENCE_RADIUS = 220;
     const PULL_STRENGTH = 0.3;
-    const LINE_COLOR = 'rgba(99, 102, 241, 0.11)';
-    const DOT_COLOR = 'rgba(99, 102, 241, 0.19)';
+    const LINE_COLOR = 'rgba(8, 145, 178, 0.045)';
+    const DOT_COLOR = 'rgba(8, 145, 178, 0.07)';
 
     let animationFrameId: number;
     let width = 0;
@@ -182,40 +183,40 @@ export default function GlobalAmbientBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
       {/* Noise texture */}
-      <div className="noise-overlay absolute inset-0 opacity-20" />
+      <div className="noise-overlay absolute inset-0 opacity-12" />
 
-      {/* Base gradient mesh */}
+      {/* Base gradient mesh — very subtle, mostly white */}
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(1400px ellipse at 20% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 55%),
-            radial-gradient(1200px ellipse at 80% 25%, rgba(99, 102, 241, 0.14) 0%, transparent 50%),
-            radial-gradient(1000px ellipse at 50% 85%, rgba(168, 85, 247, 0.10) 0%, transparent 50%),
-            radial-gradient(800px ellipse at 70% 60%, rgba(236, 72, 153, 0.06) 0%, transparent 45%)
+            radial-gradient(1400px ellipse at 20% 15%, rgba(56, 189, 248, 0.05) 0%, transparent 55%),
+            radial-gradient(1200px ellipse at 80% 25%, rgba(20, 184, 166, 0.04) 0%, transparent 50%),
+            radial-gradient(1000px ellipse at 50% 85%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+            radial-gradient(800px ellipse at 70% 60%, rgba(16, 185, 129, 0.025) 0%, transparent 45%)
           `,
         }}
       />
 
-      {/* Interactive warping grid net (from /work page) */}
+      {/* Interactive warping grid net */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
         style={{ mixBlendMode: 'multiply' }}
       />
 
-      {/* Mouse-following spotlight */}
+      {/* Mouse-following spotlight — very subtle */}
       <div
         className="absolute inset-0 transition-none"
         style={{
-          background: `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, rgba(99, 102, 241, 0.04), transparent 70%)`,
+          background: `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, rgba(8, 145, 178, 0.02), transparent 70%)`,
         }}
       />
 
-      {/* Floating orbs */}
+      {/* Floating orbs — very restrained */}
       <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full blur-[140px] opacity-20"
-        style={{ backgroundColor: 'rgba(99, 102, 241, 0.3)' }}
+        className="absolute w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.06]"
+        style={{ backgroundColor: 'rgba(6, 182, 212, 0.18)' }}
         animate={{
           x: [0, 80, -40, 60, 0],
           y: [0, -60, 40, -20, 0],
@@ -226,8 +227,8 @@ export default function GlobalAmbientBackground() {
       />
 
       <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full blur-[120px] opacity-15"
-        style={{ backgroundColor: 'rgba(168, 85, 247, 0.25)' }}
+        className="absolute w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04]"
+        style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)' }}
         animate={{
           x: [0, -60, 50, -30, 0],
           y: [0, 50, -30, 40, 0],
@@ -238,8 +239,8 @@ export default function GlobalAmbientBackground() {
       />
 
       <motion.div
-        className="absolute w-[350px] h-[350px] rounded-full blur-[100px] opacity-10"
-        style={{ backgroundColor: 'rgba(56, 189, 248, 0.2)' }}
+        className="absolute w-[350px] h-[350px] rounded-full blur-[100px] opacity-[0.03]"
+        style={{ backgroundColor: 'rgba(59, 130, 246, 0.10)' }}
         animate={{
           x: [0, 40, -60, 20, 0],
           y: [0, -40, 20, -60, 0],

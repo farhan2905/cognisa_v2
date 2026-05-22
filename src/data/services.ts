@@ -6,7 +6,7 @@ export const servicesData = [
     title: 'Website & Web Apps',
     category: 'Engineering',
     icon: Code2,
-    color: '#6366f1', // Indigo 500
+    color: '#0891b2',
     shortDescription: 'High-performance, scalable web applications built with modern frameworks.',
     fullDescription: 'We engineer highly scalable, custom web applications tailored exactly to your business needs. Forget template-based websites; we build React-based architectures (Next.js) that offer sub-second load times, dynamic data routing, and seamless user experiences.',
     features: [
@@ -22,7 +22,7 @@ export const servicesData = [
     title: 'AI & Automation',
     category: 'Intelligence',
     icon: Cpu,
-    color: '#8b5cf6', // Violet 500
+    color: '#10b981',
     shortDescription: 'Custom AI agents and automated workflows to eliminate manual tasks.',
     fullDescription: 'Stop wasting hours on repetitive tasks. We integrate custom LLMs (Large Language Models) and advanced API automations directly into your workflow to handle customer support, data processing, and document generation automatically.',
     features: [
@@ -38,7 +38,7 @@ export const servicesData = [
     title: 'System Architecture',
     category: 'Infrastructure',
     icon: Network,
-    color: '#3b82f6', // Blue 500
+    color: '#1d4ed8',
     shortDescription: 'Robust system design ensuring zero downtime and infinite scalability.',
     fullDescription: 'A beautiful front-end is useless if the servers crash under load. We design and deploy robust, microservice-based system architectures that can handle millions of requests while maintaining strict security protocols.',
     features: [
@@ -54,7 +54,7 @@ export const servicesData = [
     title: 'Cloud Infrastructure',
     category: 'DevOps',
     icon: Database,
-    color: '#06b6d4', // Cyan 500
+    color: '#06b6d4',
     shortDescription: 'Secure, managed cloud deployments optimized for cost and speed.',
     fullDescription: 'We manage your entire cloud ecosystem. From initial server setup to continuous integration and delivery (CI/CD) pipelines, we ensure your application runs smoothly on AWS, GCP, or modern edge networks.',
     features: [

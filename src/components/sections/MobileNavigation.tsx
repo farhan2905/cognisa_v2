@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home as HomeIcon, LayoutGrid, Cog, FolderOpen, Mail, Menu, X, Info, BookOpen, Phone } from 'lucide-react';
 import Logo from '@/components/shared/Logo';
-import Link from 'next/link';
 
 const mobileItems = [
   { icon: HomeIcon, label: 'Home', id: 'hero', href: '/', color: '238,130,238', shadow: 'from-[#6366f1] to-[#a855f7]' },

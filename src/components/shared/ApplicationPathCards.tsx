@@ -41,7 +41,7 @@ const applicationPaths = [
       'We replace repetitive tasks with practical AI agents, data flows, and integrations that your team can trust.',
     href: '/process',
     icon: Bot,
-    accent: 'bg-indigo-500',
+    accent: 'bg-sky-600',
     items: [
       { label: 'AI agents', icon: Sparkles },
       { label: 'Lead routing', icon: GitBranch },
@@ -96,7 +96,7 @@ function ApplicationPathCard({
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="group relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white/86 p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_52px_rgba(15,23,42,0.11)]"
+    className="enterprise-ice-card group relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-[1.2rem] p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_22px_58px_rgba(15,23,42,0.11)]"
       >
         {isHovered && (
           <span
@@ -139,6 +139,15 @@ function ApplicationPathCard({
               </span>
             );
           })}
+        </div>
+
+        <div className="relative z-10 mt-6 h-12 overflow-hidden rounded-lg border border-slate-200 bg-white/60">
+          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 300 48" fill="none" aria-hidden="true">
+            <path className="agent-route-line" d="M18 24 H94 C124 24 124 10 154 10 H282" stroke="rgba(8,145,178,0.34)" strokeWidth="1.5" />
+            <path className="agent-route-line" d="M18 24 H94 C124 24 124 38 154 38 H282" stroke="rgba(16,185,129,0.28)" strokeWidth="1.5" style={{ animationDelay: '-1s' }} />
+          </svg>
+          <div className="absolute left-3 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-slate-950" />
+          <div className="absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-emerald-500" />
         </div>
 
         <span className="relative z-10 mt-auto inline-flex items-center gap-2 pt-8 text-sm font-black text-slate-950">

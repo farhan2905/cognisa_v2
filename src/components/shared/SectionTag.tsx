@@ -14,36 +14,30 @@ export default function SectionTag({ text, variant = 'light', className }: Secti
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5 }}
-      className={cn('flex items-center gap-4 mb-8 group', className)}
+      transition={{ duration: 0.45 }}
+      className={cn('flex items-center gap-3 mb-6 group', className)}
     >
-      {/* Glass container */}
       <div className={cn(
-        'inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] transition-all duration-500',
+        'inline-flex items-center gap-2.5 px-4 py-2 rounded-xl border backdrop-blur-md transition-all duration-300',
         isLight 
-          ? 'bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-indigo-400/60 shadow-[inset_0_2px_2px_rgba(255,255,255,0.4),0_8px_24px_rgba(99,102,241,0.05)]'
-          : 'bg-gradient-to-r from-white/6 via-white/3 to-white/1 border-indigo-300/30 hover:border-indigo-400/50 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(99,102,241,0.04)]'
+          ? 'bg-slate-950/[0.04] border-slate-950/10 hover:border-slate-950/20 shadow-sm'
+          : 'bg-white/[0.04] border-white/10 hover:border-white/20 shadow-sm'
       )}>
-        <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md flex-shrink-0 group-hover:scale-110 transition-transform" />
+        <span className={cn(
+          'w-1.5 h-1.5 rounded-full flex-shrink-0 group-hover:scale-110 transition-transform duration-300',
+          isLight ? 'bg-slate-950' : 'bg-white'
+        )} />
         <span
           className={cn(
-            'text-sm md:text-base font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text',
-            isLight 
-              ? 'bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400' 
-              : 'bg-gradient-to-r from-indigo-300 via-violet-300 to-purple-300'
+            'text-[11px] md:text-xs font-mono uppercase tracking-[0.22em] font-black',
+            isLight ? 'text-slate-950' : 'text-white'
           )}
         >
           {text}
         </span>
-        <span
-          className={cn(
-            'h-1 flex-grow max-w-[80px] rounded-full bg-gradient-to-r',
-            isLight ? 'from-indigo-400/60 to-transparent' : 'from-indigo-300/50 to-transparent'
-          )}
-        />
       </div>
     </motion.div>
   );

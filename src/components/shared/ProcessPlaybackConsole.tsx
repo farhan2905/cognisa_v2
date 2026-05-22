@@ -1,65 +1,75 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, RotateCcw, FastForward, Terminal, CheckCircle2, ChevronRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  CheckCircle2,
+  ChevronRight,
+  FastForward,
+  Pause,
+  Play,
+  RotateCcw,
+  ShieldCheck,
+  Terminal,
+} from 'lucide-react';
 
 const PHASE_LOGS = [
   {
     phase: '01',
-    title: 'Discovery & Strategy',
-    color: '#6366f1',
+    title: 'Intake & Strategy',
+    color: '#0891b2',
     commands: [
-      { text: 'stakeholder-interview --client=cognisa --scope=enterprise', type: 'command' },
-      { text: 'fetching competitor positioning data...', type: 'info' },
-      { text: 'mapping target user personas & journey maps...', type: 'info' },
-      { text: '✔ roadmap generated: 5 milestones, 12 weeks duration', type: 'success' }
-    ]
+      { text: 'intake.scan --workflow=bottleneck --priority=high', type: 'command' },
+      { text: 'mapping users, tools, data sources, and current handoffs...', type: 'info' },
+      { text: 'detecting automation risk and human approval points...', type: 'info' },
+      { text: 'ready: scope generated with measurable operating outcome', type: 'success' },
+    ],
   },
   {
     phase: '02',
     title: 'Architecture & Design',
-    color: '#8b5cf6',
+    color: '#0f766e',
     commands: [
-      { text: 'generate-erd --db=postgresql --cache=redis', type: 'command' },
-      { text: 'building system architecture design diagram...', type: 'info' },
-      { text: 'exporting figma style variables & layout tokens...', type: 'info' },
-      { text: '✔ api contract schema built in openapi v3 format', type: 'success' }
-    ]
+      { text: 'system.design --roles --data-model --integrations', type: 'command' },
+      { text: 'building interface map, data model, and API contracts...', type: 'info' },
+      { text: 'adding logs, fallbacks, permissions, and review gates...', type: 'info' },
+      { text: 'ready: architecture approved for build and automation', type: 'success' },
+    ],
   },
   {
     phase: '03',
     title: 'Engineering & Development',
-    color: '#3b82f6',
+    color: '#1d4ed8',
     commands: [
-      { text: 'sprint-deploy --branch=main --verbose', type: 'command' },
-      { text: 'compiling 48 tailwind-styled next.js component layers...', type: 'info' },
-      { text: 'initializing prisma query engines & schema models...', type: 'info' },
-      { text: '✔ sprint 1-4 deployment build compiled (0 errors)', type: 'success' }
-    ]
+      { text: 'build.ship --frontend --backend --dashboards', type: 'command' },
+      { text: 'creating product UI, APIs, forms, and admin workflows...', type: 'info' },
+      { text: 'connecting CRM, email, database, and notification layer...', type: 'info' },
+      { text: 'ready: working system prepared for automation passes', type: 'success' },
+    ],
   },
   {
     phase: '04',
-    title: 'Testing & QA',
+    title: 'Automation & QA',
     color: '#06b6d4',
     commands: [
-      { text: 'npm test -- --coverage --passWithNoTests', type: 'command' },
-      { text: 'running 142 isolated unit + integration tests...', type: 'info' },
-      { text: 'executing playwright end-to-end user flows...', type: 'info' },
-      { text: '✔ lighthouse audit: performance 99%, accessibility 100%', type: 'success' }
-    ]
+      { text: 'agent.route --vision --docs --voice --human-review', type: 'command' },
+      { text: 'simulating intake, routing, approval, action, and report states...', type: 'info' },
+      { text: 'testing empty states, error paths, and permission boundaries...', type: 'info' },
+      { text: 'ready: governed automation paths passed review', type: 'success' },
+    ],
   },
   {
     phase: '05',
-    title: 'Launch & Support',
+    title: 'Launch & Improve',
     color: '#10b981',
     commands: [
-      { text: 'prod-release --env=production --region=global', type: 'command' },
-      { text: 'streaming client edge assets to vlc endpoints...', type: 'info' },
-      { text: 'configuring real-time sentry & datadog monitoring...', type: 'info' },
-      { text: '✔ deployment live at https://cognisa.io/ (100% operational)', type: 'success' }
-    ]
-  }
+      { text: 'release.deploy --monitoring --iteration-loop', type: 'command' },
+      { text: 'shipping production build with alerts and support controls...', type: 'info' },
+      { text: 'capturing adoption signals and next bottleneck candidates...', type: 'info' },
+      { text: 'ready: managed operating layer live and improving', type: 'success' },
+    ],
+  },
 ];
 
 interface ProcessPlaybackConsoleProps {
@@ -77,56 +87,48 @@ export default function ProcessPlaybackConsole({
 }: ProcessPlaybackConsoleProps = {}) {
   const [localActivePhaseIndex, localSetActivePhaseIndex] = useState(0);
   const [localIsPlaying, localSetIsPlaying] = useState(true);
-
-  const activePhaseIndex = externalActivePhaseIndex !== undefined ? externalActivePhaseIndex : localActivePhaseIndex;
-  const setActivePhaseIndex = externalSetActivePhaseIndex !== undefined ? externalSetActivePhaseIndex : localSetActivePhaseIndex;
-  const isPlaying = externalIsPlaying !== undefined ? externalIsPlaying : localIsPlaying;
-  const setIsPlaying = externalSetIsPlaying !== undefined ? externalSetIsPlaying : localSetIsPlaying;
   const [visibleLinesCount, setVisibleLinesCount] = useState(1);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const lineTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<any>(null);
+  const lineTimerRef = useRef<any>(null);
 
-  // Auto-play loop logic
+  const activePhaseIndex = externalActivePhaseIndex ?? localActivePhaseIndex;
+  const setActivePhaseIndex = externalSetActivePhaseIndex ?? localSetActivePhaseIndex;
+  const isPlaying = externalIsPlaying ?? localIsPlaying;
+  const setIsPlaying = externalSetIsPlaying ?? localSetIsPlaying;
+  const activePhase = PHASE_LOGS[activePhaseIndex];
+
   useEffect(() => {
-    if (isPlaying) {
-      timerRef.current = setInterval(() => {
-        setVisibleLinesCount(1);
-        setActivePhaseIndex((prev) => {
-          if (prev >= PHASE_LOGS.length - 1) {
-            return 0; // wrap around
-          }
-          return prev + 1;
-        });
-      }, 9500); // 9.5s per phase to let logs animate
-    }
+    if (!isPlaying) return;
+
+    timerRef.current = window.setInterval(() => {
+      setVisibleLinesCount(1);
+      setActivePhaseIndex((prev) => (prev >= PHASE_LOGS.length - 1 ? 0 : prev + 1));
+    }, 9200);
 
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) window.clearInterval(timerRef.current);
     };
-  }, [isPlaying]);
+  }, [isPlaying, setActivePhaseIndex]);
 
-  // Log line typing simulation
   useEffect(() => {
     setVisibleLinesCount(1);
-    if (lineTimerRef.current) clearInterval(lineTimerRef.current);
+    if (lineTimerRef.current) window.clearInterval(lineTimerRef.current);
 
     const maxLines = PHASE_LOGS[activePhaseIndex].commands.length;
-    lineTimerRef.current = setInterval(() => {
+    lineTimerRef.current = window.setInterval(() => {
       setVisibleLinesCount((prev) => {
         if (prev >= maxLines) {
-          if (lineTimerRef.current) clearInterval(lineTimerRef.current);
+          if (lineTimerRef.current) window.clearInterval(lineTimerRef.current);
           return maxLines;
         }
         return prev + 1;
       });
-    }, 1500); // print new log line every 1.5s
+    }, 1450);
 
     return () => {
-      if (lineTimerRef.current) clearInterval(lineTimerRef.current);
+      if (lineTimerRef.current) window.clearInterval(lineTimerRef.current);
     };
   }, [activePhaseIndex]);
-
-  const activePhase = PHASE_LOGS[activePhaseIndex];
 
   const handleRewind = () => {
     setVisibleLinesCount(1);
@@ -139,103 +141,100 @@ export default function ProcessPlaybackConsole({
   };
 
   return (
-    <div className="w-full max-w-[900px] mx-auto rounded-[2rem] border border-indigo-100 bg-white/45 backdrop-blur-md p-4 sm:p-6 shadow-[0_20px_50px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.7)]">
-      {/* Console Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-indigo-100 pb-4 mb-6">
+    <div className="enterprise-ice-card mx-auto w-full max-w-[980px] rounded-[2rem] p-4 sm:p-6">
+      <div className="mb-6 flex flex-col justify-between gap-4 border-b border-cyan-100 pb-4 sm:flex-row sm:items-center">
         <div>
-          <span className="text-[10px] font-mono tracking-widest text-indigo-600 font-bold uppercase block mb-1">
-            interactive pipeline
+          <span className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-cyan-700">
+            interactive delivery pipeline
           </span>
-          <h4 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-            Process Simulation Console
+          <h4 className="text-lg font-black tracking-tight text-slate-950 sm:text-xl">
+            Process simulation console
           </h4>
         </div>
 
-        {/* Playback Controls */}
         <div className="flex items-center gap-3">
           <button
             onClick={handleRewind}
-            title="Rewind to Phase 1"
-            className="w-9 h-9 rounded-xl border border-indigo-100 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-slate-50 hover:border-indigo-200 transition-all shadow-sm"
+            title="Rewind to phase 1"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-100 text-slate-500 shadow-sm transition-all hover:border-cyan-200 hover:bg-slate-50 hover:text-slate-800"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="h-4 w-4" />
           </button>
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             title={isPlaying ? 'Pause auto-play' : 'Play auto-play'}
-            className="w-11 h-11 rounded-xl bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-500 transition-all shadow-[0_4px_12px_rgba(99,102,241,0.2)]"
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white shadow-[0_4px_12px_rgba(15,23,42,0.2)] transition-all hover:bg-cyan-700"
           >
-            {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white ml-0.5" />}
+            {isPlaying ? <Pause className="h-5 w-5 fill-white" /> : <Play className="ml-0.5 h-5 w-5 fill-white" />}
           </button>
           <button
             onClick={handleForward}
-            title="Next Phase"
-            className="w-9 h-9 rounded-xl border border-indigo-100 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-slate-50 hover:border-indigo-200 transition-all shadow-sm"
+            title="Next phase"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-100 text-slate-500 shadow-sm transition-all hover:border-cyan-200 hover:bg-slate-50 hover:text-slate-800"
           >
-            <FastForward className="w-4 h-4" />
+            <FastForward className="h-4 w-4" />
           </button>
         </div>
       </div>
 
-      {/* Steps Navigation Bar */}
-      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mb-6">
-        {PHASE_LOGS.map((p, idx) => {
+      <div className="mb-6 grid grid-cols-5 gap-1.5 sm:gap-2">
+        {PHASE_LOGS.map((phase, idx) => {
           const isActive = idx === activePhaseIndex;
           return (
             <button
-              key={p.phase}
+              key={phase.phase}
               onClick={() => {
-                setIsPlaying(false); // Pause auto-loop on manual select
+                setIsPlaying(false);
                 setActivePhaseIndex(idx);
               }}
-              className={`flex flex-col items-center justify-center p-1.5 sm:p-3 rounded-xl border text-center transition-all ${
+              className={`relative flex flex-col items-center justify-center rounded-xl border p-1.5 text-center transition-all sm:p-3 ${
                 isActive
-                  ? 'bg-white border-indigo-200 shadow-[0_8px_20px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.85)]'
-                  : 'bg-transparent border-indigo-100 text-slate-500 hover:text-slate-850 hover:border-indigo-200'
+                  ? 'border-cyan-200 bg-white shadow-[0_8px_20px_rgba(8,145,178,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]'
+                  : 'border-cyan-100 bg-transparent text-slate-500 hover:border-cyan-200 hover:text-slate-800'
               }`}
             >
               <span
-                className="text-[8.5px] sm:text-[10px] font-mono font-bold"
-                style={{ color: isActive ? p.color : 'inherit' }}
+                className="text-[8.5px] font-mono font-bold sm:text-[10px]"
+                style={{ color: isActive ? phase.color : 'inherit' }}
               >
-                PHASE {p.phase}
+                PHASE {phase.phase}
               </span>
-              <span className="text-[7.5px] font-bold uppercase tracking-wider hidden md:block mt-1 max-w-[80px] truncate">
-                {p.title.split(' ')[0]}
+              <span className="mt-1 hidden max-w-[84px] truncate text-[7.5px] font-bold uppercase tracking-wider md:block">
+                {phase.title.split(' ')[0]}
               </span>
+              {isActive && isPlaying && (
+                <span className="absolute inset-x-2 bottom-1 h-0.5 overflow-hidden rounded-full bg-cyan-100">
+                  <span className="block h-full bg-cyan-600 progress-bar-fill" style={{ '--duration': '9.2s' } as CSSProperties} />
+                </span>
+              )}
             </button>
           );
         })}
       </div>
 
-      {/* Inner Simulator Screen */}
-      <div className="relative rounded-2xl border border-indigo-100 overflow-hidden shadow-[inset_0_2px_4px_rgba(99,102,241,0.015)] bg-indigo-50/20 flex flex-col h-60">
-        {/* Terminal Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-white/80 border-b border-indigo-100">
+      <div className="relative flex h-64 flex-col overflow-hidden rounded-2xl border border-cyan-100 bg-cyan-50/20 shadow-[inset_0_2px_4px_rgba(8,145,178,0.025)]">
+        <div className="flex items-center justify-between border-b border-cyan-100 bg-white/84 px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-green-400/80" />
             </div>
-            <span className="text-[9px] font-mono text-slate-500 font-bold uppercase tracking-wider ml-2 flex items-center gap-1">
-              <Terminal className="w-3.5 h-3.5 text-indigo-600" />
-              bash - pipeline-simulator
+            <span className="ml-2 flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-wider text-slate-500">
+              <Terminal className="h-3.5 w-3.5 text-cyan-700" />
+              pipeline-simulator
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span
-              className="text-[8px] font-mono font-bold px-2 py-0.5 rounded-full border bg-white"
-              style={{ color: activePhase.color, borderColor: `${activePhase.color}40` }}
-            >
-              ACTIVE: {activePhase.title}
-            </span>
-          </div>
+          <span
+            className="hidden rounded-full border bg-white px-2 py-0.5 text-[8px] font-mono font-bold sm:inline-flex"
+            style={{ color: activePhase.color, borderColor: `${activePhase.color}40` }}
+          >
+            ACTIVE: {activePhase.title}
+          </span>
         </div>
 
-        {/* Terminal Body */}
-        <div className="flex-grow p-5 font-mono text-[9.5px] text-slate-700 flex flex-col justify-start gap-2 overflow-y-auto leading-relaxed select-none text-left">
+        <div className="custom-scrollbar flex flex-grow flex-col justify-start gap-2 overflow-y-auto p-5 text-left font-mono text-[9.5px] leading-relaxed text-slate-700">
           <AnimatePresence mode="wait">
             <motion.div
               key={activePhaseIndex}
@@ -252,42 +251,51 @@ export default function ProcessPlaybackConsole({
                   transition={{ duration: 0.25 }}
                   className={`flex items-start gap-1.5 font-mono tracking-wide ${
                     cmd.type === 'command'
-                      ? 'text-indigo-700 font-bold'
+                      ? 'font-bold text-cyan-800'
                       : cmd.type === 'success'
-                      ? 'text-emerald-700 font-bold'
-                      : 'text-slate-500'
+                        ? 'font-bold text-emerald-700'
+                        : 'text-slate-500'
                   }`}
                 >
                   {cmd.type === 'command' ? (
                     <>
-                      <ChevronRight className="w-3.5 h-3.5 text-indigo-600 mt-0.5 flex-shrink-0" />
+                      <ChevronRight className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-cyan-700" />
                       <span>{cmd.text}</span>
                     </>
                   ) : cmd.type === 'success' ? (
                     <>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-emerald-600" />
                       <span>{cmd.text}</span>
                     </>
                   ) : (
                     <>
-                      <span className="text-slate-300 flex-shrink-0">⚙</span>
+                      <span className="flex-shrink-0 text-slate-300">::</span>
                       <span>{cmd.text}</span>
                     </>
                   )}
                 </motion.div>
               ))}
 
-              {/* Simulated blinking terminal cursor */}
               {visibleLinesCount < activePhase.commands.length && (
                 <motion.span
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ repeat: Infinity, duration: 0.9 }}
-                  className="w-1.5 h-3 bg-indigo-600 ml-5 block flex-shrink-0"
+                  className="ml-5 block h-3 w-1.5 flex-shrink-0 bg-cyan-700"
                 />
               )}
             </motion.div>
           </AnimatePresence>
         </div>
+      </div>
+
+      <div className="mt-4 grid gap-3 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4 md:grid-cols-[auto_1fr_auto] md:items-center">
+        <ShieldCheck className="h-5 w-5 text-emerald-700" />
+        <p className="text-sm font-semibold leading-6 text-emerald-950/80">
+          Each phase keeps the Kore-style tab rhythm, but the story is Cognisa: workflow intake, system build, governed AI, and managed improvement.
+        </p>
+        <span className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-[10px] font-black uppercase text-emerald-700">
+          Human in loop
+        </span>
       </div>
     </div>
   );

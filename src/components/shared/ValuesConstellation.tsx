@@ -44,7 +44,7 @@ export default function ValuesConstellation({ values }: ValuesConstellationProps
   }>>([]);
 
   const initParticles = useCallback((w: number, h: number) => {
-    const particles = [];
+    const particles = [] as any[];
     for (let i = 0; i < 60; i++) {
       particles.push({
         x: Math.random() * w,

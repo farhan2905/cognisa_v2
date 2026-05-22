@@ -45,7 +45,7 @@ export default function About() {
             className="lg:ml-auto lg:max-w-xl"
           >
             <p className="text-base font-semibold leading-8 text-slate-600 md:text-lg">
-              Managed solely by the founder of <strong className="text-slate-950">Cognisa</strong>, we turn manual work into custom web applications, AI automations, and reliable internal systems.
+              Managed solely by the founder of <strong className="text-black font-black">Cognisa</strong>, we turn manual work into custom web applications, AI automations, and reliable internal systems.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <EnterpriseButton href="/about" variant="secondary">
