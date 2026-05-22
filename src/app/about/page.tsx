@@ -3,58 +3,30 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
 import {
-  Target,
-  Zap,
-  BarChart3,
-  Lightbulb,
+  CheckCircle2,
   Users,
-  Globe,
-  ArrowRight,
 } from 'lucide-react';
-import Link from 'next/link';
 import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import SectionTag from '@/components/shared/SectionTag';
 import MiniNeuralConstellation from '@/components/shared/fragments/MiniNeuralConstellation';
-import LiveMetric from '@/components/shared/LiveMetric';
-import ValuesConstellation from '@/components/shared/ValuesConstellation';
-
-/* ── Values Data ── */
-const values = [
-  {
-    icon: Target,
-    title: 'Architecture First',
-    description:
-      'Every system is designed with robust architecture for maximum scalability and performance.',
-  },
-  {
-    icon: Zap,
-    title: 'Rapid Execution',
-    description:
-      'Agile development cycles that deliver fully functional software without compromising quality.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Automated Workflows',
-    description:
-      'Replace manual tasks with intelligent AI agents and seamless data integrations.',
-  },
-  {
-    icon: Lightbulb,
-    title: 'Code Quality',
-    description:
-      'Clean, maintainable, and modern codebases that future-proof your digital product.',
-  },
-];
+import ApplicationPathCards from '@/components/shared/ApplicationPathCards';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
 
 /* ── Stats Data ── */
 const stats = [
   { value: 200, suffix: '+', label: 'Projects Delivered' },
   { value: 50, suffix: '+', label: 'Happy Clients' },
-  { value: 98, suffix: '%', label: 'Client Satisfaction' },
   { value: 5, suffix: '+', label: 'Years Experience' },
+  { value: 4, suffix: '', label: 'Core Delivery Tracks' },
+];
+
+const deliveryStandards = [
+  'Discovery before build',
+  'Founder-led architecture',
+  'Production-ready deployment',
 ];
 
 /* ── Animated Counter ── */
@@ -83,23 +55,8 @@ function AnimatedCounter({ value, suffix, inView }: { value: number; suffix: str
   );
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.12,
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
 export default function AboutPage() {
-  const valuesRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const valuesInView = useInView(valuesRef, { once: true, margin: '-80px' });
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' });
 
   return (
@@ -177,56 +134,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Values Grid ── */}
-      <section className="relative py-12 md:py-20 overflow-hidden" ref={valuesRef}>
-        <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-indigo-200/40 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-violet-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-3" />
-
+      {/* ── Delivery Paths ── */}
+      <section className="relative overflow-hidden py-12 md:py-20">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-slate-50/70" />
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-          <SectionTag text="OUR VALUES" variant="light" />
+          <SectionTag text="HOW WE HELP" variant="light" />
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="text-2xl md:text-4xl font-bold text-foreground leading-tight tracking-tight mt-6 mb-12"
+            transition={{ duration: 0.7 }}
+            className="text-2xl md:text-4xl font-black text-slate-950 leading-tight mt-6 mb-5"
           >
-            The principles that guide{' '}
-            <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">every project.</span>
+            Choose the right delivery path for the system your business needs.
           </motion.h2>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <ValuesConstellation values={values} />
-          </motion.div>
-
-          {/* Fallback value cards below for mobile */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-10 lg:hidden">
-            {values.map((val, i) => {
-              const Icon = val.icon;
-              return (
-                <motion.div
-                  key={val.title}
-                  custom={i}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate={valuesInView ? 'visible' : 'hidden'}
-                  className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 md:p-7 min-h-[180px] flex flex-col justify-between rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-700 group"
-                >
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="w-12 h-12 rounded-xl bg-white/50 backdrop-blur-xl flex items-center justify-center mb-4 border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.04)]">
-                      <Icon className="w-5 h-5 text-indigo-500" />
-                    </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2 tracking-tight">{val.title}</h3>
-                    <p className="text-foreground/75 text-sm leading-relaxed font-medium">{val.description}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+          <p className="mb-10 max-w-3xl text-base font-semibold leading-8 text-slate-600">
+            Cognisa focuses on custom web applications, practical AI automation, and managed delivery support. The structure is repeatable, but every system is shaped around your workflow.
+          </p>
+          <ApplicationPathCards />
         </div>
       </section>
 
@@ -267,19 +192,12 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)]"
-                  >
-                    Work With Us
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/work"
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-foreground/15 rounded-full font-medium text-foreground/70 hover:text-foreground hover:border-foreground/25 transition-all"
-                  >
-                    View Our Work
-                  </Link>
+                  <EnterpriseButton href="/contact">
+                    Work with us
+                  </EnterpriseButton>
+                  <EnterpriseButton href="/work" variant="secondary">
+                    View our work
+                  </EnterpriseButton>
                 </div>
               </div>
             </div>
@@ -291,11 +209,13 @@ export default function AboutPage() {
       <section className="relative py-12 md:py-20 overflow-hidden" ref={statsRef}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-200 rounded-full blur-[200px] opacity-[0.06]" />
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-          {/* Live metrics bar */}
-          <div className="glass-surface rounded-[2rem] p-4 mb-8 flex flex-wrap items-center justify-center gap-6 border border-indigo-300/40 ring-1 ring-indigo-400/15">
-            <LiveMetric label="Active Projects" baseValue={12} variance={2} />
-            <LiveMetric label="Deploys Today" baseValue={8} variance={3} />
-            <LiveMetric label="AI Agents Online" baseValue={5} variance={1} />
+          <div className="mb-8 grid gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-3">
+            {deliveryStandards.map((standard) => (
+              <div key={standard} className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+                <span className="text-sm font-bold text-slate-700">{standard}</span>
+              </div>
+            ))}
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">

@@ -1,262 +1,155 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import SectionTag from '@/components/shared/SectionTag';
-import { Terminal, ArrowRight, Play, Pause, RotateCcw, ChevronRight } from 'lucide-react';
-import Link from 'next/link';
-import ProcessPlaybackConsole from '@/components/shared/ProcessPlaybackConsole';
+import { motion } from 'framer-motion';
+import {
+  BadgeCheck,
+  CircleAlert,
+  Gauge,
+  GitMerge,
+  Layers3,
+  LineChart,
+  MoveRight,
+  Sparkles,
+  TimerReset,
+} from 'lucide-react';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
 
-const PHASES = [
+const outcomeColumns = [
   {
-    id: '01',
-    title: 'Discovery & Strategy',
-    desc: 'Requirements gathering & roadmap scoping',
-    focus: 'Translating business goals into a structured technical plan, defining API scopes, database design, and key milestones.',
-    deliverable: '5-Milestone Roadmap & Cost Blueprint',
-    tools: ['Figma Layouts', 'User Persona Surveys', 'API Contracts'],
+    eyebrow: '01 · Roadblocks',
+    title: 'Teams lose momentum inside manual work.',
+    copy: 'Growth slows when every customer request, report, approval, and handoff depends on people copying context between tools.',
+    icon: CircleAlert,
+    accent: 'text-amber-700 bg-amber-50 border-amber-200',
+    points: ['Scattered inboxes', 'Slow approvals', 'Invisible status', 'Repeated data entry'],
   },
   {
-    id: '02',
-    title: 'Architecture & Design',
-    desc: 'System blueprints & database schemas',
-    focus: 'Designing schemas, relationship maps, container orchestrations, and configuring third-party integration contracts.',
-    deliverable: 'ERD Database Blueprints & OpenAPI Specs',
-    tools: ['Prisma Schema', 'Docker Blueprints', 'AWS VPC Maps'],
+    eyebrow: '02 · Cognisa system',
+    title: 'We design the agent and software layer around the work.',
+    copy: 'AI agents, interfaces, APIs, and human approval points are built together so automation is useful, governed, and easy to operate.',
+    icon: Sparkles,
+    accent: 'text-indigo-700 bg-indigo-50 border-indigo-200',
+    points: ['Agent workflows', 'Custom dashboards', 'System integrations', 'Support controls'],
   },
   {
-    id: '03',
-    title: 'Engineering & Development',
-    desc: 'Blazing-fast production code development',
-    focus: 'Structuring high-performance frontend interfaces, writing server-side APIs, and building automated background pipelines.',
-    deliverable: 'Production-ready Next.js & Node.js codebases',
-    tools: ['Next.js App Router', 'TypeScript Core', 'Redis Caches'],
-  },
-  {
-    id: '04',
-    title: 'Testing & QA',
-    desc: 'Automated test suite & security audit',
-    focus: 'Deploying isolated testing runners, conducting compliance assessments, and verifying conversion paths via Playwright.',
-    deliverable: '100% Passed Tests & Lighthouse Audits',
-    tools: ['Jest Units', 'Playwright E2E', 'Lighthouse Audits'],
-  },
-  {
-    id: '05',
-    title: 'Launch & Support',
-    desc: 'Global CDN distribution & live release',
-    focus: 'Publishing production builds, configuring real-time error tracking software, and guaranteeing SLA uptime monitors.',
-    deliverable: 'Live Production URL & Edge CDN Caching',
-    tools: ['Vercel Edge CDN', 'Sentry Trackers', 'Datadog Monitors'],
+    eyebrow: '03 · Outcomes',
+    title: 'The result is a business that moves with less friction.',
+    copy: 'Your team gets cleaner data, faster response loops, fewer repetitive tasks, and a managed system that keeps improving after launch.',
+    icon: BadgeCheck,
+    accent: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+    points: ['Faster cycles', 'Measurable savings', 'Cleaner ownership', 'Managed iteration'],
   },
 ];
 
+const proofMetrics = [
+  { value: '6', label: 'core systems connected', icon: GitMerge },
+  { value: '42%', label: 'admin effort removed', icon: TimerReset },
+  { value: '3.4x', label: 'faster customer loops', icon: Gauge },
+];
+
 export default function Solutions() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-80px' });
-  const [activePhaseIndex, setActivePhaseIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    // Moderate tilt for the wide console card
-    setRotateX((y - 0.5) * -4);
-    setRotateY((x - 0.5) * 4);
-    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-    setIsHovered(false);
-  };
-
-  const handlePhaseSelect = (idx: number) => {
-    setIsPlaying(false);
-    setActivePhaseIndex(idx);
-  };
-
   return (
-    <section id="solutions" ref={containerRef} className="relative py-10 md:py-16 lg:py-24 overflow-hidden">
-      {/* Background Orbs */}
-      <div className="absolute top-1/3 left-[-10%] w-[450px] h-[450px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
-      <div className="absolute bottom-1/3 right-[-10%] w-[400px] h-[400px] bg-violet-200/20 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
-
-      <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <SectionTag text="INTERACTIVE PIPELINE" variant="light" className="justify-center" />
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold text-foreground mt-4 tracking-tight leading-tight"
-          >
-            Process Simulation{' '}
-            <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-650 to-violet-600 px-3 py-1 rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
-              Console
-            </span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.15, duration: 0.6 }}
-            className="text-foreground/60 text-base md:text-lg font-medium max-w-xl mx-auto mt-4"
-          >
-            Bypass the standard black-box agency workflow. Real-time logging of how your projects move from strategy to launch.
-          </motion.p>
+    <section id="solutions" className="section-anchor relative overflow-hidden bg-white/70 px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-9 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-xs font-black uppercase text-emerald-700">From friction to leverage</p>
+            <h2 className="mt-3 text-3xl font-black leading-tight text-slate-950 md:text-5xl">
+              A practical path from business bottlenecks to managed AI systems.
+            </h2>
+          </div>
+          <EnterpriseButton href="/process" variant="secondary" className="w-fit">
+            View our process
+          </EnterpriseButton>
         </div>
 
-        {/* Console Container Card (Same style as Service Bento Cards) */}
-        <motion.div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={handleMouseLeave}
-          animate={{ rotateX, rotateY }}
-          transition={{ type: 'spring', stiffness: 220, damping: 25 }}
-          className="relative overflow-hidden rounded-[2.5rem] backdrop-blur-2xl border border-indigo-300/30 ring-1 ring-indigo-400/10 bg-gradient-to-br from-blue-600/[0.03] via-indigo-500/[0.015] to-transparent shadow-[0_12px_40px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.45)] hover:border-indigo-300/50 hover:shadow-[0_24px_60px_rgba(99,102,241,0.1),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-500 p-6 md:p-8 lg:p-10"
-          style={{ transformStyle: 'preserve-3d', perspective: 1500 }}
-        >
-          {/* Spotlight background overlay */}
-          {isHovered && (
-            <div
-              className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-300"
-              style={{
-                background: `radial-gradient(700px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
-              }}
-            />
-          )}
+        <div className="grid gap-4 lg:grid-cols-3">
+          {outcomeColumns.map((column, index) => {
+            const Icon = column.icon;
 
-          {/* Light Sweep Effect */}
-          <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[35deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
-
-          {/* Ambient color gradient orb */}
-          <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[60px] bg-indigo-500/15 pointer-events-none z-0" />
-
-          {/* Bento grid inside the card */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative z-10 items-stretch">
-            
-            {/* Left Column: Interactive Subcards of Process */}
-            <div className="lg:col-span-5 flex flex-col justify-between" style={{ transform: 'translateZ(30px)' }}>
-              <div>
-                <div className="flex items-center gap-2.5 mb-6">
-                  <Terminal className="w-5 h-5 text-indigo-600" />
-                  <span className="text-[10px] font-mono uppercase tracking-[0.15em] bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-full text-indigo-650 font-bold">
-                    bash - pipeline-simulator
+            return (
+              <motion.article
+                key={column.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-90px' }}
+                transition={{ duration: 0.55, delay: index * 0.1 }}
+                className="relative flex min-h-[430px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-emerald-400 opacity-80" />
+                <div className="mb-7 flex items-center justify-between gap-4">
+                  <span className="text-xs font-black uppercase text-slate-500">{column.eyebrow}</span>
+                  <span className={`flex h-11 w-11 items-center justify-center rounded-lg border ${column.accent}`}>
+                    <Icon className="h-5 w-5" />
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-foreground mb-6 tracking-tight">
-                  ACTIVE: {activePhaseIndex === 4 ? 'Launch & Support' : PHASES[activePhaseIndex].title}
-                </h3>
+                <h3 className="text-2xl font-black leading-tight text-slate-950">{column.title}</h3>
+                <p className="mt-4 text-sm font-medium leading-7 text-slate-600">{column.copy}</p>
 
-                {/* Subcards list */}
-                <div className="flex flex-col gap-3 mb-8">
-                  {PHASES.map((phase, idx) => {
-                    const isActive = idx === activePhaseIndex;
-                    return (
-                      <button
-                        key={phase.id}
-                        onClick={() => handlePhaseSelect(idx)}
-                        className={`text-left p-3.5 rounded-2xl border transition-all duration-300 flex items-start gap-4 relative group/item ${
-                          isActive
-                            ? 'bg-white border-indigo-200 shadow-[0_4px_16px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.8)] scale-[1.02]'
-                            : 'bg-white/40 border-indigo-100/50 hover:bg-white/70 hover:border-indigo-200'
-                        }`}
-                      >
-                        {isActive && (
-                          <div className="absolute left-0 top-3.5 bottom-3.5 w-1 bg-indigo-600 rounded-r-md" />
-                        )}
-                        <span
-                          className={`text-xs font-mono font-bold px-2 py-0.5 rounded-lg border ${
-                            isActive
-                              ? 'bg-indigo-50 border-indigo-250 text-indigo-650'
-                              : 'bg-foreground/5 border-foreground/10 text-foreground/55 group-hover/item:text-foreground/85'
-                          }`}
-                        >
-                          PHASE {phase.id}
-                        </span>
-                        <div>
-                          <h4
-                            className={`text-xs font-extrabold tracking-tight ${
-                              isActive ? 'text-indigo-950' : 'text-slate-700'
-                            }`}
-                          >
-                            {phase.title}
-                          </h4>
-                          {isActive && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.3 }}
-                              className="text-[10px] text-foreground/75 mt-2 pt-2 border-t border-indigo-100 flex flex-col gap-2 font-medium"
-                            >
-                              <p className="leading-normal text-[10.5px] text-slate-600">
-                                {phase.focus}
-                              </p>
-                              <div className="flex flex-col gap-1">
-                                <div className="text-[9px] uppercase tracking-wider font-extrabold text-indigo-650 flex items-center gap-1.5">
-                                  <span>Outcome:</span>
-                                  <span className="bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded text-[8.5px] text-indigo-700 font-bold lowercase first-letter:uppercase">
-                                    {phase.deliverable}
-                                  </span>
-                                </div>
-                                <div className="flex flex-wrap gap-1 mt-1">
-                                  {phase.tools.map((tool) => (
-                                    <span
-                                      key={tool}
-                                      className="text-[8px] font-mono px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-slate-600 rounded"
-                                    >
-                                      {tool}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            </motion.div>
-                          )}
-                        </div>
-                        <ChevronRight
-                          className={`w-3.5 h-3.5 ml-auto self-center transition-all ${
-                            isActive ? 'text-indigo-600 translate-x-0.5' : 'text-slate-400 opacity-0 group-hover/item:opacity-100'
-                          }`}
-                        />
-                      </button>
-                    );
-                  })}
+                <div className="mt-auto pt-7">
+                  <div className="space-y-2.5">
+                    {column.points.map((point) => (
+                      <div key={point} className="flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                        <MoveRight className="h-4 w-4 shrink-0 text-slate-400" />
+                        <span className="text-sm font-bold text-slate-700">{point}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-90px' }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-950 text-white shadow-[0_22px_70px_rgba(15,23,42,0.22)]"
+        >
+          <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
+            <div className="border-b border-white/10 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-3 py-1.5 text-xs font-bold uppercase text-cyan-200">
+                <Layers3 className="h-3.5 w-3.5" />
+                Managed delivery snapshot
               </div>
-
-              {/* Action Button */}
-              <Link
-                href="/process"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-500/10 text-indigo-600 border border-indigo-500/20 rounded-full font-bold text-sm hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white hover:border-transparent transition-all w-fit shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
-              >
-                Learn More About Process <ArrowRight className="w-4 h-4" />
-              </Link>
+              <h3 className="text-2xl font-black leading-tight md:text-3xl">
+                Strategy, build, automation, and support stay connected after launch.
+              </h3>
+              <p className="mt-4 text-sm font-medium leading-7 text-slate-300">
+                Cognisa works like a product team for your operations: we map the workflow, ship the system, measure adoption, and keep improving the parts that create leverage.
+              </p>
             </div>
 
-            {/* Right Column: Console Simulator */}
-            <div className="lg:col-span-7 flex flex-col relative" style={{ transform: 'translateZ(20px)' }}>
-              <ProcessPlaybackConsole
-                activePhaseIndex={activePhaseIndex}
-                setActivePhaseIndex={setActivePhaseIndex}
-                isPlaying={isPlaying}
-                setIsPlaying={setIsPlaying}
-              />
-            </div>
+            <div className="grid gap-0 sm:grid-cols-3">
+              {proofMetrics.map((metric) => {
+                const Icon = metric.icon;
 
+                return (
+                  <div key={metric.label} className="border-b border-white/10 p-6 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+                    <Icon className="mb-5 h-6 w-6 text-cyan-300" />
+                    <p className="text-4xl font-black">{metric.value}</p>
+                    <p className="mt-2 text-sm font-semibold leading-6 text-slate-300">{metric.label}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </motion.div>
+
+        <div className="mt-6 flex flex-col gap-3 rounded-lg border border-slate-200 bg-white/82 p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <LineChart className="mt-1 h-5 w-5 shrink-0 text-emerald-600" />
+            <p className="text-sm font-semibold leading-7 text-slate-700">
+              Start with one workflow, prove the return, then expand the system into the next bottleneck.
+            </p>
+          </div>
+          <EnterpriseButton href="/contact" className="shrink-0">
+            Start planning
+          </EnterpriseButton>
+        </div>
       </div>
     </section>
   );

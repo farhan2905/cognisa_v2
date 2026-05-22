@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, ArrowUpRight } from 'lucide-react';
+import { CheckCircle2, Mail, MapPin, Clock, ArrowUpRight } from 'lucide-react';
 import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
@@ -9,10 +9,15 @@ import ContactForm from '@/components/shared/ContactForm';
 import IridescentBlobBackground from '@/components/shared/fragments/IridescentBlobBackground';
 
 const contactInfo = [
-  { icon: Mail, label: 'Email', value: 'hello@cognisa.in', href: 'mailto:hello@cognisa.in', color: '#6366f1' },
-  { icon: Phone, label: 'Phone', value: '+1 (234) 567-890', href: 'tel:+1234567890', color: '#8b5cf6' },
-  { icon: MapPin, label: 'Location', value: 'New York, NY', href: null, color: '#3b82f6' },
-  { icon: Clock, label: 'Working Hours', value: 'Mon — Fri, 9am — 6pm IST', href: null, color: '#06b6d4' },
+  { icon: Mail, label: 'Email', value: 'hello@cognisa.in', href: 'mailto:hello@cognisa.in', color: '#06b6d4' },
+  { icon: MapPin, label: 'Location', value: 'New York, NY', href: null, color: '#10b981' },
+  { icon: Clock, label: 'Response window', value: 'Within 1 business day', href: null, color: '#6366f1' },
+];
+
+const goodFitSignals = [
+  'A workflow is slowing your team down',
+  'Your tools do not connect cleanly',
+  'You need custom software with post-launch ownership',
 ];
 
 const faqs = [
@@ -60,12 +65,12 @@ export default function ContactPage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl p-6 rounded-[2rem] border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.16),inset_0_1px_0_rgba(255,255,255,1)] transition-all duration-500 group hover:-translate-y-1 hover:border-indigo-300/60"
+                    className="relative overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 group hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
                   >
                     <div className="flex items-start gap-4">
                       <motion.div
                         whileHover={{ rotate: 15, scale: 1.1 }}
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                        className="w-12 h-12 rounded-lg border border-slate-200 bg-slate-50 flex items-center justify-center shrink-0"
                         style={{ backgroundColor: `${info.color}15` }}
                       >
                         <Icon className="w-5 h-5" style={{ color: info.color }} />
@@ -77,13 +82,13 @@ export default function ContactPage() {
                         {info.href ? (
                           <a
                             href={info.href}
-                            className="text-sm font-medium text-foreground/70 hover:text-indigo-500 transition-colors inline-flex items-center gap-1 group/item"
+                            className="text-sm font-bold text-slate-700 hover:text-cyan-700 transition-colors inline-flex items-center gap-1 group/item"
                           >
                             {info.value}
                             <ArrowUpRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity" />
                           </a>
                         ) : (
-                          <p className="text-sm font-medium text-foreground/70">{info.value}</p>
+                          <p className="text-sm font-bold text-slate-700">{info.value}</p>
                         )}
                       </div>
                     </div>
@@ -91,23 +96,19 @@ export default function ContactPage() {
                 );
               })}
 
-              {/* Social Links */}
-              <GlassContentBlock className="p-6">
-                <p className="text-[10px] font-mono text-foreground/40 uppercase tracking-wider mb-4">
-                  Follow us
+              <div className="rounded-lg border border-slate-200 bg-slate-950 p-6 text-white shadow-[0_18px_48px_rgba(15,23,42,0.14)]">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100/80">
+                  Best fit
                 </p>
-                <div className="flex items-center gap-3">
-                  {['X', 'LinkedIn', 'Instagram', 'Dribbble'].map((social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="px-3 py-1.5 rounded-lg bg-foreground/5 border border-foreground/10 text-xs font-medium text-foreground/50 hover:text-indigo-500 hover:border-indigo-300/40 hover:bg-indigo-500/5 transition-all"
-                    >
-                      {social}
-                    </a>
+                <div className="mt-5 space-y-3">
+                  {goodFitSignals.map((signal) => (
+                    <div key={signal} className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.06] p-3">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                      <span className="text-sm font-bold leading-6 text-white/80">{signal}</span>
+                    </div>
                   ))}
                 </div>
-              </GlassContentBlock>
+              </div>
             </div>
           </div>
         </div>

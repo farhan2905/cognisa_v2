@@ -1,13 +1,20 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Code2, BrainCircuit, TrendingUp, Server, ArrowRight, Globe } from 'lucide-react';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  ArrowRight,
+  BrainCircuit,
+  CheckCircle2,
+  Globe,
+  Server,
+  TrendingUp,
+  Workflow,
+} from 'lucide-react';
 import Link from 'next/link';
-import WebPreviewFrame from '@/components/shared/fragments/WebPreviewFrame';
-import TaskFlowSimulation from '@/components/shared/fragments/TaskFlowSimulation';
-import ServerTopologyMap from '@/components/shared/fragments/ServerTopologyMap';
-import CICDPipelineSimulator from '@/components/shared/fragments/CICDPipelineSimulator';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
+import SectionTag from '@/components/shared/SectionTag';
+import { cn } from '@/lib/utils';
 
 const services = [
   {
@@ -17,31 +24,46 @@ const services = [
     slug: 'web-development',
     title: 'Website & Web Apps',
     description:
-      'Build fast, scalable, and custom web applications that solve your precise business bottlenecks. We deliver clean, maintainable code engineered for high performance.',
-    subservices: ['Custom Web Applications', 'API Integration', 'Legacy System Modernization', 'E-Commerce & Portals'],
-    color: '#4f46e5', // indigo-600
+      'Custom web applications, portals, dashboards, and commerce systems designed around the way your business actually operates.',
+    subservices: ['Custom web apps', 'Portals', 'API integrations', 'Commerce workflows'],
+    proof: ['Fast user journeys', 'Maintainable codebases', 'Scalable product foundations'],
+    accent: 'cyan',
+    tone: 'border-cyan-200 bg-cyan-50 text-cyan-700',
+    dot: 'bg-cyan-500',
+    line: 'from-cyan-500 to-sky-500',
+    glow: 'rgba(6, 182, 212, 0.16)',
   },
   {
     icon: BrainCircuit,
     number: '02',
-    category: 'Intelligence',
+    category: 'Automation',
     slug: 'ai-automation',
     title: 'AI & Automation',
     description:
-      'Replace manual data entry and repetitive workflows with intelligent AI agents. We build custom software solutions that operate 24/7 without fatiguing.',
-    subservices: ['Workflow Automation', 'Custom AI Agents', 'Data Processing Pipelines', 'Automated Support'],
-    color: '#7c3aed', // violet-600
+      'AI agents and workflow automations that remove repetitive work, connect your tools, and keep key processes moving.',
+    subservices: ['AI agents', 'Data extraction', 'Workflow routing', 'Automated support'],
+    proof: ['Less manual handoff', 'Cleaner operating data', 'Faster response loops'],
+    accent: 'emerald',
+    tone: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+    dot: 'bg-emerald-500',
+    line: 'from-emerald-500 to-teal-500',
+    glow: 'rgba(16, 185, 129, 0.16)',
   },
   {
     icon: TrendingUp,
     number: '03',
-    category: 'Infrastructure',
+    category: 'Architecture',
     slug: 'system-architecture',
     title: 'System Architecture',
     description:
-      'Robust system design ensuring zero downtime and infinite scalability. We design and deploy robust architectures that can handle millions of requests.',
-    subservices: ['Scalable Databases', 'Microservices', 'API Development', 'Load Balancing'],
-    color: '#6366f1', // indigo-500
+      'Reliable technical foundations for products that need clean data flow, predictable performance, and room to grow.',
+    subservices: ['System design', 'Databases', 'Microservices', 'API architecture'],
+    proof: ['Clear ownership boundaries', 'Lower scaling risk', 'Better release confidence'],
+    accent: 'amber',
+    tone: 'border-amber-200 bg-amber-50 text-amber-700',
+    dot: 'bg-amber-500',
+    line: 'from-amber-500 to-orange-500',
+    glow: 'rgba(245, 158, 11, 0.17)',
   },
   {
     icon: Server,
@@ -50,253 +72,216 @@ const services = [
     slug: 'cloud-infrastructure',
     title: 'Cloud Infrastructure',
     description:
-      'Secure, managed cloud deployments optimized for cost and speed. Keep your custom infrastructure secure and running smoothly with zero downtime.',
-    subservices: ['Managed Hosting', 'CI/CD Pipelines', 'Security & Compliance', 'Edge Networks'],
-    color: '#818cf8', // indigo-400
+      'Managed deployment, hosting, CI/CD, security, and cloud operations for teams that need software to stay dependable.',
+    subservices: ['Managed hosting', 'CI/CD', 'Monitoring', 'Security hardening'],
+    proof: ['Repeatable deployments', 'Cost-aware hosting', 'Production support'],
+    accent: 'indigo',
+    tone: 'border-indigo-200 bg-indigo-50 text-indigo-700',
+    dot: 'bg-indigo-500',
+    line: 'from-indigo-500 to-violet-500',
+    glow: 'rgba(99, 102, 241, 0.16)',
   },
 ];
 
-export default function Services() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
-  // Spotlight coordinates states
-  const [leftCoords, setLeftCoords] = useState({ x: 0, y: 0 });
-  const [leftHovered, setLeftHovered] = useState(false);
-  const [rightCoords, setRightCoords] = useState({ x: 0, y: 0 });
-  const [rightHovered, setRightHovered] = useState(false);
+type Service = (typeof services)[number];
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    let index = Math.floor(latest * 4);
-    if (index >= 4) index = 3;
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-    }
-  });
-
-  const activeService = services[activeIndex];
-
-  const handleLeftMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setLeftCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const handleRightMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setRightCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
+function ServiceCard({
+  service,
+  index,
+  active,
+  onSelect,
+}: {
+  service: Service;
+  index: number;
+  active: boolean;
+  onSelect: () => void;
+}) {
+  const Icon = service.icon;
 
   return (
-    <section id="services" ref={containerRef} className="section-anchor relative h-[360vh] md:h-[400vh] bg-transparent">
-      {/* Sticky visible area */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-start lg:justify-center items-center pt-16 pb-6 md:pt-20 md:pb-10 lg:pt-0">
-        
-        {/* Background ambient glow */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="noise-overlay absolute inset-0 opacity-30" />
-          <motion.div 
-            animate={{ 
-              background: `radial-gradient(circle at 50% 50%, ${activeService.color}10 0%, transparent 60%)`
-            }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 w-full h-full"
-          />
+    <motion.button
+      type="button"
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      onClick={onSelect}
+      className={cn(
+        'group relative flex h-full min-h-[260px] flex-col overflow-hidden rounded-lg border bg-white p-5 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]',
+        active ? 'border-slate-300 shadow-[0_20px_55px_rgba(15,23,42,0.10)]' : 'border-slate-200'
+      )}
+    >
+      <div
+        className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r"
+        style={{ backgroundImage: `linear-gradient(90deg, ${service.glow}, transparent)` }}
+      />
+      <div
+        className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl transition-opacity duration-300 group-hover:opacity-100"
+        style={{ backgroundColor: service.glow, opacity: active ? 1 : 0.45 }}
+      />
+
+      <div className="relative z-10 flex items-start justify-between gap-4">
+        <div className={cn('flex h-11 w-11 items-center justify-center rounded-lg border', service.tone)}>
+          <Icon className="h-5 w-5" />
+        </div>
+        <span className="font-mono text-xs font-black text-slate-300">{service.number}</span>
+      </div>
+
+      <div className="relative z-10 mt-6">
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{service.category}</p>
+        <h3 className="mt-3 text-2xl font-black tracking-tight text-slate-950">{service.title}</h3>
+        <p className="mt-3 text-sm font-semibold leading-7 text-slate-600">{service.description}</p>
+      </div>
+
+      <div className="relative z-10 mt-6 flex flex-wrap gap-2">
+        {service.subservices.slice(0, 3).map((item) => (
+          <span key={item} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600">
+            {item}
+          </span>
+        ))}
+      </div>
+
+      <div className="relative z-10 mt-auto pt-6">
+        <span className="inline-flex items-center gap-2 text-sm font-black text-slate-950">
+          Explore service
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </div>
+    </motion.button>
+  );
+}
+
+function ActiveServicePreview({ service }: { service: Service }) {
+  const Icon = service.icon;
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={service.slug}
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -18 }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-950 p-5 text-white shadow-[0_24px_80px_rgba(15,23,42,0.18)] sm:p-6 lg:p-8"
+      >
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:42px_42px] opacity-20" />
+        <div
+          className="absolute right-0 top-0 h-72 w-72 rounded-full blur-3xl"
+          style={{ backgroundColor: service.glow }}
+        />
+
+        <div className="relative z-10 flex flex-col gap-8">
+          <div className="flex items-start justify-between gap-5">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 text-xs font-black uppercase text-cyan-100">
+                <Workflow className="h-4 w-4" />
+                Delivery layer
+              </div>
+              <h3 className="text-2xl font-black tracking-tight sm:text-3xl">{service.title}</h3>
+              <p className="mt-3 max-w-xl text-sm font-semibold leading-7 text-slate-300">{service.description}</p>
+            </div>
+            <div className={cn('hidden h-12 w-12 shrink-0 items-center justify-center rounded-lg border sm:flex', service.tone)}>
+              <Icon className="h-5 w-5" />
+            </div>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {service.subservices.map((item, index) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.06, duration: 0.3 }}
+                className="rounded-lg border border-white/10 bg-white/[0.06] p-4"
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <span className={cn('h-2 w-2 rounded-full', service.dot)} />
+                  <span className="text-xs font-black uppercase text-white/50">Capability</span>
+                </div>
+                <p className="text-sm font-bold text-white">{item}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+            <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-white/50">What this improves</p>
+            <div className="grid gap-3 md:grid-cols-3">
+              {service.proof.map((item) => (
+                <div key={item} className="flex items-start gap-2 text-sm font-semibold text-slate-200">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Link
+            href={`/services/${service.slug}`}
+            className="group inline-flex w-fit items-center gap-2 text-sm font-black text-cyan-100"
+          >
+            View {service.title}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+export default function Services() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeService = services[activeIndex];
+
+  return (
+    <section id="services" className="section-anchor relative overflow-hidden bg-white/70 px-4 py-14 sm:px-6 md:py-20 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-10 flex flex-col gap-6 md:mb-14 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionTag text="OUR SERVICES" variant="light" />
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="text-3xl font-black tracking-tight text-slate-950 md:text-5xl"
+            >
+              Services that become operating systems, not one-off deliverables.
+            </motion.h2>
+            <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-slate-600">
+              Cognisa handles the product thinking, engineering, automation, and managed delivery needed to turn business bottlenecks into reliable software.
+            </p>
+          </div>
+          <EnterpriseButton href="/services" variant="secondary" className="w-fit">
+            View all services
+          </EnterpriseButton>
         </div>
 
-        {/* Content Wrapper */}
-        <div className="relative z-10 w-full max-w-[1200px] mx-auto flex flex-col items-center">
-          
-          {/* Header Area */}
-          <div className="text-center max-w-3xl mx-auto px-4 mb-4 sm:mb-8 md:mb-16 w-full">
-            <div className="inline-flex items-center gap-4 px-6 py-2 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-3 sm:mb-6 group">
-              <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md group-hover:scale-110 transition-transform" />
-              <span className="text-sm md:text-base font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
-                OUR SERVICES
-              </span>
-              <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
-            </div>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#38bdf8] via-[#818cf8] to-[#c084fc] drop-shadow-sm mb-2 sm:mb-4 leading-tight tracking-tight">
-              Services that drive growth.
-            </h2>
-            <p className="text-foreground/70 text-base md:text-lg leading-relaxed mb-6 font-medium hidden md:block">
-              No running around for different experts. We handle it all. From custom software to AI automation, we build the systems that scale your business.
-            </p>
-            <Link 
-              href="/services" 
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] group mx-auto hidden md:inline-flex"
-            >
-              View All Services
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+        <div className="grid gap-5 lg:grid-cols-[1fr_0.95fr] lg:items-start">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {services.map((service, index) => (
+              <ServiceCard
+                key={service.slug}
+                service={service}
+                index={index}
+                active={activeIndex === index}
+                onSelect={() => setActiveIndex(index)}
+              />
+            ))}
           </div>
 
-          {/* Cards Area */}
-          <div className="w-full relative h-[480px] sm:h-[520px] md:h-[460px] lg:h-[490px] mb-4 md:mb-8 px-4">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: -15, filter: 'blur(4px)' }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute inset-0 w-[calc(100%-2rem)] left-4 glass-surface-strong rounded-[1.5rem] md:rounded-[2rem] flex flex-col overflow-hidden border border-indigo-300/40 shadow-[0_20px_50px_rgba(99,102,241,0.06)]"
-                style={{
-                  boxShadow: `0 24px 60px rgba(99,102,241,0.05), 0 0 25px ${activeService.color}15, inset 0 1px 0 rgba(255, 255, 255, 0.45)`
-                }}
-              >
-                {/* Decorative ambient color blur inside card */}
-                <div 
-                  className="absolute -top-32 -left-32 w-64 h-64 rounded-full blur-[90px] opacity-25 pointer-events-none" 
-                  style={{ backgroundColor: activeService.color }} 
-                />
-                
-                {/* Browser Top Bar */}
-                <div className="w-full flex items-center gap-2 px-6 py-3 md:py-4 glass-surface border-b border-indigo-300/30 border-x-0 border-t-0">
-                  <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-                  </div>
-                  <div className="text-[10px] sm:text-[10px] font-mono text-foreground/40 ml-4 truncate max-w-[50%]">cognisa.io/services/{activeService.slug}</div>
-                </div>
-
-                {/* Card Content Row */}
-                <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-12 items-stretch p-4 md:p-10 lg:p-12 pb-4 md:pb-12 h-full flex-grow relative">
-                  
-                  {/* Left Content with spotlight */}
-                  <div 
-                    onMouseMove={handleLeftMouseMove}
-                    onMouseEnter={() => setLeftHovered(true)}
-                    onMouseLeave={() => setLeftHovered(false)}
-                    className="w-full md:w-[50%] text-left relative z-10 flex flex-col justify-start md:justify-center flex-grow md:h-full p-2 pb-0 md:p-6 rounded-2xl transition-all duration-500 overflow-hidden"
-                  >
-                    {leftHovered && (
-                      <div 
-                        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
-                        style={{
-                          background: `radial-gradient(280px circle at ${leftCoords.x}px ${leftCoords.y}px, rgba(99, 102, 241, 0.07), transparent 80%)`,
-                        }}
-                      />
-                    )}
-
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent border border-indigo-300/30 text-[10px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60 mb-2 md:mb-6 w-fit shadow-sm relative z-10">
-                      {activeService.category}
-                    </div>
-                    
-                    <h3 className="text-[26px] sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-foreground mb-2 md:mb-3 tracking-tight leading-tight relative z-10">
-                      {activeService.title}
-                    </h3>
-                    
-                    <p className="text-[15px] sm:text-base md:text-base text-slate-700 mb-3 md:mb-6 leading-relaxed font-medium relative z-10">
-                      {activeService.description}
-                    </p>
-                    
-                    <div className="mt-auto pt-3 md:pt-0 block relative z-10">
-                      <Link href={`/services/${activeService.slug}`} className="group inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-br from-blue-600/[0.05] via-indigo-500/[0.02] to-transparent hover:bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/30 rounded-[1.25rem] text-sm md:text-sm font-semibold transition-all text-foreground/80 hover:text-foreground">
-                        Explore {activeService.title}
-                        <ArrowRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Right Graphic Area (Bento Visual Simulator) with spotlight */}
-                  <div 
-                    onMouseMove={handleRightMouseMove}
-                    onMouseEnter={() => setRightHovered(true)}
-                    onMouseLeave={() => setRightHovered(false)}
-                    className="w-full md:w-[50%] h-52 sm:h-60 md:h-full rounded-[1rem] md:rounded-[1.5rem] flex flex-col relative overflow-hidden p-0 md:p-6 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08)] group/right"
-                  >
-                    {rightHovered && (
-                      <div 
-                        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
-                        style={{
-                          background: `radial-gradient(350px circle at ${rightCoords.x}px ${rightCoords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
-                        }}
-                      />
-                    )}
-                    
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] to-transparent pointer-events-none z-0" />
-                    
-                    <div className="relative z-10 flex flex-col h-full opacity-[0.95] w-full justify-between">
-                      {/* Subservices as flex chips (hidden on mobile, visible on desktop) */}
-                      <div className="hidden md:flex flex-wrap gap-1.5 mb-3">
-                        {activeService.subservices.map((sub, idx) => (
-                          <span 
-                            key={idx} 
-                            className="px-2.5 py-1 text-[9px] md:text-[10px] font-semibold bg-white/40 border border-indigo-200/50 text-slate-700 rounded-lg shadow-sm backdrop-blur-sm"
-                          >
-                            {sub}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Interactive Simulation Block */}
-                      <div className="w-full mt-auto flex-grow flex items-center">
-                        {activeIndex === 0 && <WebPreviewFrame />}
-                        {activeIndex === 1 && <TaskFlowSimulation />}
-                        {activeIndex === 2 && <ServerTopologyMap />}
-                        {activeIndex === 3 && <CICDPipelineSimulator />}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+          <div className="lg:sticky lg:top-8">
+            <ActiveServicePreview service={activeService} />
           </div>
-
-          {/* Arched Pagination Overlay */}
-          <div className="flex flex-col items-center justify-center relative w-full h-[100px] md:h-[140px] pointer-events-none mt-2 md:mt-4">
-            <div className="relative w-full h-full flex justify-center items-start">
-              {services.map((service, i) => {
-                const distance = Math.abs(activeIndex - i);
-                const isActive = activeIndex === i;
-                
-                // Arch math: Creates an umbrella curve shape
-                const xOffset = (i - activeIndex) * (typeof window !== 'undefined' && window.innerWidth < 640 ? 45 : 90); // horizontal separation
-                const yOffset = distance * distance * (typeof window !== 'undefined' && window.innerWidth < 640 ? 5 : 15); // parabolic arch downward
-                const scale = Math.max(0.4, 1 - distance * 0.25);
-                const opacity = Math.max(0.1, 1 - distance * 0.6);
-                const rotate = (i - activeIndex) * 15; // outward rotation
-                
-                return (
-                  <motion.div
-                    key={service.number}
-                    className="absolute top-0 flex flex-col items-center"
-                    animate={{
-                      x: xOffset,
-                      y: yOffset,
-                      scale: isActive ? 1.2 : scale,
-                      opacity: isActive ? 1 : opacity,
-                      rotate: rotate,
-                      zIndex: isActive ? 10 : 5 - distance
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                      <div 
-                        className={`rounded-full flex items-center justify-center font-bold text-xs md:text-xl transition-all duration-300 ${
-                          isActive 
-                            ? 'w-10 h-10 md:w-20 md:h-20 bg-white/70 backdrop-blur-md border border-indigo-500/20 text-indigo-600 shadow-[0_10px_25px_rgba(99,102,241,0.25),inset_0_1px_0_rgba(255,255,255,0.45)]' 
-                            : 'w-10 h-10 md:w-20 md:h-20 bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-sm border border-indigo-300/30 text-foreground/50 hover:text-foreground/80 hover:border-indigo-300/50'
-                        }`}
-                        style={isActive ? { borderColor: `${service.color}40`, boxShadow: `0 10px 25px ${service.color}25, inset 0 1px 0 rgba(255,255,255,0.45)` } : {}}
-                      >
-                        {service.number}
-                      </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-            
-            <div className="absolute bottom-2 text-foreground/30 text-[10px] md:text-xs font-mono tracking-[0.2em] font-bold uppercase">
-              Service {activeIndex + 1} of 4
-            </div>
-          </div>
-          
         </div>
       </div>
     </section>

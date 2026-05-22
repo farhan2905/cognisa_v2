@@ -14,12 +14,12 @@ interface PageHeroProps {
 }
 
 const wordReveal = {
-  hidden: { opacity: 0, y: 40, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 34, filter: 'blur(6px)' },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, ease: 'easeOut' },
   },
 };
 
@@ -29,34 +29,25 @@ export default function PageHero({
   titleAccent,
   description,
   align = 'center',
-  orbColor = '#6366f1',
-  orbColor2 = '#8b5cf6',
+  orbColor = '#06b6d4',
+  orbColor2 = '#10b981',
 }: PageHeroProps) {
   const isCenter = align === 'center';
 
   return (
-    <section className="relative pt-24 pb-12 md:pt-32 md:pb-20 lg:pt-40 lg:pb-24 overflow-hidden">
-      {/* Dynamic Background Orbs */}
+    <section className="relative overflow-hidden border-b border-slate-200/80 bg-gradient-to-br from-white/86 via-cyan-50/45 to-slate-50/80 px-4 pb-14 pt-24 sm:px-6 md:pb-20 md:pt-32 lg:px-12 lg:pt-36">
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:54px_54px] opacity-45" />
       <div
-        className="absolute top-[-15%] right-[-10%] w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full blur-[160px] pointer-events-none opacity-30 animate-orb-1"
+        className="absolute right-[-8%] top-[-18%] h-72 w-72 rounded-full blur-3xl opacity-[0.16]"
         style={{ backgroundColor: orbColor }}
       />
       <div
-        className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] md:w-[500px] md:h-[500px] rounded-full blur-[140px] pointer-events-none opacity-20 animate-orb-2"
+        className="absolute bottom-[-18%] left-[-8%] h-72 w-72 rounded-full blur-3xl opacity-[0.12]"
         style={{ backgroundColor: orbColor2 }}
       />
 
-      {/* Dot grid texture */}
       <div
-        className="absolute inset-0 z-[0] opacity-[0.02] pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #6366f1 0.8px, transparent 0.8px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
-
-      <div
-        className={`w-full max-w-[1000px] mx-auto px-4 md:px-8 lg:px-12 relative z-10 ${
+        className={`relative z-10 mx-auto w-full max-w-[1120px] ${
           isCenter ? 'text-center' : 'text-left'
         }`}
       >
@@ -70,13 +61,13 @@ export default function PageHero({
           initial="hidden"
           animate="visible"
           variants={wordReveal}
-          className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight tracking-tight mt-6 mb-6"
+          className="mt-6 max-w-5xl text-4xl font-black leading-[1.04] text-slate-950 md:text-6xl"
         >
           {title}
           {titleAccent && (
             <>
               {' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-indigo-600 to-emerald-600">
                 {titleAccent}
               </span>
             </>
@@ -84,11 +75,11 @@ export default function PageHero({
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className={`text-lg md:text-xl text-foreground/70 leading-relaxed font-medium ${
-            isCenter ? 'max-w-2xl mx-auto' : 'max-w-3xl'
+          transition={{ duration: 0.65, delay: 0.15, ease: 'easeOut' }}
+          className={`mt-6 text-base font-semibold leading-8 text-slate-600 md:text-lg ${
+            isCenter ? 'mx-auto max-w-3xl' : 'max-w-3xl'
           }`}
         >
           {description}

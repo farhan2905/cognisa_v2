@@ -1,205 +1,144 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Quote } from 'lucide-react';
-import VoiceWave from '@/components/shared/VoiceWave';
+import { motion } from 'framer-motion';
+import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
+import SectionTag from '@/components/shared/SectionTag';
+import { worksData } from '@/data/work';
 
-const testimonials = [
-  {
-    quote:
-      'Cognisa completely transformed our online presence. Their data-driven approach led to a 340% increase in organic traffic within just 6 months. The team is incredibly talented and responsive.',
-    name: 'Sarah Chen',
-    role: 'CEO, TechFlow Inc.',
-    initials: 'SC',
-    color: 'bg-blue-500/10 text-blue-600',
-    waveColor: '#6366f1',
-  },
-  {
-    quote:
-      "Working with Cognisa was a game-changer for our brand. They understood our vision from day one and delivered a website and marketing strategy that truly represents who we are. Revenue up 200%.",
-    name: 'Marcus Rodriguez',
-    role: 'Founder, GreenLeaf Co.',
-    initials: 'MR',
-    color: 'bg-indigo-500/10 text-indigo-600',
-    waveColor: '#8b5cf6',
-  },
-  {
-    quote:
-      "The AI solutions Cognisa implemented in our customer service workflow reduced response times by 80% and increased customer satisfaction scores dramatically. Best investment we've made.",
-    name: 'Emily Watson',
-    role: 'VP of Operations, DataSphere',
-    initials: 'EW',
-    color: 'bg-violet-500/10 text-violet-600',
-    waveColor: '#818cf8',
-  },
+const proofCards = worksData.slice(0, 3).map((work) => ({
+  slug: work.slug,
+  title: work.title,
+  category: work.category,
+  description: work.shortDescription,
+  outcomes: work.outcomes.slice(0, 2),
+  techStack: work.techStack.slice(0, 3),
+  color: work.color,
+}));
+
+const deliveryHighlights = [
+  'Founder-led architecture and implementation direction',
+  'Custom systems built around your exact workflow',
+  'AI automation where it removes real operational friction',
+  'Post-launch improvement instead of handoff-only delivery',
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i: number) => ({
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      delay: i * 0.15,
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { delay: index * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   }),
 };
 
-function GenerativeAvatar({ initials, color, index }: { initials: string; color: string; index: number }) {
-  return (
-    <div className="relative w-11 h-11 flex-shrink-0">
-      {/* Generative gradient blob */}
-      <div
-        className="absolute inset-0 rounded-full iridescent-blob opacity-60 scale-75"
-        style={{
-          animationDelay: `${index * 3}s`,
-          filter: 'blur(2px)',
-        }}
-      />
-      <div
-        className={`relative w-full h-full rounded-full ${color} flex items-center justify-center text-sm font-bold z-10 backdrop-blur-sm border border-white/20`}
-      >
-        {initials}
-      </div>
-    </div>
-  );
-}
-
-function TestimonialCard({ 
-  testimonial, 
-  index, 
-  active, 
-  setActive, 
-  isInView 
-}: { 
-  testimonial: typeof testimonials[0]; 
-  index: number; 
-  active: number; 
-  setActive: (idx: number) => void;
-  isInView: boolean;
-}) {
-  const isActive = active === index;
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  return (
-    <motion.div
-      custom={index}
-      variants={cardVariants}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      onClick={() => setActive(index)}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`relative overflow-hidden rounded-[2rem] p-5 sm:p-8 border cursor-pointer transition-all duration-500 flex flex-col ${
-        isActive
-          ? 'bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border-indigo-400/60 ring-2 ring-indigo-400/20 shadow-[0_16px_40px_rgba(99,102,241,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] scale-[1.02]'
-          : 'bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border-indigo-300/40 hover:border-indigo-300/60 hover:shadow-[0_12px_36px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.55)] opacity-75 md:opacity-100'
-      }`}
-    >
-      {/* Spotlight overlay */}
-      {isHovered && (
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
-          style={{
-            background: `radial-gradient(280px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
-          }}
-        />
-      )}
-
-      {/* Subtle light sweep */}
-      <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
-
-      <div className="relative z-10 flex flex-col h-full">
-        {/* Voice wave */}
-        <VoiceWave color={testimonial.waveColor} className="mb-3 sm:mb-4" />
-
-        {/* Quote icon */}
-        <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400/60 mb-3 sm:mb-4 flex-shrink-0" />
-
-        {/* Quote text */}
-        <p className="text-foreground/70 text-base leading-relaxed mb-4 sm:mb-8 flex-grow [text-wrap:balance]">
-          <span className="font-serif italic text-lg text-foreground/90">&ldquo;{testimonial.quote}&rdquo;</span>
-        </p>
-
-        {/* Author */}
-        <div className="flex items-center gap-4 pt-4 sm:pt-6 border-t border-foreground/5">
-          <GenerativeAvatar
-            initials={testimonial.initials}
-            color={testimonial.color}
-            index={index}
-          />
-          <div>
-            <p className="text-foreground font-semibold text-sm flex items-center gap-2">
-              {testimonial.name}
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              </span>
-            </p>
-            <p className="text-foreground/60 text-xs">{testimonial.role}</p>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function Testimonials() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [isInView]);
-
   return (
-    <section id="testimonials" ref={ref} className="section-anchor relative bg-transparent py-10 md:py-16 lg:py-24 overflow-hidden">
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-16"
-        >
-          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 hover:border-white/35 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6 group">
-            <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md group-hover:scale-110 transition-transform" />
-            <span className="text-sm md:text-base font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
-              Client Stories
-            </span>
-            <span className="h-1 w-12 md:w-16 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
+    <section id="testimonials" className="section-anchor relative overflow-hidden bg-slate-50/80 px-4 py-14 sm:px-6 md:py-20 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-10 flex flex-col gap-6 md:mb-14 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <SectionTag text="PROJECT PROOF" variant="light" />
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="text-3xl font-black tracking-tight text-slate-950 md:text-5xl"
+            >
+              Outcome notes from shipped Cognisa systems.
+            </motion.h2>
+            <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-slate-600">
+              Instead of invented testimonials, this section highlights real project categories, measurable delivery notes, and the type of operating improvements Cognisa builds toward.
+            </p>
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
-            Loved by <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">leaders</span> worldwide
-          </h2>
-        </motion.div>
+          <EnterpriseButton href="/work" variant="secondary" className="w-fit">
+            Explore project work
+          </EnterpriseButton>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {testimonials.map((testimonial, i) => (
-            <TestimonialCard 
-              key={testimonial.name}
-              testimonial={testimonial}
-              index={i}
-              active={active}
-              setActive={setActive}
-              isInView={isInView}
-            />
-          ))}
+        <div className="grid gap-5 lg:grid-cols-[1fr_0.76fr]">
+          <div className="grid gap-5 md:grid-cols-3 lg:col-span-1">
+            {proofCards.map((card, index) => (
+              <motion.article
+                key={card.slug}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
+              >
+                <div
+                  className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl"
+                  style={{ backgroundColor: `${card.color}22` }}
+                />
+                <div className="relative z-10">
+                  <div className="mb-6 flex items-center justify-between gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
+                      <Sparkles className="h-5 w-5 text-cyan-600" />
+                    </div>
+                    <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">{card.category}</span>
+                  </div>
+                  <h3 className="text-xl font-black tracking-tight text-slate-950">{card.title}</h3>
+                  <p className="mt-3 text-sm font-semibold leading-7 text-slate-600">{card.description}</p>
+                </div>
+
+                <div className="relative z-10 mt-6 space-y-3">
+                  {card.outcomes.map((outcome) => (
+                    <div key={`${card.slug}-${outcome.label}`} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                      <p className="text-2xl font-black text-slate-950">{outcome.metric}</p>
+                      <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">{outcome.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-6">
+                  {card.techStack.map((tech) => (
+                    <span key={tech} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-slate-600">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-950 p-5 text-white shadow-[0_24px_80px_rgba(15,23,42,0.18)] sm:p-6 lg:p-8"
+          >
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:44px_44px] opacity-20" />
+            <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-cyan-300/10 blur-3xl" />
+
+            <div className="relative z-10">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 text-xs font-black uppercase text-cyan-100">
+                <ShieldCheck className="h-4 w-4" />
+                Delivery standard
+              </div>
+              <h3 className="text-2xl font-black tracking-tight md:text-3xl">Built to reduce handoff risk.</h3>
+              <p className="mt-4 text-sm font-semibold leading-7 text-slate-300">
+                Cognisa is positioned as a founder-managed delivery partner. That means fewer layers, tighter technical decisions, and clearer ownership from the first workflow map to post-launch improvement.
+              </p>
+
+              <div className="mt-8 space-y-3">
+                {deliveryHighlights.map((item) => (
+                  <div key={item} className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.06] p-4">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                    <span className="text-sm font-bold text-white/80">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <a href="/about" className="group mt-8 inline-flex items-center gap-2 text-sm font-black text-cyan-100">
+                More about Cognisa
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </div>
+          </motion.aside>
         </div>
       </div>
     </section>

@@ -1,33 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 import { worksData } from '@/data/work';
 
-export default function WorkBrowserPreview({ work }: { work: typeof worksData[0] }) {
-  const [isInteractive, setIsInteractive] = useState(false);
-
+export default function WorkBrowserPreview({ work }: { work: (typeof worksData)[number] }) {
   return (
-    <div 
-      className="absolute inset-0 top-10 overflow-hidden bg-background/50"
-      onMouseLeave={() => setIsInteractive(false)}
-    >
-      <iframe 
-        src={work.link} 
-        className="w-full h-full border-none scale-[1.01]" 
-        sandbox="allow-scripts allow-same-origin" 
-        title={work.title} 
+    <div className="absolute inset-0 top-10 overflow-hidden bg-slate-950">
+      <iframe
+        src={work.link}
+        className="h-full w-full border-none bg-white"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+        title={`${work.title} live website preview`}
         loading="lazy"
       />
-      
-      <div 
-        className={`absolute inset-0 z-20 flex items-center justify-center transition-all duration-300 ${isInteractive ? 'opacity-0 pointer-events-none' : 'opacity-100 bg-background/20 cursor-pointer pointer-events-auto backdrop-blur-[2px]'}`} 
-        onClick={() => setIsInteractive(true)}
-      >
-        {!isInteractive && (
-          <span className="px-6 py-3 glass-surface text-white shadow-2xl text-sm font-medium rounded-full flex items-center gap-2 transform transition-transform hover:scale-105">
-            Tap to interact
-          </span>
-        )}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-4">
+        <a
+          href={work.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/90 px-4 py-2 text-xs font-black text-slate-950 shadow-lg transition-all hover:bg-cyan-100"
+        >
+          Open live site
+          <ExternalLink className="h-3.5 w-3.5" />
+        </a>
       </div>
     </div>
   );

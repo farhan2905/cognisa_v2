@@ -1,142 +1,123 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
-  Code2,
-  Brain,
-  Server,
-  Database,
-  Cloud,
-  Figma,
-  Container,
-  Workflow,
-  Layers,
-  Cpu,
-  GitBranch,
-  Flame,
+  ArrowRight,
+  Bot,
+  Braces,
+  LifeBuoy,
+  Network,
+  ShieldCheck,
 } from 'lucide-react';
 
-const row1Items = [
-  { label: 'React & Next.js', icon: Code2 },
-  { label: 'Python & Django', icon: Brain },
-  { label: 'Node.js Architecture', icon: Server },
-  { label: 'AI Agents', icon: Cpu },
-  { label: 'LLM Integration', icon: Brain },
-  { label: 'Cloud Infrastructure', icon: Cloud },
-  { label: 'PostgreSQL & Redis', icon: Database },
-  { label: 'API Development', icon: Layers },
-  { label: 'Docker & CI/CD', icon: Container },
-  { label: 'Figma to Code', icon: Figma },
-  { label: 'Tailwind & Framer', icon: Flame },
-  { label: 'Serverless Scaling', icon: Workflow },
+const technologyPanels = [
+  {
+    title: 'AI Automation',
+    label: 'Autonomous workflows',
+    href: '/services',
+    icon: Bot,
+    accent: 'bg-cyan-500',
+    copy: 'Deploy agents that triage requests, update systems, draft responses, and escalate when humans need control.',
+    checks: ['Support agents', 'Ops assistants', 'Data entry flows'],
+  },
+  {
+    title: 'Software Platforms',
+    label: 'Custom systems',
+    href: '/work',
+    icon: Braces,
+    accent: 'bg-indigo-500',
+    copy: 'Build portals, dashboards, SaaS products, and internal tools around your real process instead of generic templates.',
+    checks: ['Next.js apps', 'APIs', 'Role-based portals'],
+  },
+  {
+    title: 'Orchestration',
+    label: 'Connected operations',
+    href: '/process',
+    icon: Network,
+    accent: 'bg-emerald-500',
+    copy: 'Connect CRM, spreadsheets, email, databases, and approval steps into one reliable operating layer.',
+    checks: ['Integrations', 'Audit trails', 'Human approvals'],
+  },
+  {
+    title: 'Managed Growth',
+    label: 'Launch and support',
+    href: '/contact',
+    icon: LifeBuoy,
+    accent: 'bg-amber-500',
+    copy: 'Keep the system live, monitored, improved, and aligned to the next version of your business.',
+    checks: ['Monitoring', 'Iteration', 'SLA support'],
+  },
 ];
-
-const row2Items = [
-  'Frontend Engineering',
-  'Backend Systems',
-  'AI / ML',
-  'DevOps',
-  'Data Architecture',
-  'UI/UX Design',
-  'Automation',
-  'Cloud Native',
-];
-
-const row3Snippets = [
-  'const ai = new Agent({ model: "gpt-4" })',
-  'docker build -t cognisa/api:latest .',
-  'git push origin main --force-with-lease',
-  'await db.migrate({ direction: "up" })',
-  'export const config = { region: "global" }',
-  'useEffect(() => { track("page_view") }, [])',
-  'kubectl apply -f k8s/production.yaml',
-  'SELECT * FROM insights WHERE published = true',
-];
-
-function MarqueeRow({
-  items,
-  speed = 30,
-  reverse = false,
-  children,
-}: {
-  items?: { label: string; icon: React.ElementType }[];
-  speed?: number;
-  reverse?: boolean;
-  children?: React.ReactNode;
-}) {
-  const repeated = items ? [...items, ...items, ...items, ...items] : null;
-
-  return (
-    <div className="relative overflow-hidden py-2">
-      <motion.div
-        className="flex items-center whitespace-nowrap"
-        animate={{ x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }}
-        transition={{
-          duration: speed,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-      >
-        {repeated
-          ? repeated.map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-2 md:gap-3 mx-4 md:mx-8 text-indigo-500 text-sm md:text-base lg:text-lg font-bold tracking-tight hover:text-indigo-600 transition-colors duration-300 whitespace-nowrap"
-                >
-                  <Icon className="w-4 h-4 md:w-5 md:h-5 opacity-70" />
-                  {item.label}
-                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-400/40 inline-block" />
-                </span>
-              );
-            })
-          : children}
-      </motion.div>
-    </div>
-  );
-}
 
 export default function Marquee() {
   return (
-    <section id="marquee" className="relative bg-transparent py-4 md:py-6 overflow-hidden">
-      <div className="glass-surface rounded-none border-y border-indigo-300/40">
-        {/* Row 1: Tech names + icons (fast, foreground) */}
-        <MarqueeRow items={row1Items} speed={35} />
-
-        {/* Row 2: Categories (medium, middle, smaller, reversed) */}
-        <div className="border-t border-indigo-300/15">
-          <MarqueeRow speed={45} reverse>
-            {[...row2Items, ...row2Items, ...row2Items, ...row2Items].map(
-              (item, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-2 mx-6 md:mx-10 text-violet-400/60 text-xs md:text-sm font-semibold tracking-wide uppercase whitespace-nowrap"
-                >
-                  {item}
-                  <span className="w-1 h-1 rounded-full bg-violet-400/30 inline-block" />
-                </span>
-              )
-            )}
-          </MarqueeRow>
+    <section id="marquee" className="section-anchor relative overflow-hidden border-y border-slate-200/80 bg-white/58 px-4 py-10 backdrop-blur-xl sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-black uppercase text-cyan-700">Explore our technology</p>
+            <h2 className="mt-3 max-w-3xl text-3xl font-black leading-tight text-slate-950 md:text-4xl">
+              One delivery partner for the systems, agents, and workflows behind growth.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm font-medium leading-7 text-slate-600">
+            Start with a focused capability, connect it to the systems your team already uses, then expand the platform as the return becomes visible.
+          </p>
         </div>
 
-        {/* Row 3: Code snippets (slow, background, mono, faint) */}
-        <div className="border-t border-indigo-300/10">
-          <MarqueeRow speed={55}>
-            {[...row3Snippets, ...row3Snippets, ...row3Snippets, ...row3Snippets].map(
-              (item, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-2 mx-8 md:mx-12 font-mono text-[10px] md:text-xs text-indigo-300/25 tracking-wide whitespace-nowrap"
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {technologyPanels.map((panel, index) => {
+            const Icon = panel.icon;
+
+            return (
+              <motion.div
+                key={panel.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+              >
+                <Link
+                  href={panel.href}
+                  className="group flex h-full min-h-[280px] flex-col rounded-lg border border-slate-200 bg-white/82 p-5 shadow-sm transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_42px_rgba(15,23,42,0.10)]"
                 >
-                  <GitBranch className="w-3 h-3 opacity-40" />
-                  {item}
-                  <span className="w-1 h-1 rounded-full bg-indigo-300/15 inline-block" />
-                </span>
-              )
-            )}
-          </MarqueeRow>
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className={`h-10 w-1.5 rounded-full ${panel.accent}`} />
+                      <div>
+                        <p className="text-xs font-bold uppercase text-slate-500">{panel.label}</p>
+                        <h3 className="text-xl font-black text-slate-950">{panel.title}</h3>
+                      </div>
+                    </div>
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 transition group-hover:bg-slate-950">
+                      <Icon className="h-5 w-5 text-slate-700 transition group-hover:text-white" />
+                    </span>
+                  </div>
+
+                  <p className="text-sm font-medium leading-7 text-slate-600">{panel.copy}</p>
+
+                  <div className="mt-auto pt-6">
+                    <div className="mb-5 flex flex-wrap gap-2">
+                      {panel.checks.map((check) => (
+                        <span
+                          key={check}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600"
+                        >
+                          <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+                          {check}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="inline-flex items-center gap-2 text-sm font-black text-slate-950">
+                      Learn more
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

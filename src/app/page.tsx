@@ -6,6 +6,7 @@ import Hero from '@/components/sections/Hero';
 import Marquee from '@/components/sections/Marquee';
 import Challenges from '@/components/sections/Challenges';
 import Solutions from '@/components/sections/Solutions';
+import PlatformTabs from '@/components/sections/PlatformTabs';
 import About from '@/components/sections/About';
 import Services from '@/components/sections/Services';
 import Process from '@/components/sections/Process';
@@ -32,6 +33,7 @@ export default function Home() {
         <Marquee />
         <Challenges />
         <Solutions />
+        <PlatformTabs />
         <About />
         <Services />
         <Process />

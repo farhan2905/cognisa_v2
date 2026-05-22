@@ -1,145 +1,152 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { insightsData } from '@/data/insights';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
 import PageHero from '@/components/shared/PageHero';
-import GlassContentBlock from '@/components/shared/GlassContentBlock';
-import IridescentBlobBackground from '@/components/shared/fragments/IridescentBlobBackground';
+import { insightsData } from '@/data/insights';
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: index * 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
   }),
 };
 
 export default function InsightsListingPage() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const featured = insightsData[0];
   const rest = insightsData.slice(1);
+  const FeaturedIcon = featured.icon;
 
   return (
     <>
       <PageHero
         tagText="INSIGHTS & RESOURCES"
-        title="Your pocket-sized library of"
-        titleAccent="tips & strategies."
-        description="Deep dives into AI automation, modern web architecture, and business strategy — written by engineers who actually build the stuff."
-        orbColor="#3b82f6"
-        orbColor2="#8b5cf6"
+        title="Practical thinking for"
+        titleAccent="better systems."
+        description="Notes on AI automation, scalable web architecture, and the build-versus-buy decisions behind custom software."
+        orbColor="#06b6d4"
+        orbColor2="#10b981"
       />
 
-      {/* Featured Article */}
-      <section className="relative py-4 md:py-8">
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12">
-          <Link href={`/insights/${featured.slug}`} className="block group">
-            <GlassContentBlock className="p-8 md:p-12" hoverEffect>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="bg-indigo-500/10 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider border border-indigo-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">
+      <section className="relative bg-white/70 px-4 py-8 sm:px-6 md:py-12 lg:px-10">
+        <div className="mx-auto max-w-[1200px]">
+          <Link href={`/insights/${featured.slug}`} className="group block">
+            <article className="relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_22px_60px_rgba(15,23,42,0.08)]">
+              <div
+                className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full blur-3xl"
+                style={{ backgroundColor: `${featured.color}20` }}
+              />
+              <div className="grid gap-0 lg:grid-cols-[1fr_0.72fr]">
+                <div className="relative z-10 p-6 sm:p-8 lg:p-10">
+                  <div className="mb-6 flex flex-wrap items-center gap-3">
+                    <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-cyan-700">
                       Featured
                     </span>
-                    <span className="text-foreground/40 text-xs font-mono flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5" />
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500">
+                      <Clock className="h-3.5 w-3.5" />
                       {featured.readTime}
                     </span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 tracking-tight group-hover:text-indigo-500 transition-colors leading-tight">
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{featured.category}</p>
+                  <h2 className="mt-3 max-w-3xl text-3xl font-black tracking-tight text-slate-950 transition-colors group-hover:text-cyan-700 md:text-5xl">
                     {featured.title}
                   </h2>
-                  <p className="text-foreground/70 leading-relaxed font-medium mb-6 text-base md:text-lg">
-                    {featured.shortDescription}
-                  </p>
-                  <div className="flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors font-semibold">
+                  <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-slate-600">{featured.shortDescription}</p>
+                  <div className="mt-8 inline-flex items-center gap-2 text-sm font-black text-slate-950 transition-colors group-hover:text-cyan-700">
                     Read article
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
-                <div className="relative h-[200px] md:h-[280px] rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent border border-indigo-300/30 flex items-center justify-center">
-                  <div
-                    className="absolute inset-0 opacity-15"
-                    style={{ background: `radial-gradient(circle at center, ${featured.color}, transparent 70%)` }}
-                  />
-                  <featured.icon className="w-20 h-20 opacity-20" style={{ color: featured.color }} />
+
+                <div className="relative z-10 border-t border-slate-200 bg-slate-950 p-6 text-white sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
+                  <div className="flex h-full min-h-[260px] flex-col justify-between rounded-lg border border-white/10 bg-white/[0.05] p-5">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 bg-white/10">
+                      <FeaturedIcon className="h-7 w-7" style={{ color: featured.color }} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.16em] text-white/50">Focus area</p>
+                      <p className="mt-3 text-2xl font-black leading-tight text-white">AI, architecture, and business workflow decisions.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </GlassContentBlock>
+            </article>
           </Link>
         </div>
       </section>
 
-      {/* Articles Grid */}
-      <section className="relative py-8 md:py-16 overflow-hidden" ref={ref}>
-        <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rest.map((article, i) => (
-              <motion.div
-                key={article.slug}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
-              >
-                <Link
-                  href={`/insights/${article.slug}`}
-                  className="block h-full group hover:-translate-y-2 transition-transform duration-500"
+      <section className="relative bg-slate-50/80 px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {rest.map((article, index) => {
+              const Icon = article.icon;
+
+              return (
+                <motion.article
+                  key={article.slug}
+                  custom={index}
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-80px' }}
                 >
-                  <GlassContentBlock hoverEffect className="p-6 h-full flex flex-col rounded-3xl">
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="bg-foreground/10 text-foreground px-3 py-1 rounded-full text-xs font-mono tracking-wide">
-                        {article.category}
-                      </span>
-                      <span className="flex items-center gap-1.5 text-foreground/40 text-xs font-mono">
-                        <Clock className="w-3.5 h-3.5" />
+                  <Link
+                    href={`/insights/${article.slug}`}
+                    className="group relative flex h-full min-h-[300px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
+                  >
+                    <div
+                      className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl"
+                      style={{ backgroundColor: `${article.color}20` }}
+                    />
+                    <div className="relative z-10 mb-8 flex items-start justify-between gap-5">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
+                        <Icon className="h-5 w-5" style={{ color: article.color }} />
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-500">
+                        <Clock className="h-3.5 w-3.5" />
                         {article.readTime}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-indigo-500 transition-colors leading-snug">
+                    <p className="relative z-10 text-xs font-black uppercase tracking-[0.18em] text-slate-400">{article.category}</p>
+                    <h3 className="relative z-10 mt-3 text-2xl font-black leading-tight tracking-tight text-slate-950 transition-colors group-hover:text-cyan-700">
                       {article.title}
                     </h3>
-                    <p className="text-foreground/70 leading-relaxed mt-auto text-sm">
-                      {article.shortDescription}
-                    </p>
-                    <div className="mt-6 flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors font-medium text-sm">
-                      Read more
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <p className="relative z-10 mt-4 text-sm font-semibold leading-7 text-slate-600">{article.shortDescription}</p>
+                    <div className="relative z-10 mt-auto pt-8">
+                      <span className="inline-flex items-center gap-2 text-sm font-black text-slate-950 transition-colors group-hover:text-cyan-700">
+                        Read article
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </span>
                     </div>
-                  </GlassContentBlock>
-                </Link>
-              </motion.div>
-            ))}
+                  </Link>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="relative py-12 md:py-20">
-        <div className="w-full max-w-[700px] mx-auto px-4 md:px-8">
-          <GlassContentBlock className="text-center p-8 md:p-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 tracking-tight">
-              Stay in the loop
-            </h3>
-            <p className="text-foreground/60 mb-8 font-medium">
-              Get the latest insights on AI, web development, and growth strategy delivered to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 px-5 py-3.5 rounded-full bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/40 ring-1 ring-indigo-400/10 text-foreground placeholder:text-foreground/35 focus:outline-none focus:border-indigo-400/60 transition-all text-sm font-medium"
-              />
-              <button className="px-6 py-3.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 text-white rounded-full font-semibold text-sm hover:opacity-95 transition-all shadow-[0_4px_16px_rgba(99,102,241,0.25)]">
-                Subscribe
-              </button>
-            </div>
-          </GlassContentBlock>
+      <section className="relative bg-white/70 px-4 py-12 sm:px-6 md:py-16 lg:px-10">
+        <div className="mx-auto max-w-[900px] rounded-lg border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 lg:p-10">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Need a build decision?</p>
+          <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
+            Turn one software question into a clear implementation path.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base font-semibold leading-8 text-slate-600">
+            Bring the workflow, integration, or AI automation idea you are weighing. Cognisa can help separate what should be built, bought, automated, or left alone.
+          </p>
+          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <EnterpriseButton href="/contact" variant="primary">
+              Talk to Cognisa
+            </EnterpriseButton>
+            <EnterpriseButton href="/services" variant="secondary">
+              View services
+            </EnterpriseButton>
+          </div>
         </div>
       </section>
     </>

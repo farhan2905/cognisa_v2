@@ -1,6 +1,7 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface GlassContentBlockProps {
@@ -22,11 +23,9 @@ export default function GlassContentBlock({ children, className, hoverEffect = f
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[2rem] backdrop-blur-2xl p-6 md:p-8 lg:p-10",
-        "bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent",
-        "border border-indigo-300/30 ring-1 ring-indigo-400/10",
-        "shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.45)]",
-        hoverEffect && "transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_15px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.55)]",
+        "relative overflow-hidden rounded-lg bg-white/86 p-6 md:p-8 lg:p-10",
+        "border border-slate-200 shadow-sm backdrop-blur-xl",
+        hoverEffect && "transition-all duration-500 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_42px_rgba(15,23,42,0.10)]",
         className
       )}
       onMouseMove={handleMouseMove}
@@ -38,13 +37,12 @@ export default function GlassContentBlock({ children, className, hoverEffect = f
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
           style={{
-            background: `radial-gradient(350px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
+            background: `radial-gradient(350px circle at ${coords.x}px ${coords.y}px, rgba(8, 145, 178, 0.12), transparent 80%)`,
           }}
         />
       )}
 
-      {/* Glossy specular highlight layer for extra fidelity */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent rounded-[2rem] pointer-events-none z-0" />
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-emerald-400 opacity-80 pointer-events-none z-0" />
       
       <div className="relative z-10">
         {children}

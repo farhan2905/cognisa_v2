@@ -1,119 +1,92 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import SectionTag from '@/components/shared/SectionTag';
-import { ArrowRight, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { ArrowRight, Clock } from 'lucide-react';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
+import SectionTag from '@/components/shared/SectionTag';
 import { insightsData } from '@/data/insights';
-import TerminalTyping from '@/components/shared/TerminalTyping';
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] } }),
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  }),
 };
 
-function InsightCard({ article, index, isInView }: { article: typeof insightsData[0]; index: number; isInView: boolean }) {
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
+function InsightCard({ article, index }: { article: (typeof insightsData)[number]; index: number }) {
+  const Icon = article.icon;
 
   return (
-    <motion.div 
-      custom={index} 
-      variants={cardVariants} 
-      initial="hidden" 
-      animate={isInView ? 'visible' : 'hidden'}
-    >
-      <Link 
-        href={`/insights/${article.slug}`} 
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="group flex flex-col h-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl rounded-3xl p-6 border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.04),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:-translate-y-2 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.55)]"
+    <motion.article custom={index} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
+      <Link
+        href={`/insights/${article.slug}`}
+        className="group relative flex h-full min-h-[330px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)] sm:p-6"
       >
-        {/* Spotlight overlay */}
-        {isHovered && (
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
-            style={{
-              background: `radial-gradient(300px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
-            }}
-          />
-        )}
+        <div
+          className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl"
+          style={{ backgroundColor: `${article.color}20` }}
+        />
 
-        {/* Subtle light sweep */}
-        <div className="absolute top-0 left-[-100%] w-[50%] h-[200%] bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[30deg] opacity-0 group-hover:opacity-100 group-hover:left-[200%] transition-all duration-1000 pointer-events-none z-0" />
-
-        <div className="flex items-center gap-4 mb-6 relative z-10">
-          <span className="bg-foreground/5 text-foreground/80 border border-foreground/10 px-3 py-1 rounded-full text-xs font-mono tracking-wide flex items-center gap-2">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            </span>
-            {article.category}
+        <div className="relative z-10 mb-8 flex items-start justify-between gap-5">
+          <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
+            <Icon className="h-5 w-5" style={{ color: article.color }} />
+          </div>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-500">
+            <Clock className="h-3.5 w-3.5" />
+            {article.readTime}
           </span>
-          <span className="flex items-center gap-1.5 text-foreground/50 text-xs font-mono"><Clock className="w-3.5 h-3.5" />{article.readTime}</span>
         </div>
-        <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-indigo-500 transition-colors leading-snug relative z-10">{article.title}</h3>
-        <p className="text-foreground/70 leading-relaxed mt-auto relative z-10 font-medium">{article.shortDescription}</p>
-        <div className="mt-8 flex items-center gap-2 text-foreground/50 group-hover:text-indigo-500 transition-colors relative z-10 font-medium">
-          <span className="text-sm">Read more</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+
+        <div className="relative z-10">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{article.category}</p>
+          <h3 className="mt-3 text-2xl font-black leading-tight tracking-tight text-slate-950 transition-colors group-hover:text-cyan-700">
+            {article.title}
+          </h3>
+          <p className="mt-4 text-sm font-semibold leading-7 text-slate-600">{article.shortDescription}</p>
+        </div>
+
+        <div className="relative z-10 mt-auto pt-8">
+          <span className="inline-flex items-center gap-2 text-sm font-black text-slate-950 transition-colors group-hover:text-cyan-700">
+            Read article
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </span>
         </div>
       </Link>
-    </motion.div>
+    </motion.article>
   );
 }
 
 export default function Insights() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
-    <section ref={ref} className="section-anchor bg-transparent py-10 md:py-16 lg:py-24" id="insights">
-      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-16 gap-8">
-          <div className="max-w-2xl">
+    <section className="section-anchor bg-slate-50/80 px-4 py-14 sm:px-6 md:py-20 lg:px-10" id="insights">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-10 flex flex-col gap-6 md:mb-14 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
             <SectionTag text="INSIGHTS & RESOURCES" variant="light" />
-            <motion.h2 initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="text-2xl md:text-4xl font-bold text-foreground mt-6 leading-tight">
-              Your pocket-sized library of tips, tricks, and <span className="text-indigo-500 bg-transparent font-serif italic font-medium">&apos;why didn&apos;t I think of that?&apos;</span>
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="text-3xl font-black tracking-tight text-slate-950 md:text-5xl"
+            >
+              Practical notes on AI, architecture, and software ROI.
             </motion.h2>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="mt-3 h-5"
-            >
-              <TerminalTyping
-                commands={[
-                  '> cat latest-insights.md --published',
-                  '> grep "AI\|architecture\|growth" *',
-                  '> ls ./articles/ | wc -l',
-                ]}
-                typingSpeed={40}
-                deleteSpeed={20}
-                pauseDuration={2500}
-              />
-            </motion.div>
+            <p className="mt-5 max-w-2xl text-base font-semibold leading-8 text-slate-600">
+              Short reads for teams deciding what to automate, what to build, and how to keep custom software scalable.
+            </p>
           </div>
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }} transition={{ delay: 0.3, duration: 0.7 }}>
-            <Link
-              href="/insights"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] group"
-            >
-              Read all articles
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+          <EnterpriseButton href="/insights" variant="secondary" className="w-fit">
+            Read all articles
+          </EnterpriseButton>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {insightsData.map((article, i) => (
-            <InsightCard key={article.title} article={article} index={i} isInView={isInView} />
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          {insightsData.map((article, index) => (
+            <InsightCard key={article.slug} article={article} index={index} />
           ))}
         </div>
       </div>

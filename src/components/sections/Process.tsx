@@ -1,185 +1,304 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-import SectionTag from '@/components/shared/SectionTag';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  CheckCircle2,
+  ExternalLink,
+  MonitorUp,
+} from 'lucide-react';
+import EnterpriseButton from '@/components/shared/EnterpriseButton';
+import SectionTag from '@/components/shared/SectionTag';
+import { worksData } from '@/data/work';
+import { cn } from '@/lib/utils';
 
-const works = [
-  { slug: 'desh-yatraa', number: '01', title: 'Desh Yatraa', description: 'We engineered a comprehensive travel booking and exploration portal for Desh Yatraa. The platform features an intuitive search architecture, seamless booking workflows, and an optimized mobile experience.', detail: 'Travel & Tourism Portal', icon: '✈️', color: '#6366f1', color2: '#a855f7', link: 'https://deshyatraa.com' },
-  { slug: 'proxyui', number: '02', title: 'ProxyUI', description: 'A modern UI component showcase with reusable sections and patterns to help teams ship clean interfaces faster.', detail: 'UI Component Library', icon: '🧩', color: '#3b82f6', color2: '#06b6d4', link: 'https://proxyui.vercel.app' },
-  { slug: 'voyage-horizon', number: '03', title: 'Voyage Horizon', description: 'Developed a modern digital storefront for Voyage Horizon to showcase their premium travel packages. We focused on high-performance media delivery, lead generation forms, and a custom CMS.', detail: 'Travel Agency Platform', icon: '🌊', color: '#f97316', color2: '#f43f5e', link: 'https://voyagehorizon.co.in' },
-  { slug: 'kuch-nahi', number: '04', title: 'Kuch Nahi', description: 'Built a blazing-fast, custom e-commerce solution for Kuch Nahi. The architecture was designed from the ground up to minimize cart abandonment, featuring a hyper-optimized checkout flow and secure payment gateways.', detail: 'E-Commerce Experience', icon: '🛒', color: '#ec4899', color2: '#d946ef', link: 'https://kuchnahi.co.in' },
-  { slug: 'bhairav-steel', number: '05', title: 'Bhairav Steel', description: 'Transformed Bhairav Steel\'s traditional business into a powerful digital catalog. We developed a robust B2B platform that handles complex product specifications and quote request automation.', detail: 'B2B Industrial Catalog', icon: '🏗️', color: '#10b981', color2: '#14b8a6', link: 'https://bhairavsteel.in' },
-];
+const workTabs = [
+  { key: 'travel', label: 'Travel', match: ['Travel'] },
+  { key: 'systems', label: 'Systems + UI', match: ['UI', 'Catalog', 'B2B'] },
+  { key: 'commerce', label: 'Commerce', match: ['E-Commerce'] },
+  { key: 'all', label: 'All Work', match: [] },
+] as const;
 
-export default function Process() {
-  const targetRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  
-  const { scrollYProgress } = useScroll({ 
-    target: targetRef,
-    offset: ["start start", "end end"]
-  });
+const cardVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    let index = Math.floor(latest * 5);
-    if (index >= 5) index = 4;
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-    }
-  });
+type Work = (typeof worksData)[number];
+type WorkTabKey = (typeof workTabs)[number]['key'];
 
-  const activeColor1 = works[activeIndex].color;
-  const activeColor2 = works[activeIndex].color2;
-  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-75%"]);
+function getWorksForTab(tabKey: WorkTabKey) {
+  const tab = workTabs.find((item) => item.key === tabKey);
+  if (!tab || tab.key === 'all') return worksData;
 
+  return worksData.filter((work) => tab.match.some((token) => work.category.includes(token)));
+}
+
+function LiveWebsitePreview({ work }: { work: Work }) {
   return (
-    <section id="work" ref={targetRef} className="section-anchor relative h-[340vh] md:h-[400vh] bg-transparent">
-      
-      <div className="sticky top-0 h-[100vh] flex flex-col justify-start lg:justify-center overflow-hidden z-10 pt-16 md:pt-20 lg:pt-0">
-        
-        {/* Dynamic color-changing background orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="noise-overlay absolute inset-0 opacity-30 z-[1]" />
-          <motion.div 
-            animate={{ backgroundColor: activeColor1 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute top-[10%] left-[10%] -translate-x-1/4 -translate-y-1/4 w-[70vw] h-[70vw] md:w-[45vw] md:h-[45vw] rounded-full blur-[140px] opacity-[0.22] pointer-events-none" 
-          />
-          <motion.div 
-            animate={{ backgroundColor: activeColor2 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute bottom-[10%] right-[10%] translate-x-1/4 translate-y-1/4 w-[70vw] h-[70vw] md:w-[55vw] md:h-[55vw] rounded-full blur-[140px] opacity-[0.20] pointer-events-none" 
-          />
-        </div>
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 mb-4 mt-6 md:mb-8 md:mt-6 lg:mt-10 flex-shrink-0 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <SectionTag text="OUR WORK" variant="light" />
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              viewport={{ once: true }} 
-              transition={{ duration: 0.6 }} 
-              className="text-xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70 leading-tight tracking-tight drop-shadow-sm mt-2 md:mt-4"
-            >
-              Digital <span className="text-gradient-accent drop-shadow-sm">systems</span> built for real businesses.
-            </motion.h2>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={work.slug}
+        initial={{ opacity: 0, y: 18, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -18, scale: 0.985 }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-950 shadow-[0_24px_80px_rgba(15,23,42,0.18)]"
+      >
+        <div className="flex h-11 items-center gap-3 border-b border-white/10 bg-white/[0.06] px-4">
+          <div className="flex gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
           </div>
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.6 }}>
-            <Link 
-              href="/work" 
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] group"
-            >
-              View All Work
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
+          <div className="mx-auto max-w-[58%] truncate rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-center font-mono text-[10px] text-white/55">
+            {work.link.replace('https://', '')}
+          </div>
+          <a
+            href={work.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${work.title}`}
+            className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 text-white/55 transition-colors hover:border-cyan-200/40 hover:text-cyan-100"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
         </div>
 
-        <motion.div style={{ x }} className="flex gap-6 md:gap-24 lg:gap-32 px-4 md:px-12 lg:px-20 w-fit pb-12 items-center">
-          {works.map((work, idx) => (
-            <WorkCard key={work.number} work={work} index={idx} total={works.length} />
-          ))}
-        </motion.div>
-      </div>
-    </section>
+        <div className="relative h-[360px] overflow-hidden bg-white sm:h-[430px] lg:h-[560px]">
+          <iframe
+            src={work.link}
+            title={`${work.title} live website preview`}
+            className="h-full w-full border-none bg-white"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-5">
+            <div className="pointer-events-auto flex flex-col gap-3 rounded-lg border border-white/10 bg-slate-950/90 p-4 text-white shadow-2xl backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-cyan-100/80">Live project</p>
+                <p className="mt-1 text-base font-black">{work.title}</p>
+              </div>
+              <a
+                href={work.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white px-4 py-2 text-xs font-black text-slate-950 transition-all hover:bg-cyan-100"
+              >
+                Open live site
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
-function WorkCard({ work, index, total }: { work: typeof works[0], index: number, total: number }) {
-  const [isInteractive, setIsInteractive] = useState(false);
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+function ProjectSelector({
+  work,
+  index,
+  active,
+  onSelect,
+}: {
+  work: Work;
+  index: number;
+  active: boolean;
+  onSelect: () => void;
+}) {
+  const primaryOutcome = work.outcomes[0];
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  return (
+    <motion.button
+      type="button"
+      custom={index}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
+      onClick={onSelect}
+      className={cn(
+        'group relative overflow-hidden rounded-lg border bg-white p-4 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]',
+        active ? 'border-slate-400 shadow-[0_18px_48px_rgba(15,23,42,0.10)]' : 'border-slate-200'
+      )}
+    >
+      <div
+        className="absolute -right-12 -top-16 h-32 w-32 rounded-full blur-3xl"
+        style={{ backgroundColor: `${work.color}20` }}
+      />
+      <div className="relative z-10 flex items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-slate-400">{work.category}</p>
+          <h3 className="mt-2 text-lg font-black tracking-tight text-slate-950">{work.title}</h3>
+        </div>
+        <span className="font-mono text-xs font-black text-slate-300">{work.number}</span>
+      </div>
+      <p className="relative z-10 mt-3 text-sm font-semibold leading-6 text-slate-600">{work.shortDescription}</p>
+      {primaryOutcome && (
+        <div className="relative z-10 mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <p className="text-xl font-black text-slate-950">{primaryOutcome.metric}</p>
+          <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">{primaryOutcome.label}</p>
+        </div>
+      )}
+    </motion.button>
+  );
+}
+
+export default function Process() {
+  const [activeTab, setActiveTab] = useState<WorkTabKey>('travel');
+  const tabWorks = useMemo(() => getWorksForTab(activeTab), [activeTab]);
+  const [activeSlug, setActiveSlug] = useState(worksData[0].slug);
+
+  const availableWorks = tabWorks.length > 0 ? tabWorks : worksData;
+  const activeWork = availableWorks.find((work) => work.slug === activeSlug) ?? availableWorks[0];
+
+  const handleTabChange = (tabKey: WorkTabKey) => {
+    const nextWorks = getWorksForTab(tabKey);
+    setActiveTab(tabKey);
+    setActiveSlug((nextWorks[0] ?? worksData[0]).slug);
   };
 
   return (
-    <div className="flex flex-col gap-3 md:gap-8 w-[85vw] md:w-[55vw] lg:w-[42vw] flex-shrink-0 relative group items-center">
-      {/* Website Information Card (Above the browser) */}
-      <div 
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="w-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent backdrop-blur-2xl p-4 sm:p-5 md:p-8 rounded-2xl md:rounded-3xl border border-indigo-300/30 ring-1 ring-indigo-400/10 shadow-[0_10px_30px_rgba(99,102,241,0.05),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:border-indigo-300/50 hover:shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_rgba(255,255,255,0.55)]"
-      >
-        {/* Spotlight overlay */}
-        {isHovered && (
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
-            style={{
-              background: `radial-gradient(350px circle at ${coords.x}px ${coords.y}px, rgba(99, 102, 241, 0.12), transparent 80%)`,
-            }}
-          />
-        )}
-
-        {/* Decorative ambient color blur matching the project */}
-        <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[50px] opacity-20 pointer-events-none z-0" style={{ backgroundColor: work.color }} />
-        <div className="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-br from-white/6 via-white/3 to-transparent opacity-70 pointer-events-none z-0" />
-        
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 md:gap-4 relative z-10">
+    <section id="work" className="section-anchor relative overflow-hidden bg-slate-50/80 px-4 py-14 sm:px-6 md:py-20 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="mb-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-xl">{work.icon}</span>
-              <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest bg-foreground/10 px-3 py-1 rounded-full text-foreground/80">{work.detail}</span>
-            </div>
-            <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-3">{work.title}</h3>
-            <p className="text-sm md:text-base text-foreground/70 max-w-xl">{work.description}</p>
-          </div>
-          <div className="flex-shrink-0 flex items-center justify-between md:flex-col md:items-end md:justify-start">
-            <span className="text-4xl md:text-5xl font-bold opacity-10">{work.number}</span>
-            <a 
-              href={work.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)] md:mt-6"
+            <SectionTag text="OUR WORK" variant="light" />
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="text-3xl font-black tracking-tight text-slate-950 md:text-5xl"
             >
-              Visit Website <ArrowUpRight className="w-3 h-3" />
-            </a>
+              Live systems built for real business workflows.
+            </motion.h2>
           </div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
+            className="lg:justify-self-end"
+          >
+            <p className="max-w-2xl text-base font-semibold leading-8 text-slate-600 lg:text-right">
+              Switch by work category, review the project context, and inspect the actual live websites Cognisa has built.
+            </p>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:justify-end">
+              <EnterpriseButton href="/work" variant="secondary">
+                View all work
+              </EnterpriseButton>
+              <EnterpriseButton href="/contact" variant="primary">
+                Let&apos;s talk
+              </EnterpriseButton>
+            </div>
+          </motion.div>
         </div>
-      </div>
 
-      {/* Browser Window Card */}
-      <div 
-        className="w-full h-[28vh] sm:h-[38vh] md:h-[55vh] rounded-[1.5rem] md:rounded-[2rem] border border-indigo-300/30 shadow-[0_20px_60px_rgba(0,0,0,0.15)] relative overflow-hidden bg-zinc-950 transition-all duration-500 group-hover:shadow-[0_25px_70px_rgba(99,102,241,0.15)]"
-        onMouseLeave={() => setIsInteractive(false)}
-        style={{
-          boxShadow: `0 20px 60px rgba(0,0,0,0.15), 0 0 30px ${work.color}10`
-        }}
-      >
-        {/* Browser Header */}
-        <div className="absolute top-0 left-0 right-0 h-10 glass-surface border-b border-indigo-300/20 border-x-0 border-t-0 flex items-center px-6 gap-2 z-30">
-          <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-          <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-          <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-          <div className="ml-4 flex-1 flex justify-center">
-            <div className="bg-black/30 backdrop-blur-md px-4 py-1 rounded-md text-xs text-white/50 w-1/2 max-w-[200px] truncate text-center border border-white/5 shadow-inner">
-              {work.link.replace('https://', '')}
+        <div className="mb-6 flex flex-wrap gap-2">
+          {workTabs.map((tab) => {
+            const isActive = activeTab === tab.key;
+
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => handleTabChange(tab.key)}
+                className={cn(
+                  'rounded-full border px-4 py-2 text-sm font-black transition-all duration-300',
+                  isActive
+                    ? 'border-slate-950 bg-slate-950 text-white shadow-[0_14px_34px_rgba(15,23,42,0.14)]'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-cyan-200 hover:text-cyan-700'
+                )}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
+          <div className="space-y-4">
+            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-cyan-200 bg-cyan-50 text-cyan-700">
+                  <BriefcaseBusiness className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">Selected category</p>
+                  <p className="text-lg font-black text-slate-950">{workTabs.find((tab) => tab.key === activeTab)?.label}</p>
+                </div>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                {availableWorks.map((work, index) => (
+                  <ProjectSelector
+                    key={work.slug}
+                    work={work}
+                    index={index}
+                    active={activeWork.slug === work.slug}
+                    onSelect={() => setActiveSlug(work.slug)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Browser Body / Iframe */}
-        <div className="w-full h-full pt-10 relative z-10 bg-background/50">
-          <iframe src={work.link} className="w-full h-full border-none scale-[1.01]" sandbox="allow-scripts allow-same-origin" title={work.title} />
-          
-          <div 
-            className={`absolute inset-0 z-20 flex items-center justify-center transition-all duration-300 ${isInteractive ? 'opacity-0 pointer-events-none' : 'opacity-100 bg-background/20 cursor-pointer pointer-events-auto backdrop-blur-[2px]'}`} 
-            onClick={() => setIsInteractive(true)}
-          >
-            {!isInteractive && (
-              <span className="px-6 py-3 glass-surface text-white shadow-2xl text-sm font-medium rounded-full flex items-center gap-2 transform transition-transform hover:scale-105">
-                Tap to interact
-              </span>
-            )}
+          <div className="space-y-5">
+            <LiveWebsitePreview work={activeWork} />
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="grid gap-5 md:grid-cols-[1fr_0.85fr]"
+            >
+              <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <div className="mb-5 flex items-center gap-2">
+                  <MonitorUp className="h-5 w-5 text-cyan-700" />
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-400">Project context</p>
+                </div>
+                <h3 className="text-2xl font-black tracking-tight text-slate-950">{activeWork.title}</h3>
+                <p className="mt-3 text-sm font-semibold leading-7 text-slate-600">{activeWork.fullDescription}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {activeWork.techStack.map((tech) => (
+                    <span key={tech} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-slate-200 bg-slate-950 p-5 text-white shadow-[0_18px_48px_rgba(15,23,42,0.14)] sm:p-6">
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-cyan-100/80">Delivery outcomes</p>
+                <div className="mt-5 space-y-3">
+                  {activeWork.outcomes.map((outcome) => (
+                    <div key={`${activeWork.slug}-${outcome.label}`} className="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.06] p-4">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                      <div>
+                        <p className="text-xl font-black">{outcome.metric}</p>
+                        <p className="text-sm font-semibold leading-6 text-slate-300">{outcome.label}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <Link href={`/work/${activeWork.slug}`} className="group mt-6 inline-flex items-center gap-2 text-sm font-black text-cyan-100">
+                  View case study
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
