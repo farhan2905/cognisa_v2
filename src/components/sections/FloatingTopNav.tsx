@@ -32,12 +32,22 @@ export default function FloatingTopNav() {
   const [activeId, setActiveId] = useState(getPathActiveId(pathname));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [afterDelay, setAfterDelay] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
 
   // Track scroll for blur intensity
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Timer for initial delay (1 second after hero loads)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAfterDelay(true);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   // Close mobile menu on route change
@@ -80,6 +90,8 @@ export default function FloatingTopNav() {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
+  const isMinimized = (scrolled || afterDelay) && !isInteracting && !mobileOpen;
+
   return (
     <>
       <motion.nav
@@ -93,11 +105,17 @@ export default function FloatingTopNav() {
         aria-label="Primary navigation"
       >
         <div
+          onMouseEnter={() => setIsInteracting(true)}
+          onMouseLeave={() => setIsInteracting(false)}
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => setIsInteracting(false)}
           className={cn(
             'mx-auto flex max-w-[1500px] items-center justify-between rounded-[1.4rem] border px-4 py-3 transition-all duration-300',
-            scrolled
-              ? 'border-slate-200/90 bg-white/92 shadow-[0_18px_54px_rgba(15,23,42,0.12)] backdrop-blur-2xl'
-              : 'border-slate-200/60 bg-white/80 shadow-[0_12px_36px_rgba(15,23,42,0.06)] backdrop-blur-xl'
+            isMinimized
+              ? 'border-slate-200/20 bg-white/[0.08] shadow-[0_4px_24px_rgba(15,23,42,0.02)] backdrop-blur-md'
+              : scrolled
+                ? 'border-slate-200/90 bg-white/92 shadow-[0_18px_54px_rgba(15,23,42,0.12)] backdrop-blur-2xl'
+                : 'border-slate-200/60 bg-white/80 shadow-[0_12px_36px_rgba(15,23,42,0.06)] backdrop-blur-xl'
           )}
         >
           {/* Logo */}

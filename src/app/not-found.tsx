@@ -103,13 +103,29 @@ export default function NotFound() {
   const [theme, setTheme] = useState<ThemeColor>('slate');
   const [showMatrix, setShowMatrix] = useState(false);
 
+  const consoleBodyRef = useRef<HTMLDivElement>(null);
   const consoleEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Auto scroll to bottom
+  // Force scroll to top on mount and set scroll restoration to manual
   useEffect(() => {
-    consoleEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      if (window.history && 'scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  // Auto scroll to bottom of console container
+  useEffect(() => {
+    if (consoleBodyRef.current) {
+      consoleBodyRef.current.scrollTo({
+        top: consoleBodyRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   }, [history]);
 
   // Focus input on console click
@@ -422,7 +438,7 @@ export default function NotFound() {
             </div>
 
             {/* Shell Content Panel */}
-            <div className="p-4 sm:p-5 h-[340px] md:h-[380px] overflow-y-auto flex flex-col gap-1 relative z-10 scrollbar-thin">
+            <div ref={consoleBodyRef} className="p-4 sm:p-5 h-[340px] md:h-[380px] overflow-y-auto flex flex-col gap-1 relative z-10 scrollbar-thin">
               {history.map((entry, idx) => {
                 let colorClass = 'text-slate-300';
                 if (entry.type === 'input') colorClass = activeStyle.textLight + ' font-bold';
