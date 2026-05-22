@@ -32,17 +32,22 @@ export default function FloatingTopNav() {
   const [activeId, setActiveId] = useState(getPathActiveId(pathname));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const [afterDelay, setAfterDelay] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
 
-  // Track scroll for blur intensity
+  // Track scroll position and scrolled state
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
+      setScrollY(window.scrollY);
+    };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Timer for initial delay (1 second after hero loads)
+  // Timer for initial delay (1 second after page loads)
   useEffect(() => {
     const timer = setTimeout(() => {
       setAfterDelay(true);
@@ -90,7 +95,14 @@ export default function FloatingTopNav() {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
-  const isMinimized = (scrolled || afterDelay) && !isInteracting && !mobileOpen;
+  const isHomepage = pathname === '/';
+  
+  // On homepage, minimize only when scrolled past the hero (second section reached)
+  const hasReachedMinimizeZone = isHomepage 
+    ? (scrollY > 450)
+    : (scrolled || afterDelay);
+
+  const isMinimized = hasReachedMinimizeZone && !isInteracting && !mobileOpen;
 
   return (
     <>
@@ -112,7 +124,7 @@ export default function FloatingTopNav() {
           className={cn(
             'mx-auto flex max-w-[1500px] items-center justify-between rounded-[1.4rem] border px-4 py-3 transition-all duration-300',
             isMinimized
-              ? 'border-slate-200/20 bg-white/[0.08] shadow-[0_4px_24px_rgba(15,23,42,0.02)] backdrop-blur-md'
+              ? 'border-slate-200/[0.06] bg-white/[0.02] shadow-none backdrop-blur-[2px]'
               : scrolled
                 ? 'border-slate-200/90 bg-white/92 shadow-[0_18px_54px_rgba(15,23,42,0.12)] backdrop-blur-2xl'
                 : 'border-slate-200/60 bg-white/80 shadow-[0_12px_36px_rgba(15,23,42,0.06)] backdrop-blur-xl'
