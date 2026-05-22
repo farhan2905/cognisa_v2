@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: " AI Automation & Software Development",
+  title: "Cognisa | AI Automation & Software Development",
   description:
     "The Anti-Agency Expert. We build custom software, digital experiences, and AI automations that drive business growth.",
   keywords: [
@@ -26,13 +26,14 @@ export const metadata: Metadata = {
     "AI solutions",
     "growth strategy",
     "tech consultancy",
+    "Cognisa",
   ],
-  authors: [{ name: "iknowdata" }],
+  authors: [{ name: "Cognisa" }],
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "iknowdata | AI Automation & Software Development",
+    title: "Cognisa | AI Automation & Software Development",
     description: "We build custom software and AI automations that drive business growth.",
     type: "website",
   },

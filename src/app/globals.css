@@ -570,4 +570,167 @@ mark {
   to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
 }
 
+/* ========== KORE.AI-INSPIRED ANIMATIONS ========== */
+
+/* Shimmer sweep — used on status pills, card borders */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.shimmer-border {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.15) 40%,
+    rgba(139, 92, 246, 0.2) 50%,
+    rgba(99, 102, 241, 0.15) 60%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Rotating conic-gradient border — for stat cards, CTA panels */
+@keyframes gradient-spin {
+  from { --gradient-angle: 0deg; }
+  to { --gradient-angle: 360deg; }
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.gradient-border-spin {
+  position: relative;
+  z-index: 0;
+}
+.gradient-border-spin::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    rgba(99, 102, 241, 0.4),
+    rgba(139, 92, 246, 0.3),
+    rgba(56, 189, 248, 0.2),
+    rgba(236, 72, 153, 0.15),
+    rgba(99, 102, 241, 0.4)
+  );
+  animation: gradient-spin 4s linear infinite;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.gradient-border-spin:hover::before {
+  opacity: 1;
+}
+
+/* Page entrance — Kore.ai-style orchestrated load */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes hero-content-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 2rem, 0);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0px);
+  }
+}
+
+@keyframes hero-canvas-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.85) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes hero-logo-spin-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotate(-180deg);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(10deg);
+    filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+/* Section scroll reveal */
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Auto-play progress bar fill */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.progress-bar-fill {
+  animation: progress-fill var(--duration, 6s) linear forwards;
+}
+
+/* Testimonial dot pulse */
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+/* Enhanced heartbeat for live indicators */
+@keyframes heartbeat-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    transform: scale(1);
+  }
+  30% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    transform: scale(1.15);
+  }
+  60% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    transform: scale(1);
+  }
+}
+
+.heartbeat-glow {
+  animation: heartbeat-glow 2s infinite ease-in-out;
+}
+
 /* Base font-size uses browser default (16px) for correct rem scaling at any zoom level */
