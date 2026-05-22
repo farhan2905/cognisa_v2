@@ -15,17 +15,16 @@ const customPrismStyle = {
   ...prism,
   'pre[class*="language-"]': {
     ...prism['pre[class*="language-"]'],
-    background: 'rgba(99, 102, 241, 0.03)',
-    border: '1px solid rgba(99, 102, 241, 0.08)',
+    background: '#f8fafc',
+    border: '1px solid #e2e8f0',
     borderRadius: '1.25rem',
-    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.7)',
     padding: '1.5rem',
     margin: '1.5rem 0',
   },
   'code[class*="language-"]': {
     ...prism['code[class*="language-"]'],
     background: 'transparent',
-    color: '#312e81',
+    color: '#0f172a',
     fontFamily: 'monospace',
   }
 };
@@ -78,7 +77,7 @@ export default function InsightDetailPage({ params }: { params: { slug: string }
         {/* Main Content */}
         <div className="flex-grow w-full min-w-0">
           <GlassContentBlock className="px-6 md:px-12 py-10 md:py-16">
-            <div className="flex items-center gap-6 text-foreground/60 text-sm font-medium mb-12 border-b border-indigo-300/20 pb-6">
+            <div className="flex items-center gap-6 text-slate-500 text-sm font-medium mb-12 border-b border-slate-200 pb-6">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {post.date}
@@ -89,7 +88,7 @@ export default function InsightDetailPage({ params }: { params: { slug: string }
               </div>
             </div>
 
-            <div className="prose max-w-none prose-h1:text-3xl prose-h1:font-bold prose-h1:text-foreground prose-h1:mb-8 prose-h2:text-2xl prose-h2:font-bold prose-h2:text-foreground prose-h2:mt-12 prose-h2:mb-6 prose-p:text-foreground/80 prose-p:leading-relaxed prose-p:mb-6 prose-ul:text-foreground/80 prose-ul:mb-6 prose-li:mb-2 prose-strong:text-foreground prose-code:text-indigo-500 prose-code:bg-indigo-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-transparent prose-pre:p-0">
+            <div className="prose max-w-none prose-h1:text-3xl prose-h1:font-bold prose-h1:text-slate-900 prose-h1:mb-8 prose-h2:text-2xl prose-h2:font-bold prose-h2:text-slate-900 prose-h2:mt-12 prose-h2:mb-6 prose-p:text-slate-650 prose-p:leading-relaxed prose-p:mb-6 prose-ul:text-slate-650 prose-ul:mb-6 prose-li:mb-2 prose-strong:text-slate-950 prose-code:text-cyan-600 prose-code:bg-cyan-50/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-transparent prose-pre:p-0">
               <ReactMarkdown
                 components={{
                   h2({ children }) {
@@ -114,7 +113,7 @@ export default function InsightDetailPage({ params }: { params: { slug: string }
                         {String(children).replace(/\n$/, '')}
                       </SyntaxHighlighter>
                     ) : (
-                      <code className="text-indigo-650 bg-indigo-50/50 px-1.5 py-0.5 rounded text-xs font-mono border border-indigo-100">
+                      <code className="text-cyan-700 bg-cyan-50/50 px-1.5 py-0.5 rounded text-xs font-mono border border-cyan-100">
                         {children}
                       </code>
                     );

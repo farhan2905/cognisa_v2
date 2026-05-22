@@ -15,9 +15,9 @@ export default function DetailWorkShowcase({ work }: DetailWorkShowcaseProps) {
   const [activeMode, setActiveMode] = useState<'live' | 'architecture'>('live');
 
   return (
-    <div className="md:col-span-2 min-h-[450px] md:min-h-[500px] flex flex-col relative group overflow-hidden rounded-[2.5rem] border border-indigo-100 bg-white/45 backdrop-blur-md shadow-[0_20px_50px_rgba(99,102,241,0.03),inset_0_1px_0_rgba(255,255,255,0.7)]">
+    <div className="md:col-span-2 min-h-[450px] md:min-h-[500px] flex flex-col relative group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       {/* Browser Bar Header */}
-      <div className="h-12 w-full bg-white/80 border-b border-indigo-100 flex items-center px-6 justify-between absolute top-0 left-0 right-0 z-30">
+      <div className="h-12 w-full bg-slate-50 border-b border-slate-200 flex items-center px-6 justify-between absolute top-0 left-0 right-0 z-30">
         <div className="flex gap-1.5 flex-shrink-0">
           <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -25,12 +25,12 @@ export default function DetailWorkShowcase({ work }: DetailWorkShowcaseProps) {
         </div>
 
         {/* Dynamic Mode Switcher Tabs */}
-        <div className="flex items-center gap-1 bg-indigo-50/60 p-0.5 rounded-lg border border-indigo-100/50">
+        <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg border border-slate-200">
           <button
             onClick={() => setActiveMode('live')}
             className={`px-3 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 transition-all ${
               activeMode === 'live'
-                ? 'bg-white text-indigo-650 shadow-sm border border-indigo-100/50'
+                ? 'bg-white text-cyan-600 shadow-sm border border-slate-200'
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -41,7 +41,7 @@ export default function DetailWorkShowcase({ work }: DetailWorkShowcaseProps) {
             onClick={() => setActiveMode('architecture')}
             className={`px-3 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 transition-all ${
               activeMode === 'architecture'
-                ? 'bg-white text-indigo-650 shadow-sm border border-indigo-100/50'
+                ? 'bg-white text-cyan-600 shadow-sm border border-slate-200'
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -57,7 +57,7 @@ export default function DetailWorkShowcase({ work }: DetailWorkShowcaseProps) {
       </div>
 
       {/* Main Content Area */}
-      <div className="absolute inset-0 top-12 bottom-0 bg-indigo-50/10">
+      <div className="absolute inset-0 top-12 bottom-0 bg-white">
         <AnimatePresence mode="wait">
           {activeMode === 'live' ? (
             <motion.div

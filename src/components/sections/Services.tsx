@@ -75,11 +75,11 @@ const services = [
       'Managed deployment, hosting, CI/CD, security, and cloud operations for teams that need software to stay dependable.',
     subservices: ['Managed hosting', 'CI/CD', 'Monitoring', 'Security hardening'],
     proof: ['Repeatable deployments', 'Cost-aware hosting', 'Production support'],
-    accent: 'indigo',
-    tone: 'border-indigo-200 bg-indigo-50 text-indigo-700',
-    dot: 'bg-indigo-500',
-    line: 'from-indigo-500 to-violet-500',
-    glow: 'rgba(99, 102, 241, 0.16)',
+    accent: 'teal',
+    tone: 'border-teal-200 bg-teal-50 text-teal-700',
+    dot: 'bg-teal-500',
+    line: 'from-teal-500 to-emerald-500',
+    glow: 'rgba(13, 148, 136, 0.16)',
   },
 ];
 

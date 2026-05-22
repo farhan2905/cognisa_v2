@@ -9,15 +9,16 @@ import Logo from '@/components/shared/Logo';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { label: 'Agent platform', href: '/#platform', id: 'platform' },
-  { label: 'AI capabilities', href: '/#multimodal', id: 'multimodal' },
+  { label: 'AI capabilities', href: '/capabilities', id: 'capabilities' },
   { label: 'Services', href: '/services', id: 'services' },
   { label: 'Work', href: '/work', id: 'work' },
   { label: 'Process', href: '/process', id: 'process' },
   { label: 'Insights', href: '/insights', id: 'insights' },
+  { label: 'About us', href: '/about', id: 'about' },
 ];
 
 function getPathActiveId(pathname: string) {
+  if (pathname.startsWith('/capabilities')) return 'capabilities';
   if (pathname.startsWith('/services')) return 'services';
   if (pathname.startsWith('/work')) return 'work';
   if (pathname.startsWith('/process')) return 'process';
@@ -66,7 +67,7 @@ export default function FloatingTopNav() {
       return;
     }
 
-    const ids = ['hero', 'platform', 'multimodal', 'services', 'work', 'insights', 'cta'];
+    const ids = ['hero', 'capabilities', 'services', 'work', 'insights', 'cta'];
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -159,7 +160,7 @@ export default function FloatingTopNav() {
                     />
                   )}
                   <span className="relative z-10">{item.label}</span>
-                  {(item.id === 'platform' || item.id === 'services') && (
+                  {item.id === 'services' && (
                     <ChevronDown className="relative z-10 h-3.5 w-3.5 opacity-55" />
                   )}
                 </Link>
@@ -235,7 +236,6 @@ export default function FloatingTopNav() {
                 {[
                   { label: 'Home', href: '/', id: 'hero' },
                   ...navItems,
-                  { label: 'About', href: '/about', id: 'about' },
                   { label: 'Contact', href: '/contact', id: 'contact' },
                 ].map((item, index) => {
                   const active = activeId === item.id;

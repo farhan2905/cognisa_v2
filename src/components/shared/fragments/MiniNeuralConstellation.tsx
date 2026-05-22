@@ -35,7 +35,7 @@ export default function MiniNeuralConstellation({ className = '' }: { className?
       nodes.push({
         x: cx + Math.cos(angle) * dist, y: cy + Math.sin(angle) * dist,
         baseX: cx + Math.cos(angle) * dist, baseY: cy + Math.sin(angle) * dist,
-        radius: 3 + Math.random() * 2, hue: 220 + Math.random() * 15,
+        radius: 3 + Math.random() * 2, hue: 180 + Math.random() * 10,
         phase: Math.random() * Math.PI * 2, speed: 0.2 + Math.random() * 0.3,
       });
     }
@@ -47,7 +47,7 @@ export default function MiniNeuralConstellation({ className = '' }: { className?
       const py = cy + Math.sin(angle) * dist;
       nodes.push({
         x: px, y: py, baseX: px, baseY: py,
-        radius: 2 + Math.random() * 2, hue: 235 + Math.random() * 30,
+        radius: 2 + Math.random() * 2, hue: 185 + Math.random() * 10,
         phase: Math.random() * Math.PI * 2, speed: 0.15 + Math.random() * 0.2,
       });
     }
@@ -59,7 +59,7 @@ export default function MiniNeuralConstellation({ className = '' }: { className?
       const py = cy + Math.sin(angle) * dist;
       nodes.push({
         x: px, y: py, baseX: px, baseY: py,
-        radius: 1.5 + Math.random() * 2, hue: 250 + Math.random() * 40,
+        radius: 1.5 + Math.random() * 2, hue: 190 + Math.random() * 10,
         phase: Math.random() * Math.PI * 2, speed: 0.1 + Math.random() * 0.15,
       });
     }
@@ -140,10 +140,9 @@ export default function MiniNeuralConstellation({ className = '' }: { className?
         const alpha = branch.opacity * (0.5 + 0.5 * pulse);
         const mx = (from.x + to.x) / 2 + Math.sin(t + branch.from) * 5;
         const my = (from.y + to.y) / 2 + Math.cos(t + branch.to) * 5;
-
         const grad = ctx.createLinearGradient(from.x, from.y, to.x, to.y);
-        grad.addColorStop(0, `hsla(${from.hue}, 70%, 65%, ${alpha})`);
-        grad.addColorStop(1, `hsla(${to.hue}, 70%, 65%, ${alpha})`);
+        grad.addColorStop(0, `hsla(${from.hue}, 40%, 60%, ${alpha * 0.6})`);
+        grad.addColorStop(1, `hsla(${to.hue}, 40%, 60%, ${alpha * 0.6})`);
 
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
@@ -156,11 +155,11 @@ export default function MiniNeuralConstellation({ className = '' }: { className?
       nodes.forEach((node) => {
         const pulse = 0.7 + 0.3 * Math.sin(t * 2 + node.phase);
         const r = node.radius * pulse;
-        const glowRadius = r * 4;
+        const glowRadius = r * 3;
 
         const glow = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, glowRadius);
-        glow.addColorStop(0, `hsla(${node.hue}, 85%, 72%, ${0.2 * pulse})`);
-        glow.addColorStop(1, `hsla(${node.hue}, 80%, 70%, 0)`);
+        glow.addColorStop(0, `hsla(${node.hue}, 45%, 65%, ${0.08 * pulse})`);
+        glow.addColorStop(1, `hsla(${node.hue}, 40%, 60%, 0)`);
         ctx.beginPath();
         ctx.arc(node.x, node.y, glowRadius, 0, Math.PI * 2);
         ctx.fillStyle = glow;
@@ -168,7 +167,7 @@ export default function MiniNeuralConstellation({ className = '' }: { className?
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${node.hue}, 85%, 68%, ${0.6 + 0.3 * pulse})`;
+        ctx.fillStyle = `hsla(${node.hue}, 50%, 55%, ${0.4 + 0.2 * pulse})`;
         ctx.fill();
       });
 

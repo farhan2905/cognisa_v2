@@ -64,19 +64,19 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
         {/* Technical Details & Next Steps */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <GlassContentBlock className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-              <Award className="w-6 h-6 text-indigo-400" />
+            <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <Award className="w-6 h-6 text-cyan-600" />
               Project Architecture
             </h2>
-            <p className="text-foreground/80 leading-relaxed mb-6">
+            <p className="text-slate-600 leading-relaxed mb-6">
               For {work.title}, we engineered a production-grade architecture optimized for
               performance, scalability, and conversion. This included decoupled services,
               edge-accelerated delivery, and rigorous load testing prior to launch.
             </p>
-            <h3 className="font-semibold text-foreground mb-4">Core Technologies Used:</h3>
+            <h3 className="font-semibold text-slate-900 mb-4">Core Technologies Used:</h3>
             <ul className="flex flex-col gap-3">
               {work.techStack.map((tech, idx) => (
-                <li key={idx} className="flex items-center gap-3 text-foreground/70">
+                <li key={idx} className="flex items-center gap-3 text-slate-600">
                   <CheckCircle2 className="w-5 h-5 opacity-60" style={{ color: work.color }} />
                   {tech}
                 </li>
@@ -85,13 +85,13 @@ export default function WorkDetailPage({ params }: { params: { slug: string } })
           </GlassContentBlock>
 
           <GlassContentBlock className="flex flex-col justify-center">
-            <h3 className="text-xl font-bold text-foreground mb-4">Ready to build something similar?</h3>
-            <p className="text-sm text-foreground/70 mb-8 leading-relaxed">
+            <h3 className="text-xl font-bold text-slate-900 mb-4">Ready to build something similar?</h3>
+            <p className="text-sm text-slate-600 mb-8 leading-relaxed">
               We apply the exact same rigorous engineering standards to every project we take on.
             </p>
             <Link
               href="/contact"
-              className="w-full text-center py-3 bg-gradient-to-r from-blue-600/[0.1] to-indigo-500/[0.1] border border-indigo-400/30 rounded-xl font-semibold hover:from-blue-600/[0.2] hover:to-indigo-500/[0.2] transition-colors"
+              className="w-full text-center py-2.5 bg-slate-950 text-white rounded-full font-bold text-xs hover:bg-cyan-700 transition-all shadow-sm block"
             >
               Let&apos;s Discuss Your Project
             </Link>

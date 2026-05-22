@@ -43,12 +43,11 @@ export default function RelatedContent({
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6">
-            <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md" />
-            <span className="text-sm font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-slate-200 bg-slate-50 shadow-sm mb-6">
+            <span className="w-2 h-2 bg-cyan-600 rounded-full animate-pulse" />
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500">
               Continue Exploring
             </span>
-            <span className="h-1 w-12 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground">
             Related {type === 'services' ? 'Services' : type === 'work' ? 'Projects' : 'Articles'}
@@ -65,9 +64,9 @@ export default function RelatedContent({
             >
               <Link
                 href={`${basePath}/${item.slug}`}
-                className="group flex flex-col h-full relative overflow-hidden bg-gradient-to-br from-blue-600/[0.06] via-indigo-500/[0.025] to-transparent backdrop-blur-2xl rounded-2xl p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)] transition-all duration-500 hover:-translate-y-2 hover:border-indigo-300/60 hover:ring-indigo-400/30"
+                className="group flex flex-col h-full relative overflow-hidden bg-white rounded-2xl p-6 border border-slate-200 shadow-sm transition-all duration-300 hover:border-slate-350 hover:shadow-md"
               >
-                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-indigo-500 transition-colors">
+                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-cyan-700 transition-colors">
                   {item.title}
                 </h3>
                 {item.description && (
@@ -75,8 +74,8 @@ export default function RelatedContent({
                     {item.description}
                   </p>
                 )}
-                <div className="mt-auto flex items-center gap-2 text-foreground/40 group-hover:text-indigo-500 transition-colors">
-                  <span className="text-xs font-medium">Explore</span>
+                <div className="mt-auto flex items-center gap-2 text-foreground/45 group-hover:text-cyan-700 transition-colors">
+                  <span className="text-xs font-semibold">Explore</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>

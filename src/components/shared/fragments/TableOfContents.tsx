@@ -28,10 +28,10 @@ export default function TableOfContents({ sections, className = '' }: TableOfCon
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
-      <div className="sticky top-32 glass-surface rounded-[2rem] p-6 border border-indigo-300/40 ring-1 ring-indigo-400/15 shadow-[0_10px_30px_rgba(59,130,246,0.12),inset_0_1px_0_rgba(255,255,255,0.45)]">
-        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-indigo-300/20">
-          <Hash className="w-4 h-4 text-indigo-500" />
-          <span className="text-xs font-mono font-bold text-foreground/50 uppercase tracking-wider">
+      <div className="sticky top-32 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-200">
+          <Hash className="w-4 h-4 text-cyan-600" />
+          <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
             On this page
           </span>
         </div>
@@ -47,7 +47,7 @@ export default function TableOfContents({ sections, className = '' }: TableOfCon
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
-                className="block text-sm text-foreground/60 hover:text-indigo-500 transition-colors py-1 px-3 rounded-lg hover:bg-indigo-500/5 border-l-2 border-transparent hover:border-indigo-400/30"
+                className="block text-xs font-semibold text-slate-500 hover:text-cyan-700 transition-colors py-1.5 px-3 rounded-lg hover:bg-slate-50 border-l-2 border-transparent hover:border-cyan-500"
               >
                 {section.title}
               </a>

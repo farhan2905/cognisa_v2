@@ -55,8 +55,8 @@ export default function ProcessPage() {
         title="From concept to deployment"
         titleAccent="in 5 phases."
         description="We follow a structured, transparent engineering process that ensures every project is delivered on time, on budget, and to the highest quality standard."
-        orbColor="#8b5cf6"
-        orbColor2="#3b82f6"
+        orbColor="#0891b2"
+        orbColor2="#10b981"
       />
 
       {/* Playback Console */}
@@ -73,7 +73,6 @@ export default function ProcessPage() {
 
       {/* Timeline */}
       <section className="relative py-8 md:py-16 overflow-hidden">
-        <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-1" />
         <div className="w-full max-w-[1000px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <ProcessTimeline 
             activePhaseIndex={activePhaseIndex} 
@@ -84,7 +83,6 @@ export default function ProcessPage() {
 
       {/* Tech Stack Bento */}
       <section className="relative py-12 md:py-20 overflow-hidden" ref={techRef}>
-        <div className="absolute bottom-0 right-[-10%] w-[400px] h-[400px] bg-violet-200/30 rounded-full blur-[120px] pointer-events-none animate-orb-2" />
 
         <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <div className="text-center mb-12">
@@ -97,7 +95,7 @@ export default function ProcessPage() {
               className="text-2xl md:text-4xl font-bold text-foreground mt-6 tracking-tight"
             >
               Tools &{' '}
-              <span className="bg-indigo-500/10 border border-indigo-300/40 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 px-2 py-0.5 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]">technologies</span> we use
+              <span className="bg-slate-100 border border-slate-200 text-slate-900 px-2.5 py-0.5 rounded-xl shadow-sm font-semibold">technologies</span> we use
             </motion.h2>
           </div>
 
@@ -111,7 +109,7 @@ export default function ProcessPage() {
               >
                 <GlassContentBlock hoverEffect className="h-full">
                   <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                    <span className="w-2 h-5 rounded-full bg-gradient-to-b from-indigo-400 to-violet-500" />
+                    <span className="w-2 h-5 rounded-full bg-slate-950" />
                     {cat.title}
                   </h3>
                   <div className="flex flex-wrap gap-2">

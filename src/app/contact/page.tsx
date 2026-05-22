@@ -7,11 +7,12 @@ import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import ContactForm from '@/components/shared/ContactForm';
 import IridescentBlobBackground from '@/components/shared/fragments/IridescentBlobBackground';
+import SectionTag from '@/components/shared/SectionTag';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'hello@cognisa.in', href: 'mailto:hello@cognisa.in', color: '#06b6d4' },
   { icon: MapPin, label: 'Location', value: 'New York, NY', href: null, color: '#10b981' },
-  { icon: Clock, label: 'Response window', value: 'Within 1 business day', href: null, color: '#6366f1' },
+  { icon: Clock, label: 'Response window', value: 'Within 1 business day', href: null, color: '#0891b2' },
 ];
 
 const goodFitSignals = [
@@ -38,8 +39,8 @@ export default function ContactPage() {
           title="Let's build something"
           titleAccent="exceptional."
           description="Every great project starts with a conversation. Tell us about your vision, and we'll map out a clear path forward."
-          orbColor="#6366f1"
-          orbColor2="#a78bfa"
+          orbColor="#0891b2"
+          orbColor2="#10b981"
         />
       </div>
 
@@ -117,14 +118,8 @@ export default function ContactPage() {
       {/* ── FAQ ── */}
       <section className="relative py-12 md:py-20 overflow-hidden">
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border backdrop-blur-[100px] bg-gradient-to-r from-white/8 via-white/4 to-white/2 border-indigo-300/40 shadow-[inset_0_2px_2px_rgba(255,255,255,0.3),0_8px_24px_rgba(31,38,135,0.1)] mb-6">
-              <span className="w-4 h-4 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-md" />
-              <span className="text-sm font-mono uppercase tracking-[0.2em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
-                FAQ
-              </span>
-              <span className="h-1 w-12 rounded-full bg-gradient-to-r from-indigo-400/60 to-transparent" />
-            </div>
+          <div className="text-center mb-12 flex flex-col items-center">
+            <SectionTag text="FAQ" className="justify-center mb-6" />
             <h2 className="text-2xl md:text-3xl font-bold text-foreground">Quick answers to common questions</h2>
           </div>
           <div className="max-w-3xl mx-auto space-y-4">

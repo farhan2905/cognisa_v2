@@ -50,7 +50,7 @@ function AnimatedCounter({ value, suffix, inView }: { value: number; suffix: str
   return (
     <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tabular-nums">
       {displayValue}
-      <span className="text-indigo-500">{suffix}</span>
+      <span className="text-cyan-600">{suffix}</span>
     </span>
   );
 }
@@ -69,8 +69,8 @@ export default function AboutPage() {
           title="We don't just write code. We build"
           titleAccent="systems that scale."
           description="Managed solely by the founder of Cognisa, we specialize in delivering high-performance custom web applications and AI-driven automation. We partner closely with businesses to transform manual bottlenecks into scalable, automated tech solutions."
-          orbColor="#6366f1"
-          orbColor2="#a78bfa"
+          orbColor="#0891b2"
+          orbColor2="#10b981"
           align="left"
         />
       </div>
@@ -81,7 +81,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
             <GlassContentBlock>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 tracking-tight">
-                The <span className="text-indigo-500">Anti-Agency</span> Expert
+                The <span className="text-cyan-650">Anti-Agency</span> Expert
               </h2>
               <div className="space-y-5 text-foreground/75 leading-relaxed font-medium text-base">
                 <p>
@@ -103,7 +103,7 @@ export default function AboutPage() {
 
             <GlassContentBlock>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 tracking-tight">
-                Our <span className="text-indigo-500">Mission</span>
+                Our <span className="text-cyan-650">Mission</span>
               </h2>
               <div className="space-y-5 text-foreground/75 leading-relaxed font-medium text-base">
                 <p>
@@ -162,7 +162,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
               {/* Avatar */}
               <div className="flex justify-center lg:justify-start">
-                <div className="w-40 h-40 md:w-52 md:h-52 rounded-[2.5rem] bg-gradient-to-br from-indigo-500/20 via-violet-500/10 to-transparent border border-indigo-300/40 flex items-center justify-center shadow-[0_10px_30px_rgba(99,102,241,0.15)]">
+                <div className="w-40 h-40 md:w-52 md:h-52 rounded-[2.5rem] bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent border border-cyan-350 flex items-center justify-center shadow-[0_10px_30px_rgba(8,145,178,0.12)]">
                   <span className="text-5xl md:text-7xl font-bold text-gradient">C</span>
                 </div>
               </div>
@@ -170,7 +170,7 @@ export default function AboutPage() {
               {/* Info */}
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-3 mb-4">
-                  <Users className="w-5 h-5 text-indigo-500" />
+                  <Users className="w-5 h-5 text-cyan-650" />
                   <span className="text-xs font-mono uppercase tracking-widest text-foreground/50 font-bold">
                     Founder & Lead Engineer
                   </span>
@@ -207,7 +207,7 @@ export default function AboutPage() {
 
       {/* ── Stats ── */}
       <section className="relative py-12 md:py-20 overflow-hidden" ref={statsRef}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-200 rounded-full blur-[200px] opacity-[0.06]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-100 rounded-full blur-[200px] opacity-[0.06]" />
         <div className="w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
           <div className="mb-8 grid gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-3">
             {deliveryStandards.map((standard) => (

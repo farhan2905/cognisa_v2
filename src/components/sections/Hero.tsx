@@ -21,7 +21,7 @@ import EnterpriseButton from '@/components/shared/EnterpriseButton';
 
 const capabilities = [
   { label: 'AI agents', icon: Cpu, tone: 'text-cyan-600 bg-cyan-50 border-cyan-200' },
-  { label: 'Custom software', icon: Workflow, tone: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
+  { label: 'Custom software', icon: Workflow, tone: 'text-teal-600 bg-teal-50 border-teal-200' },
   { label: 'Workflow orchestration', icon: Network, tone: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
   { label: 'Managed delivery', icon: ShieldCheck, tone: 'text-amber-600 bg-amber-50 border-amber-200' },
 ];
@@ -210,12 +210,12 @@ function HeroDropletIntro() {
 /* ─── Stagger Orchestration — spread over 5.5-6.0s total ─── */
 const stagger = {
   droplet: 0,         // t=0.0s — rings start expanding
-  eyebrow: 1.2,       // t=1.2s — badge fades in
-  headline: 2.0,      // t=2.0s — main title reveals (blur-in)
-  text: 3.0,          // t=3.0s — description
-  ctas: 3.8,          // t=3.8s — CTA buttons
-  stats: 4.6,         // t=4.6s — stat cards start
-  runtime: 2.2,       // t=2.2s — runtime visual starts
+  headline: 1.2,      // t=1.2s — main title reveals (blur-in)
+  runtime: 1.8,       // t=1.8s — runtime visual starts
+  eyebrow: 2.2,       // t=2.2s — badge/logo row fades in
+  text: 2.8,          // t=2.8s — description
+  ctas: 3.6,          // t=3.6s — CTA buttons
+  stats: 4.6,         // unused/removed
 };
 
 /* ─── Animation durations — longer, more cinematic ─── */
@@ -238,7 +238,7 @@ interface LogEntry {
 function AgentRuntimeVisual() {
   const router = useRouter();
   const [history, setHistory] = useState<LogEntry[]>([
-    { type: 'system', text: 'Cognisa System Shell v2.4.0 (node_hero // online)' },
+    { type: 'system', text: 'System Shell v2.4.0 (node_hero // online)' },
     { type: 'system', text: 'Designed around your business systems' },
     { type: 'system', text: ' ' },
     { type: 'output', text: 'Directories (use "cd <name>" to navigate):' },
@@ -758,17 +758,6 @@ export default function Hero() {
 
         <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <div className="max-w-3xl">
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: dur.eyebrow, delay: stagger.eyebrow, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-200/60 bg-white/80 px-3 py-1.5 text-xs font-bold uppercase text-slate-600 shadow-sm backdrop-blur"
-            >
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              AI automation / software platforms / managed growth
-            </motion.div>
-
             {/* Headline — dramatic blur-in with scale */}
             <motion.h1
               initial={{ opacity: 0, y: 40, filter: 'blur(12px)', scale: 0.97 }}
@@ -779,12 +768,13 @@ export default function Hero() {
               Build AI systems ready for the work your business actually runs.
             </motion.h1>
 
+
             {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: dur.text, delay: stagger.text, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-5 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg"
+              className="mt-6 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg"
             >
               Cognisa designs, builds, and manages custom software and AI agents that connect to your tools, automate repeatable work, and create measurable operating leverage.
             </motion.p>
@@ -794,7 +784,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: dur.ctas, delay: stagger.ctas, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-7 flex flex-col gap-3 sm:flex-row"
+              className="mt-8 flex flex-col gap-3 sm:flex-row"
             >
               <EnterpriseButton href="/contact">
                 Get a demo
@@ -803,26 +793,6 @@ export default function Hero() {
                 Explore our technology
               </EnterpriseButton>
             </motion.div>
-
-            {/* Stats — stagger each card individually */}
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {heroStats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 16, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.65,
-                    delay: stagger.stats + index * 0.2,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="enterprise-ice-card rounded-lg p-4"
-                >
-                  <p className="text-xl font-black text-slate-950">{stat.value}</p>
-                  <p className="mt-1 text-xs font-semibold leading-5 text-slate-500">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
           </div>
 
           <AgentRuntimeVisual />

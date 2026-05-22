@@ -50,82 +50,82 @@ export default function SpatialWorkPreview({ work }: SpatialWorkPreviewProps) {
     switch (work.slug) {
       case 'desh-yatraa':
         return (
-          <div className="w-full h-full flex flex-col gap-2 p-3.5">
-            <div className="flex justify-between items-center bg-white/20 p-2 rounded-xl border border-white/30 backdrop-blur-sm">
-              <span className="text-[8px] font-bold text-white">Find Destinations</span>
-              <span className="w-3.5 h-3.5 bg-white/30 rounded-full flex items-center justify-center text-[7px]">🔍</span>
+          <div className="w-full h-full flex flex-col gap-2 p-3.5 text-slate-800">
+            <div className="flex justify-between items-center bg-slate-50 p-2 rounded-xl border border-slate-200">
+              <span className="text-[8px] font-bold text-slate-700">Find Destinations</span>
+              <span className="w-3.5 h-3.5 bg-slate-200 rounded-full flex items-center justify-center text-[7px]">🔍</span>
             </div>
             <div className="grid grid-cols-2 gap-2 mt-1">
-              <div className="bg-indigo-500/25 p-2 rounded-xl border border-indigo-400/20 flex flex-col justify-between h-14">
-                <span className="text-[12px] font-extrabold text-white">Asia</span>
-                <span className="text-[6px] text-white/70">12 Packages</span>
+              <div className="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col justify-between h-14">
+                <span className="text-[12px] font-extrabold text-slate-900">Asia</span>
+                <span className="text-[6px] text-slate-500 font-semibold">12 Packages</span>
               </div>
-              <div className="bg-pink-500/25 p-2 rounded-xl border border-pink-400/20 flex flex-col justify-between h-14">
-                <span className="text-[12px] font-extrabold text-white">Europe</span>
-                <span className="text-[6px] text-white/70">8 Packages</span>
+              <div className="bg-cyan-50/30 p-2 rounded-xl border border-cyan-200 flex flex-col justify-between h-14">
+                <span className="text-[12px] font-extrabold text-cyan-700">Europe</span>
+                <span className="text-[6px] text-cyan-600 font-semibold">8 Packages</span>
               </div>
             </div>
           </div>
         );
       case 'proxyui':
         return (
-          <div className="w-full h-full flex flex-col justify-between p-3.5">
-            <div className="text-[8px] font-bold text-foreground/40 font-mono">PROXY_COMPONENT_GRID</div>
+          <div className="w-full h-full flex flex-col justify-between p-3.5 text-slate-850">
+            <div className="text-[8px] font-bold text-slate-400 font-mono">PROXY_COMPONENT_GRID</div>
             <div className="grid grid-cols-3 gap-2 my-2">
-              <div className="bg-white/20 border border-indigo-500/10 px-2 py-3 rounded-lg text-center font-bold text-[8px] hover:border-indigo-400/50 shadow-sm transition-all text-indigo-600">Button</div>
-              <div className="bg-white/20 border border-indigo-500/10 px-2 py-3 rounded-lg text-center font-bold text-[8px] text-indigo-600">Card</div>
-              <div className="bg-white/20 border border-indigo-500/10 px-2 py-3 rounded-lg text-center font-bold text-[8px] text-indigo-600">Dialog</div>
+              <div className="bg-slate-50 border border-slate-200 px-2 py-3 rounded-lg text-center font-bold text-[8px] hover:border-cyan-400 shadow-sm transition-all text-cyan-700 cursor-pointer">Button</div>
+              <div className="bg-slate-50 border border-slate-200 px-2 py-3 rounded-lg text-center font-bold text-[8px] text-slate-700">Card</div>
+              <div className="bg-slate-50 border border-slate-200 px-2 py-3 rounded-lg text-center font-bold text-[8px] text-slate-700">Dialog</div>
             </div>
-            <div className="h-4 bg-indigo-500/10 border border-indigo-400/25 rounded-lg flex items-center justify-center font-bold text-[8px] text-indigo-600">Get Starter Template</div>
+            <div className="h-5 bg-slate-950 hover:bg-cyan-700 text-white rounded-lg flex items-center justify-center font-bold text-[8px] cursor-pointer transition-colors shadow-sm">Get Starter Template</div>
           </div>
         );
       case 'voyage-horizon':
         return (
-          <div className="w-full h-full flex flex-col gap-2 p-3">
-            <div className="h-10 bg-white/25 rounded-xl border border-white/30 flex items-center justify-between px-3">
-              <span className="text-[9px] font-extrabold text-white">Voyage.</span>
-              <span className="px-2 py-0.5 rounded bg-white/40 text-[7px] font-bold text-white">Book Now</span>
+          <div className="w-full h-full flex flex-col gap-2 p-3 text-slate-850">
+            <div className="h-10 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between px-3">
+              <span className="text-[9px] font-extrabold text-slate-800">Voyage.</span>
+              <span className="px-2 py-0.5 rounded bg-slate-950 text-[7px] font-bold text-white cursor-pointer hover:bg-cyan-700 transition-colors">Book Now</span>
             </div>
-            <div className="h-16 bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-300/30 rounded-xl p-2.5 flex flex-col justify-between">
-              <div className="w-20 h-2.5 bg-white/40 rounded" />
-              <div className="w-28 h-1.5 bg-white/20 rounded" />
+            <div className="h-16 bg-slate-50 border border-slate-200 rounded-xl p-2.5 flex flex-col justify-between">
+              <div className="w-20 h-2.5 bg-slate-200 rounded" />
+              <div className="w-28 h-1.5 bg-slate-100 rounded" />
             </div>
           </div>
         );
       case 'kuch-nahi':
         return (
-          <div className="w-full h-full flex flex-col gap-2 p-3">
-            <div className="flex justify-between items-center text-[8px] text-foreground/45 border-b border-indigo-500/5 pb-1">
+          <div className="w-full h-full flex flex-col gap-2 p-3 text-slate-800">
+            <div className="flex justify-between items-center text-[8px] text-slate-400 border-b border-slate-100 pb-1">
               <span>BAG (2 ITEMS)</span>
-              <span className="font-bold text-indigo-600">TOTAL: $128</span>
+              <span className="font-bold text-cyan-600">TOTAL: $128</span>
             </div>
-            <div className="flex items-center gap-2 bg-indigo-500/[0.03] p-1.5 rounded-lg border border-indigo-500/5">
-              <div className="w-6 h-6 bg-indigo-500/10 border border-indigo-500/15 rounded flex items-center justify-center text-[10px]">👟</div>
+            <div className="flex items-center gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-200">
+              <div className="w-6 h-6 bg-white border border-slate-200 rounded flex items-center justify-center text-[10px]">👟</div>
               <div>
-                <div className="font-bold text-[7px]">Neo Sneaker</div>
-                <div className="text-[6px] text-foreground/40">$98.00</div>
+                <div className="font-bold text-[7px] text-slate-800">Neo Sneaker</div>
+                <div className="text-[6px] text-slate-500 font-semibold">$98.00</div>
               </div>
             </div>
-            <div className="w-full py-2 bg-indigo-600 rounded-lg text-center text-white font-bold text-[8px] mt-auto">
+            <div className="w-full py-2 bg-slate-950 hover:bg-cyan-700 transition-colors rounded-lg text-center text-white font-bold text-[8px] mt-auto cursor-pointer shadow-sm">
               Secure Checkout
             </div>
           </div>
         );
       default:
         return (
-          <div className="w-full h-full flex flex-col justify-between p-3.5">
-            <div className="text-[8px] font-bold text-foreground/40">INDUSTRIAL_DATABASE_CATALOG</div>
+          <div className="w-full h-full flex flex-col justify-between p-3.5 text-slate-800">
+            <div className="text-[8px] font-bold text-slate-400">INDUSTRIAL_DATABASE_CATALOG</div>
             <div className="flex flex-col gap-1.5 my-2">
-              <div className="flex justify-between text-[7px] py-1 border-b border-indigo-500/10">
-                <span className="font-semibold">SKU_B021 (Beam 120mm)</span>
-                <span className="text-emerald-500 font-bold">IN STOCK</span>
+              <div className="flex justify-between text-[7px] py-1 border-b border-slate-100">
+                <span className="font-semibold text-slate-700">SKU_B021 (Beam 120mm)</span>
+                <span className="text-cyan-700 font-bold">IN STOCK</span>
               </div>
-              <div className="flex justify-between text-[7px] py-1 border-b border-indigo-500/10">
-                <span className="font-semibold">SKU_B024 (Beam 150mm)</span>
-                <span className="text-amber-500 font-bold">LOW STOCK</span>
+              <div className="flex justify-between text-[7px] py-1 border-b border-slate-100">
+                <span className="font-semibold text-slate-700">SKU_B024 (Beam 150mm)</span>
+                <span className="text-amber-600 font-bold">LOW STOCK</span>
               </div>
             </div>
-            <div className="text-[8px] font-bold text-indigo-600 bg-indigo-500/10 border border-indigo-400/20 py-1 rounded text-center">Request Quote</div>
+            <div className="text-[8px] font-bold text-white bg-slate-950 hover:bg-cyan-700 cursor-pointer border border-slate-950 py-1 rounded text-center transition-all shadow-sm">Request Quote</div>
           </div>
         );
     }
@@ -153,25 +153,25 @@ export default function SpatialWorkPreview({ work }: SpatialWorkPreviewProps) {
         <motion.div
           animate={{
             z: isHovered ? -42 : 0,
-            opacity: isHovered ? 0.75 : 0.25,
+            opacity: isHovered ? 0.98 : 0.25,
             scale: isHovered ? 0.95 : 1
           }}
           transition={{ type: 'spring', stiffness: 200, damping: 22 }}
-          className="absolute inset-0 rounded-2xl bg-slate-950/20 backdrop-blur-sm border border-indigo-500/15 p-4 flex flex-col justify-between font-mono text-[6.5px] text-indigo-400/80 shadow-2xl"
+          className="absolute inset-0 rounded-2xl bg-slate-50 border border-slate-200 p-4 flex flex-col justify-between font-mono text-[6.5px] text-slate-500 shadow-sm"
         >
-          <div className="flex items-center gap-1 border-b border-indigo-500/10 pb-1 mb-1 font-bold text-[7px] text-indigo-400">
-            <Database className="w-2.5 h-2.5" />
+          <div className="flex items-center gap-1 border-b border-slate-200 pb-1 mb-1 font-bold text-[7px] text-slate-650">
+            <Database className="w-2.5 h-2.5 text-cyan-600" />
             DATALOG_SCHEMA_MAP
           </div>
           <div className="flex-grow flex flex-col justify-center gap-1">
-            <div className="border border-indigo-500/10 p-1 rounded bg-slate-950/40">
-              <div className="font-bold text-white text-[7px] border-b border-indigo-500/5 pb-0.5 mb-0.5">schema: {work.slug}_db</div>
+            <div className="border border-slate-200 p-1 rounded bg-white">
+              <div className="font-bold text-slate-800 text-[7px] border-b border-slate-100 pb-0.5 mb-0.5">schema: {work.slug}_db</div>
               <div>• id: int (PK)</div>
               <div>• record_hash: varchar(64)</div>
               <div>• payload: jsonb</div>
               <div>• timestamp: timestampz</div>
             </div>
-            <div className="text-[5.5px] text-indigo-400/40">// relational indices bound and synced</div>
+            <div className="text-[5.5px] text-slate-400">// relational indices bound and synced</div>
           </div>
         </motion.div>
 
@@ -179,17 +179,17 @@ export default function SpatialWorkPreview({ work }: SpatialWorkPreviewProps) {
         <motion.div
           animate={{
             z: isHovered ? 15 : 0,
-            opacity: isHovered ? 0.92 : 0.45,
+            opacity: isHovered ? 0.98 : 0.45,
             scale: isHovered ? 0.98 : 1
           }}
           transition={{ type: 'spring', stiffness: 200, damping: 22 }}
-          className="absolute inset-0 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-indigo-400/20 p-4 flex flex-col justify-between font-mono text-[7px] text-foreground/80 shadow-xl"
+          className="absolute inset-0 rounded-2xl bg-white border border-slate-200 p-4 flex flex-col justify-between font-mono text-[7px] text-slate-700 shadow-sm"
         >
-          <div className="flex items-center gap-1 border-b border-indigo-500/10 pb-1 mb-1 font-bold text-[7px] text-pink-400">
+          <div className="flex items-center gap-1 border-b border-slate-200 pb-1 mb-1 font-bold text-[7px] text-cyan-700">
             <Terminal className="w-2.5 h-2.5" />
             controllers/{work.slug}.ts
           </div>
-          <pre className="flex-grow flex items-center justify-start text-left text-pink-500/90 font-mono text-[6.5px] leading-relaxed overflow-x-hidden select-none">
+          <pre className="flex-grow flex items-center justify-start text-left text-slate-600 font-mono text-[6.5px] leading-relaxed overflow-x-hidden select-none">
             <code>{getLogicContent()}</code>
           </pre>
         </motion.div>
@@ -202,23 +202,23 @@ export default function SpatialWorkPreview({ work }: SpatialWorkPreviewProps) {
             scale: 1
           }}
           transition={{ type: 'spring', stiffness: 200, damping: 22 }}
-          className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/[0.02] backdrop-blur-2xl border border-indigo-300/35 shadow-[0_12px_45px_rgba(99,102,241,0.06),inset_0_1px_0_rgba(255,255,255,0.45)] overflow-hidden flex flex-col justify-between"
+          className="absolute inset-0 rounded-2xl bg-white border border-slate-300 shadow-sm overflow-hidden flex flex-col justify-between"
         >
-          {/* Glass header mock */}
-          <div className="h-6 w-full bg-white/5 border-b border-indigo-300/10 flex items-center px-3 justify-between">
+          {/* Header mock */}
+          <div className="h-6 w-full bg-slate-50 border-b border-slate-200 flex items-center px-3 justify-between">
             <div className="flex gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-400/70" />
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400/70" />
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400/70" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
             </div>
-            <span className="text-[7px] font-mono text-foreground/45 uppercase tracking-widest font-semibold flex items-center gap-1">
-              <Layout className="w-2 h-2 text-indigo-400" />
+            <span className="text-[7px] font-mono text-slate-400 uppercase tracking-widest font-semibold flex items-center gap-1">
+              <Layout className="w-2 h-2 text-cyan-600" />
               Live Frame
             </span>
           </div>
 
           {/* Core UI View */}
-          <div className="flex-grow bg-white/5 relative z-10 flex items-center justify-center overflow-hidden">
+          <div className="flex-grow bg-white relative z-10 flex items-center justify-center overflow-hidden">
             {renderUIMockup()}
           </div>
         </motion.div>
@@ -226,8 +226,8 @@ export default function SpatialWorkPreview({ work }: SpatialWorkPreviewProps) {
 
       {/* Persistent speculative indicator */}
       {!isHovered && (
-        <span className="absolute bottom-4 px-4 py-2 border border-white/20 bg-slate-900/60 text-white rounded-full text-[9px] font-mono tracking-wider font-semibold shadow-lg backdrop-blur-md flex items-center gap-1.5 z-30 pointer-events-none">
-          <Layers className="w-3.5 h-3.5 text-indigo-400" />
+        <span className="absolute bottom-4 px-4 py-2 border border-slate-200 bg-slate-950 text-white rounded-full text-[9px] font-mono tracking-wider font-semibold shadow-sm flex items-center gap-1.5 z-30 pointer-events-none">
+          <Layers className="w-3.5 h-3.5 text-cyan-500" />
           HOVER TO UNFOLD LAYERS
         </span>
       )}

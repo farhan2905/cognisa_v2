@@ -46,7 +46,7 @@ export default function OutcomeCard({ metric, label, color }: OutcomeCardProps) 
 
   return (
     <div ref={cardRef} className="flex-1 w-full">
-      <GlassContentBlock className="h-full flex flex-col justify-center items-center text-center p-6 md:p-8 border-indigo-150 relative overflow-hidden" hoverEffect>
+      <GlassContentBlock className="h-full flex flex-col justify-center items-center text-center p-6 md:p-8 border-slate-200 relative overflow-hidden" hoverEffect>
         {/* Decorative circular graph background */}
         <div className="w-24 h-24 relative mb-4 flex items-center justify-center">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -56,7 +56,7 @@ export default function OutcomeCard({ metric, label, color }: OutcomeCardProps) 
               cy="50"
               r="42"
               fill="transparent"
-              stroke="rgba(99, 102, 241, 0.05)"
+              stroke="rgba(148, 163, 184, 0.08)"
               strokeWidth="5"
             />
             {/* Animated foreground dial */}

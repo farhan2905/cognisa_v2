@@ -36,8 +36,8 @@ const stats = [
     suffix: '',
     label: 'Core Delivery Tracks',
     description: 'Software, AI automation, architecture, and cloud operations working as one delivery layer.',
-    accent: 'text-indigo-600',
-    bar: 'from-indigo-500 to-violet-500',
+    accent: 'text-teal-600',
+    bar: 'from-teal-500 to-emerald-500',
   },
 ];
 

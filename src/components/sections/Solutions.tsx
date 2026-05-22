@@ -28,7 +28,7 @@ const outcomeColumns = [
     title: 'We design the agent and software layer around the work.',
     copy: 'AI agents, interfaces, APIs, and human approval points are built together so automation is useful, governed, and easy to operate.',
     icon: Sparkles,
-    accent: 'text-indigo-700 bg-indigo-50 border-indigo-200',
+    accent: 'text-teal-700 bg-teal-50 border-teal-200',
     points: ['Agent workflows', 'Custom dashboards', 'System integrations', 'Support controls'],
   },
   {
@@ -62,11 +62,11 @@ export default function Solutions() {
             View our process
           </EnterpriseButton>
         </div>
-
+ 
         <div className="grid gap-4 lg:grid-cols-3">
           {outcomeColumns.map((column, index) => {
             const Icon = column.icon;
-
+ 
             return (
               <motion.article
                 key={column.title}
@@ -76,7 +76,7 @@ export default function Solutions() {
                 transition={{ duration: 0.55, delay: index * 0.1 }}
                 className="relative flex min-h-[430px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
               >
-                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-emerald-400 opacity-80" />
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-teal-500 to-emerald-400 opacity-80" />
                 <div className="mb-7 flex items-center justify-between gap-4">
                   <span className="text-xs font-black uppercase text-slate-500">{column.eyebrow}</span>
                   <span className={`flex h-11 w-11 items-center justify-center rounded-lg border ${column.accent}`}>

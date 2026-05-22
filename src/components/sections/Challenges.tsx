@@ -44,7 +44,7 @@ const industries: Record<IndustryKey, {
     headline: 'Automate finance workflows without losing human control.',
     copy: 'Invoice checks, payment follow-ups, reporting packs, and exception handling become structured flows with permissions, audit trails, and clear escalation paths.',
     icon: Landmark,
-    accent: 'bg-indigo-500',
+    accent: 'bg-teal-500',
     metrics: [
       { value: '24/7', label: 'invoice visibility' },
       { value: '99%', label: 'audit-ready history' },
@@ -107,7 +107,7 @@ export default function Challenges() {
       <div className="mx-auto max-w-[1400px]">
         <div className="mb-8 grid gap-5 lg:grid-cols-[0.78fr_1fr] lg:items-end">
           <div>
-            <p className="text-xs font-black uppercase text-indigo-700">Built for real teams</p>
+            <p className="text-xs font-black uppercase text-cyan-700">Built for real teams</p>
             <h2 className="mt-3 text-3xl font-black leading-tight text-slate-950 md:text-5xl">
               Enterprise-grade workflows without enterprise bloat.
             </h2>

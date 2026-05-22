@@ -129,55 +129,35 @@ body {
   }
   
   .glass-card {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid rgba(8, 145, 178, 0.16);
-    box-shadow: 
-      0 12px 36px rgba(15, 23, 42, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    background: #ffffff;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
     border-radius: 16px;
   }
   
   .glass-panel {
-    background: rgba(255, 255, 255, 0.76);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(8, 145, 178, 0.18);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      0 14px 42px rgba(15, 23, 42, 0.05);
+    background: #ffffff;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
     border-radius: 20px;
   }
 
   .glass-surface {
-    background: rgba(255, 255, 255, 0.56);
-    backdrop-filter: blur(28px) saturate(160%);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
-    border: 1px solid rgba(8, 145, 178, 0.14);
-    box-shadow:
-      0 10px 32px rgba(15, 23, 42, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: #ffffff;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
   }
 
   .glass-surface-strong {
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(32px) saturate(180%);
-    -webkit-backdrop-filter: blur(32px) saturate(180%);
-    border: 1px solid rgba(8, 145, 178, 0.22);
-    box-shadow:
-      0 20px 48px rgba(15, 23, 42, 0.07),
-      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    background: #ffffff;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
   }
 
   .glass-surface-soft {
-    background: rgba(255, 255, 255, 0.38);
-    backdrop-filter: blur(38px) saturate(150%);
-    -webkit-backdrop-filter: blur(38px) saturate(150%);
-    border: 1px solid rgba(8, 145, 178, 0.1);
-    box-shadow:
-      0 14px 44px rgba(15, 23, 42, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: #f8fafc; /* slate-50 */
+    border: 1px solid #f1f5f9; /* slate-100 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
   }
 
   .section-anchor {
@@ -770,13 +750,10 @@ mark {
 }
 
 .enterprise-ice-card {
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(241, 250, 252, 0.72)),
-    radial-gradient(620px circle at 14% 0%, rgba(6, 182, 212, 0.12), transparent 58%);
-  border: 1px solid rgba(8, 145, 178, 0.15);
+  background: #ffffff;
+  border: 1px solid #e2e8f0; /* slate-200 */
   box-shadow:
-    0 18px 55px rgba(15, 23, 42, 0.07),
-    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* ========== HERO DROPLET / RIPPLE ANIMATION ========== */

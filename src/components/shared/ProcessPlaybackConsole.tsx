@@ -40,7 +40,7 @@ const PHASE_LOGS = [
   {
     phase: '03',
     title: 'Engineering & Development',
-    color: '#1d4ed8',
+    color: '#0d9488',
     commands: [
       { text: 'build.ship --frontend --backend --dashboards', type: 'command' },
       { text: 'creating product UI, APIs, forms, and admin workflows...', type: 'info' },
@@ -142,9 +142,9 @@ export default function ProcessPlaybackConsole({
 
   return (
     <div className="enterprise-ice-card mx-auto w-full max-w-[980px] rounded-[2rem] p-4 sm:p-6">
-      <div className="mb-6 flex flex-col justify-between gap-4 border-b border-cyan-100 pb-4 sm:flex-row sm:items-center">
+      <div className="mb-6 flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
         <div>
-          <span className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-cyan-700">
+          <span className="mb-1 block text-[10px] font-bold uppercase tracking-widest text-cyan-600">
             interactive delivery pipeline
           </span>
           <h4 className="text-lg font-black tracking-tight text-slate-950 sm:text-xl">
@@ -156,21 +156,21 @@ export default function ProcessPlaybackConsole({
           <button
             onClick={handleRewind}
             title="Rewind to phase 1"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-100 text-slate-500 shadow-sm transition-all hover:border-cyan-200 hover:bg-slate-50 hover:text-slate-800"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-500 shadow-sm transition-all hover:border-slate-350 hover:bg-slate-50 hover:text-slate-800"
           >
             <RotateCcw className="h-4 w-4" />
           </button>
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             title={isPlaying ? 'Pause auto-play' : 'Play auto-play'}
-            className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white shadow-[0_4px_12px_rgba(15,23,42,0.2)] transition-all hover:bg-cyan-700"
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-white shadow-sm transition-all hover:bg-slate-850"
           >
             {isPlaying ? <Pause className="h-5 w-5 fill-white" /> : <Play className="ml-0.5 h-5 w-5 fill-white" />}
           </button>
           <button
             onClick={handleForward}
             title="Next phase"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-100 text-slate-500 shadow-sm transition-all hover:border-cyan-200 hover:bg-slate-50 hover:text-slate-800"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-500 shadow-sm transition-all hover:border-slate-350 hover:bg-slate-50 hover:text-slate-800"
           >
             <FastForward className="h-4 w-4" />
           </button>
@@ -187,15 +187,16 @@ export default function ProcessPlaybackConsole({
                 setIsPlaying(false);
                 setActivePhaseIndex(idx);
               }}
-              className={`relative flex flex-col items-center justify-center rounded-xl border p-1.5 text-center transition-all sm:p-3 ${
+              className={`relative flex flex-col items-center justify-center rounded-xl border p-1.5 text-center transition-all sm:p-3 group ${
                 isActive
-                  ? 'border-cyan-200 bg-white shadow-[0_8px_20px_rgba(8,145,178,0.06),inset_0_1px_0_rgba(255,255,255,0.85)]'
-                  : 'border-cyan-100 bg-transparent text-slate-500 hover:border-cyan-200 hover:text-slate-800'
+                  ? 'border-slate-900 bg-slate-950 text-white shadow-sm'
+                  : 'border-slate-200 bg-transparent text-slate-500 hover:border-slate-350 hover:text-slate-850'
               }`}
             >
               <span
-                className="text-[8.5px] font-mono font-bold sm:text-[10px]"
-                style={{ color: isActive ? phase.color : 'inherit' }}
+                className={`text-[8.5px] font-mono font-bold sm:text-[10px] ${
+                  isActive ? 'text-cyan-400' : 'text-slate-500 group-hover:text-slate-800'
+                }`}
               >
                 PHASE {phase.phase}
               </span>
@@ -203,8 +204,8 @@ export default function ProcessPlaybackConsole({
                 {phase.title.split(' ')[0]}
               </span>
               {isActive && isPlaying && (
-                <span className="absolute inset-x-2 bottom-1 h-0.5 overflow-hidden rounded-full bg-cyan-100">
-                  <span className="block h-full bg-cyan-600 progress-bar-fill" style={{ '--duration': '9.2s' } as CSSProperties} />
+                <span className="absolute inset-x-2 bottom-1 h-0.5 overflow-hidden rounded-full bg-slate-800">
+                  <span className="block h-full bg-cyan-400 progress-bar-fill" style={{ '--duration': '9.2s' } as CSSProperties} />
                 </span>
               )}
             </button>
@@ -212,8 +213,8 @@ export default function ProcessPlaybackConsole({
         })}
       </div>
 
-      <div className="relative flex h-64 flex-col overflow-hidden rounded-2xl border border-cyan-100 bg-cyan-50/20 shadow-[inset_0_2px_4px_rgba(8,145,178,0.025)]">
-        <div className="flex items-center justify-between border-b border-cyan-100 bg-white/84 px-4 py-3">
+      <div className="relative flex h-64 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
+        <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
@@ -221,15 +222,12 @@ export default function ProcessPlaybackConsole({
               <span className="h-2.5 w-2.5 rounded-full bg-green-400/80" />
             </div>
             <span className="ml-2 flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-wider text-slate-500">
-              <Terminal className="h-3.5 w-3.5 text-cyan-700" />
+              <Terminal className="h-3.5 w-3.5 text-cyan-600" />
               pipeline-simulator
             </span>
           </div>
 
-          <span
-            className="hidden rounded-full border bg-white px-2 py-0.5 text-[8px] font-mono font-bold sm:inline-flex"
-            style={{ color: activePhase.color, borderColor: `${activePhase.color}40` }}
-          >
+          <span className="hidden rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[8px] font-mono font-bold text-slate-650 sm:inline-flex">
             ACTIVE: {activePhase.title}
           </span>
         </div>
@@ -251,7 +249,7 @@ export default function ProcessPlaybackConsole({
                   transition={{ duration: 0.25 }}
                   className={`flex items-start gap-1.5 font-mono tracking-wide ${
                     cmd.type === 'command'
-                      ? 'font-bold text-cyan-800'
+                      ? 'font-bold text-cyan-700'
                       : cmd.type === 'success'
                         ? 'font-bold text-emerald-700'
                         : 'text-slate-500'
@@ -259,7 +257,7 @@ export default function ProcessPlaybackConsole({
                 >
                   {cmd.type === 'command' ? (
                     <>
-                      <ChevronRight className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-cyan-700" />
+                      <ChevronRight className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-cyan-600" />
                       <span>{cmd.text}</span>
                     </>
                   ) : cmd.type === 'success' ? (
@@ -280,7 +278,7 @@ export default function ProcessPlaybackConsole({
                 <motion.span
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ repeat: Infinity, duration: 0.9 }}
-                  className="ml-5 block h-3 w-1.5 flex-shrink-0 bg-cyan-700"
+                  className="ml-5 block h-3 w-1.5 flex-shrink-0 bg-cyan-600"
                 />
               )}
             </motion.div>
@@ -288,12 +286,12 @@ export default function ProcessPlaybackConsole({
         </div>
       </div>
 
-      <div className="mt-4 grid gap-3 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-4 md:grid-cols-[auto_1fr_auto] md:items-center">
-        <ShieldCheck className="h-5 w-5 text-emerald-700" />
-        <p className="text-sm font-semibold leading-6 text-emerald-950/80">
-          Each phase keeps the Kore-style tab rhythm, but the story is Cognisa: workflow intake, system build, governed AI, and managed improvement.
+      <div className="mt-4 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 md:grid-cols-[auto_1fr_auto] md:items-center">
+        <ShieldCheck className="h-5 w-5 text-slate-700" />
+        <p className="text-sm font-semibold leading-6 text-slate-650">
+          Every phase follows a rigorous path to ensure seamless transition from scoping to live operation: workflow intake, architecture design, system engineering, governed QA, and continuous improvement.
         </p>
-        <span className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-[10px] font-black uppercase text-emerald-700">
+        <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-black uppercase text-slate-700">
           Human in loop
         </span>
       </div>

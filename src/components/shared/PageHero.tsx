@@ -67,7 +67,7 @@ export default function PageHero({
           {titleAccent && (
             <>
               {' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-indigo-600 to-emerald-600">
+              <span className="text-cyan-600">
                 {titleAccent}
               </span>
             </>

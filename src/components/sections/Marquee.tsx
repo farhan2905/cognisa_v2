@@ -26,7 +26,7 @@ const technologyPanels = [
     label: 'Custom systems',
     href: '/work',
     icon: Braces,
-    accent: 'bg-indigo-500',
+    accent: 'bg-teal-500',
     copy: 'Build portals, dashboards, SaaS products, and internal tools around your real process instead of generic templates.',
     checks: ['Next.js apps', 'APIs', 'Role-based portals'],
   },

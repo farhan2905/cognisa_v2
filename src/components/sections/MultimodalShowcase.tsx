@@ -241,7 +241,7 @@ export default function MultimodalShowcase() {
               Cognisa can present vision, documents, voice, and model-routing as credible product demos first, then connect real APIs when the business case is proven.
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <EnterpriseButton href="/services/ai-automation">Explore AI automation</EnterpriseButton>
+              <EnterpriseButton href="/capabilities">Explore AI automation</EnterpriseButton>
               <EnterpriseButton href="/contact" variant="secondary">Scope a prototype</EnterpriseButton>
             </div>
           </div>

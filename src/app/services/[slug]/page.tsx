@@ -82,7 +82,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-blue-600/[0.08] via-indigo-500/[0.04] to-transparent border border-indigo-300/40 rounded-full font-semibold text-foreground hover:from-blue-600/[0.15] hover:via-indigo-500/[0.08] transition-all shadow-[0_4px_12px_rgba(59,130,246,0.08),inset_0_1px_0_rgba(255,255,255,1)]"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-950 text-white rounded-full font-bold text-sm hover:bg-cyan-700 transition-all shadow-sm"
             >
               Start Your Project
               <ChevronRight className="w-4 h-4" />
@@ -94,12 +94,12 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
         <div className="flex flex-col gap-8">
           {/* Live Metrics */}
           <GlassContentBlock className="p-5">
-            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-indigo-300/20">
+            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-200">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="text-[10px] font-mono text-foreground/40 uppercase tracking-wider">Live Status</span>
+              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Live Status</span>
             </div>
             <div className="space-y-3">
               <LiveMetric label="Active Deployments" baseValue={5} variance={1} />
@@ -117,14 +117,14 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               {service.techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1.5 text-sm font-medium bg-foreground/5 border border-foreground/10 rounded-lg text-foreground/80 hover:border-indigo-300/40 hover:bg-indigo-500/5 transition-all cursor-default"
+                  className="px-3 py-1.5 text-sm font-medium bg-foreground/5 border border-foreground/10 rounded-lg text-foreground/80 hover:border-slate-350 hover:bg-slate-50 transition-all cursor-default"
                 >
                   {tech}
                 </span>
               ))}
             </div>
 
-            <hr className="my-8 border-indigo-300/20" />
+            <hr className="my-8 border-slate-200" />
 
             <h4 className="font-semibold text-foreground mb-4">Other Services</h4>
             <div className="flex flex-col gap-3">
@@ -132,7 +132,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 <Link
                   key={s.slug}
                   href={`/services/${s.slug}`}
-                  className="text-sm font-medium text-foreground/60 hover:text-indigo-500 transition-colors flex items-center gap-2"
+                  className="text-sm font-medium text-foreground/60 hover:text-cyan-600 transition-colors flex items-center gap-2"
                 >
                   <s.icon className="w-4 h-4" />
                   {s.title}

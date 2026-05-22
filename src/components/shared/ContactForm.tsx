@@ -63,7 +63,7 @@ export default function ContactForm() {
   }
 
   const inputClasses =
-    'w-full px-5 py-3.5 rounded-xl bg-gradient-to-br from-blue-600/[0.04] via-indigo-500/[0.015] to-transparent border border-indigo-300/40 ring-1 ring-indigo-400/10 text-foreground placeholder:text-foreground/35 focus:outline-none focus:border-indigo-400/60 focus:ring-indigo-400/25 transition-all duration-300 backdrop-blur-sm text-sm font-medium';
+    'w-full px-5 py-3.5 rounded-xl bg-gradient-to-br from-cyan-600/[0.04] via-teal-500/[0.015] to-transparent border border-cyan-300/40 ring-1 ring-teal-400/10 text-foreground placeholder:text-foreground/35 focus:outline-none focus:border-cyan-400/60 focus:ring-cyan-400/25 transition-all duration-300 backdrop-blur-sm text-sm font-medium';
 
   const labelClasses = 'block text-sm font-semibold text-foreground/70 mb-2';
 
@@ -178,7 +178,7 @@ export default function ContactForm() {
         type="submit"
         whileHover={{ scale: 1.02, y: -2 }}
         whileTap={{ scale: 0.98 }}
-        className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-semibold text-white text-base bg-gradient-to-r from-[#4f46e5] via-[#6366f1] to-[#7c3aed] shadow-[0_6px_30px_rgba(99,102,241,0.35)] hover:shadow-[0_10px_40px_rgba(99,102,241,0.45)] transition-shadow duration-500 overflow-hidden w-full sm:w-auto self-start"
+        className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-semibold text-white text-base bg-gradient-to-r from-cyan-600 via-teal-500 to-emerald-600 shadow-[0_6px_30px_rgba(6,182,212,0.35)] hover:shadow-[0_10px_40px_rgba(6,182,212,0.45)] transition-shadow duration-500 overflow-hidden w-full sm:w-auto self-start"
       >
         {/* Shimmer */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />

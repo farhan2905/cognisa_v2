@@ -23,9 +23,8 @@ export default function GlassContentBlock({ children, className, hoverEffect = f
   return (
     <div
       className={cn(
-        "enterprise-ice-card relative overflow-hidden rounded-[1.2rem] p-6 md:p-8 lg:p-10",
-        "backdrop-blur-xl",
-        hoverEffect && "transition-all duration-500 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_42px_rgba(15,23,42,0.10)]",
+        "relative overflow-hidden rounded-[1.2rem] border border-slate-200 bg-white p-6 md:p-8 lg:p-10 shadow-sm",
+        hoverEffect && "transition-all duration-500 hover:-translate-y-1 hover:border-slate-350 hover:shadow-md",
         className
       )}
       onMouseMove={handleMouseMove}
@@ -37,12 +36,12 @@ export default function GlassContentBlock({ children, className, hoverEffect = f
         <div
           className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
           style={{
-            background: `radial-gradient(380px circle at ${coords.x}px ${coords.y}px, rgba(8, 145, 178, 0.13), transparent 80%)`,
+            background: `radial-gradient(380px circle at ${coords.x}px ${coords.y}px, rgba(6, 182, 212, 0.06), transparent 80%)`,
           }}
         />
       )}
 
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-emerald-400 opacity-80 pointer-events-none z-0" />
+
       
       <div className="relative z-10">
         {children}
