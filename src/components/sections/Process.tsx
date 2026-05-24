@@ -385,7 +385,7 @@ export default function Process() {
           })}
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1.22fr_0.78fr]">
+        <div className="grid gap-5 lg:grid-cols-[1.52fr_0.48fr]">
           <div className="order-1 lg:order-2 lg:h-full">
             <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm lg:h-full lg:flex lg:flex-col">
               <div className="mb-5 flex items-center gap-3 shrink-0">
