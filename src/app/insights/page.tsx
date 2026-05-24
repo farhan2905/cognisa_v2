@@ -63,7 +63,7 @@ export default function InsightsListingPage() {
                 </div>
 
                 <div className="relative z-10 border-t border-slate-200 bg-slate-950 p-6 text-white sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
-                  <div className="flex h-full min-h-[260px] flex-col justify-between rounded-lg border border-white/10 bg-white/[0.05] p-5">
+                  <div className="flex h-full min-h-[240px] sm:min-h-[260px] lg:min-h-[310px] flex-col justify-between rounded-lg border border-white/10 bg-white/[0.05] px-5 py-7">
                     <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/10 bg-white/10">
                       <FeaturedIcon className="h-7 w-7" style={{ color: featured.color }} />
                     </div>
@@ -96,7 +96,7 @@ export default function InsightsListingPage() {
                 >
                   <Link
                     href={`/insights/${article.slug}`}
-                    className="group relative flex h-full min-h-[300px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
+                    className="group relative flex h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[360px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white px-6 py-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
                   >
                     <div
                       className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl"

@@ -774,7 +774,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               transition={{ duration: dur.text, delay: stagger.text, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-6 max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg"
+              className="mt-6 hidden sm:block max-w-2xl text-base font-medium leading-8 text-slate-600 sm:text-lg"
             >
               Cognisa designs, builds, and manages custom software and AI agents that connect to your tools, automate repeatable work, and create measurable operating leverage.
             </motion.p>
@@ -784,12 +784,12 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: dur.ctas, delay: stagger.ctas, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
+              className="mt-8 hidden sm:flex flex-col gap-3 sm:flex-row"
             >
               <EnterpriseButton href="/contact">
                 Get a demo
               </EnterpriseButton>
-              <EnterpriseButton href="#marquee" variant="secondary">
+              <EnterpriseButton href="/capabilities" variant="secondary">
                 Explore our technology
               </EnterpriseButton>
             </motion.div>

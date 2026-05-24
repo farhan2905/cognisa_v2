@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import {
@@ -43,6 +43,46 @@ function getWorksForTab(tabKey: WorkTabKey) {
 }
 
 function LiveWebsitePreview({ work }: { work: Work }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const updateScale = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const width = container.clientWidth;
+      if (window.innerWidth < 1024) {
+        setScale(1); // Mobile layout (unscaled responsive iframe)
+      } else {
+        // Desktop layout (iframe rendered at 1280px and scaled down to fit)
+        setScale(width / 1280);
+      }
+    };
+
+    // Delay slightly to let initial layout settle
+    const timer = setTimeout(updateScale, 50);
+
+    window.addEventListener('resize', updateScale);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateScale);
+    };
+  }, []);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.scrollTop = 0;
+    }
+  }, [work]);
+
+  const untransformedHeight = 5500;
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -51,7 +91,7 @@ function LiveWebsitePreview({ work }: { work: Work }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: -18, scale: 0.985 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
-        className="relative overflow-hidden rounded-lg border border-slate-200 bg-slate-950 shadow-[0_24px_80px_rgba(15,23,42,0.18)]"
+        className="relative overflow-hidden rounded-r-xl rounded-l-none border-y border-r border-l-0 border-slate-200 bg-slate-950 shadow-[0_24px_80px_rgba(15,23,42,0.18)] -ml-4 md:-ml-6 lg:-ml-10"
       >
         <div className="flex h-11 items-center gap-3 border-b border-white/10 bg-white/[0.06] px-4">
           <div className="flex gap-1.5">
@@ -73,13 +113,43 @@ function LiveWebsitePreview({ work }: { work: Work }) {
           </a>
         </div>
 
-        <div className="relative h-[360px] overflow-hidden bg-white sm:h-[430px] lg:h-[560px]">
-          <iframe
-            src={work.link}
-            title={`${work.title} live website preview`}
-            className="h-full w-full border-none bg-white"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-          />
+        <div className="relative h-[360px] overflow-hidden bg-white sm:h-[430px] lg:h-[560px]" ref={containerRef}>
+          <div
+            ref={scrollContainerRef}
+            className="h-full w-full overflow-y-auto overflow-x-hidden scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            <div 
+              style={scale === 1 ? { 
+                width: '100%', 
+                height: `${untransformedHeight}px` 
+              } : { 
+                width: `${1280 * scale}px`, 
+                height: `${untransformedHeight * scale}px`, 
+                overflow: 'hidden'
+              }}
+              className="relative"
+            >
+              <div
+                style={scale === 1 ? {
+                  width: '100%',
+                  height: '100%'
+                } : {
+                  width: '1280px',
+                  height: `${untransformedHeight}px`,
+                  transform: `scale(${scale})`,
+                  transformOrigin: 'top left'
+                }}
+                className="absolute inset-0"
+              >
+                <iframe
+                  src={work.link}
+                  title={`${work.title} live website preview`}
+                  className="absolute inset-0 w-full h-full border-none bg-white"
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                />
+              </div>
+            </div>
+          </div>
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-5">
             <div className="pointer-events-auto flex flex-col gap-3 rounded-lg border border-white/10 bg-slate-950/90 p-4 text-white shadow-2xl backdrop-blur sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -149,6 +219,96 @@ function ProjectSelector({
         </div>
       )}
     </motion.button>
+  );
+}
+
+function CustomProjectDropdown({
+  works,
+  activeSlug,
+  onSelect,
+}: {
+  works: Work[];
+  activeSlug: string;
+  onSelect: (slug: string) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const activeWork = works.find((w) => w.slug === activeSlug) ?? works[0];
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-3 text-left font-black shadow-sm transition-all duration-300 hover:border-slate-300 hover:shadow-md focus:outline-none"
+      >
+        <div className="flex flex-col">
+          <span className="text-[10px] font-black uppercase tracking-[0.12em] text-slate-400">Select Project</span>
+          <span className="text-sm text-slate-950">{activeWork.title}</span>
+        </div>
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="text-slate-400"
+        >
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </motion.span>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="absolute left-0 right-0 z-50 mt-1.5 max-h-60 overflow-y-auto rounded-lg border border-slate-200 bg-white p-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.12)]"
+          >
+            {works.map((work) => {
+              const isActive = work.slug === activeSlug;
+              return (
+                <button
+                  key={work.slug}
+                  type="button"
+                  onClick={() => {
+                    onSelect(work.slug);
+                    setIsOpen(false);
+                  }}
+                  className={cn(
+                    'flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left transition-colors',
+                    isActive ? 'bg-slate-100' : 'hover:bg-slate-50'
+                  )}
+                >
+                  <div>
+                    <p className="text-xs font-black text-slate-900">{work.title}</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{work.category}</p>
+                  </div>
+                  {isActive && <span className="h-1.5 w-1.5 rounded-full bg-cyan-600" />}
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -225,10 +385,10 @@ export default function Process() {
           })}
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
-          <div className="space-y-4">
-            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-              <div className="mb-5 flex items-center gap-3">
+        <div className="grid gap-5 lg:grid-cols-[1.22fr_0.78fr]">
+          <div className="order-1 lg:order-2 lg:h-full">
+            <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm lg:h-full lg:flex lg:flex-col">
+              <div className="mb-5 flex items-center gap-3 shrink-0">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-cyan-200 bg-cyan-50 text-cyan-700">
                   <BriefcaseBusiness className="h-5 w-5" />
                 </div>
@@ -237,21 +397,37 @@ export default function Process() {
                   <p className="text-lg font-black text-slate-950">{workTabs.find((tab) => tab.key === activeTab)?.label}</p>
                 </div>
               </div>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                {availableWorks.map((work, index) => (
-                  <ProjectSelector
-                    key={work.slug}
-                    work={work}
-                    index={index}
-                    active={activeWork.slug === work.slug}
-                    onSelect={() => setActiveSlug(work.slug)}
-                  />
-                ))}
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:flex-1">
+                {activeTab === 'all' ? (
+                  <div className="space-y-3 col-span-full">
+                    <CustomProjectDropdown
+                      works={availableWorks}
+                      activeSlug={activeSlug}
+                      onSelect={(slug) => setActiveSlug(slug)}
+                    />
+                    <ProjectSelector
+                      work={activeWork}
+                      index={0}
+                      active={true}
+                      onSelect={() => {}}
+                    />
+                  </div>
+                ) : (
+                  availableWorks.map((work, index) => (
+                    <ProjectSelector
+                      key={work.slug}
+                      work={work}
+                      index={index}
+                      active={activeWork.slug === work.slug}
+                      onSelect={() => setActiveSlug(work.slug)}
+                    />
+                  ))
+                )}
               </div>
             </div>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-5 order-2 lg:order-1">
             <LiveWebsitePreview work={activeWork} />
 
             <motion.div

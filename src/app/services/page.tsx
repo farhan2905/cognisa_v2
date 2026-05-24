@@ -115,7 +115,7 @@ function ServiceRowCard({
                   {service.subservices.map((sub) => (
                     <span
                       key={sub}
-                      className="px-3 py-1.5 text-[10px] font-bold bg-slate-50 border border-slate-200 text-slate-650 rounded-xl shadow-sm uppercase tracking-wider"
+                      className="px-3 py-1.5 text-[10px] font-bold bg-slate-50 border border-slate-200 text-slate-600 rounded-xl shadow-sm uppercase tracking-wider"
                     >
                       {sub}
                     </span>

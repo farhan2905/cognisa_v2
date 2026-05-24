@@ -89,7 +89,7 @@ export default function ServiceInteractiveShowcase({
           )}
 
           <div className="relative z-10 flex flex-col">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-650 mb-6 w-fit shadow-sm">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-600 mb-6 w-fit shadow-sm">
               {category}
             </div>
 
@@ -111,7 +111,7 @@ export default function ServiceInteractiveShowcase({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.5 }}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-350 hover:shadow-sm transition-all duration-300 group/item"
+                    className="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 hover:shadow-sm transition-all duration-300 group/item"
                   >
                     <span className="text-xs font-mono font-bold text-cyan-600 bg-cyan-50/50 w-7 h-7 flex items-center justify-center rounded-lg border border-cyan-100 group-hover/item:bg-cyan-600 group-hover/item:text-white transition-all">
                       {formattedNum}

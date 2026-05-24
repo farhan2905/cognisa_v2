@@ -67,7 +67,7 @@ export default function Testimonials() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-80px' }}
-                className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
+                className="group relative flex min-h-[320px] sm:min-h-[360px] lg:min-h-[430px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white px-5 py-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
               >
                 <div
                   className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl"

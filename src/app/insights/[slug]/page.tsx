@@ -88,7 +88,7 @@ export default function InsightDetailPage({ params }: { params: { slug: string }
               </div>
             </div>
 
-            <div className="prose max-w-none prose-h1:text-3xl prose-h1:font-bold prose-h1:text-slate-900 prose-h1:mb-8 prose-h2:text-2xl prose-h2:font-bold prose-h2:text-slate-900 prose-h2:mt-12 prose-h2:mb-6 prose-p:text-slate-650 prose-p:leading-relaxed prose-p:mb-6 prose-ul:text-slate-650 prose-ul:mb-6 prose-li:mb-2 prose-strong:text-slate-950 prose-code:text-cyan-600 prose-code:bg-cyan-50/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-transparent prose-pre:p-0">
+            <div className="prose max-w-none prose-h1:text-3xl prose-h1:font-bold prose-h1:text-slate-900 prose-h1:mb-8 prose-h2:text-2xl prose-h2:font-bold prose-h2:text-slate-900 prose-h2:mt-12 prose-h2:mb-6 prose-p:text-slate-600 prose-p:leading-relaxed prose-p:mb-6 prose-ul:text-slate-600 prose-ul:mb-6 prose-li:mb-2 prose-strong:text-slate-950 prose-code:text-cyan-600 prose-code:bg-cyan-50/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-pre:bg-transparent prose-pre:p-0">
               <ReactMarkdown
                 components={{
                   h2({ children }) {

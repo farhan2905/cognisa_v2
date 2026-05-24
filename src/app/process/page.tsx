@@ -2,7 +2,6 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
 import ProcessTimeline from '@/components/shared/ProcessTimeline';
@@ -49,7 +48,7 @@ export default function ProcessPage() {
   };
 
   return (
-    <SubPageShell showFooter={false}>
+    <>
       <PageHero
         tagText="OUR PROCESS"
         title="From concept to deployment"
@@ -134,6 +133,6 @@ export default function ProcessPage() {
         titleAccent="project?"
         description="Let's walk through the process together. Book a free discovery call to discuss your requirements."
       />
-    </SubPageShell>
+    </>
   );
 }

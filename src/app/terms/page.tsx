@@ -1,6 +1,5 @@
 'use client';
 
-import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import MiniNeuralConstellation from '@/components/shared/fragments/MiniNeuralConstellation';
@@ -68,7 +67,7 @@ const content = [
 
 export default function TermsPage() {
   return (
-    <SubPageShell>
+    <>
       <div className="relative overflow-hidden">
         <MiniNeuralConstellation className="z-10 opacity-15" />
       <PageHero
@@ -112,6 +111,6 @@ export default function TermsPage() {
           </div>
         </div>
       </section>
-    </SubPageShell>
+    </>
   );
 }

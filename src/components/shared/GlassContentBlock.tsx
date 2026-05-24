@@ -23,8 +23,8 @@ export default function GlassContentBlock({ children, className, hoverEffect = f
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[1.2rem] border border-slate-200 bg-white p-6 md:p-8 lg:p-10 shadow-sm",
-        hoverEffect && "transition-all duration-500 hover:-translate-y-1 hover:border-slate-350 hover:shadow-md",
+        "relative overflow-hidden rounded-lg border border-slate-200 bg-white px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 shadow-sm",
+        hoverEffect && "transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]",
         className
       )}
       onMouseMove={handleMouseMove}

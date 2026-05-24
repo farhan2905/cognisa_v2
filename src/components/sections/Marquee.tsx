@@ -80,7 +80,7 @@ export default function Marquee() {
               >
                 <Link
                   href={panel.href}
-                  className="group flex h-full min-h-[280px] flex-col rounded-lg border border-slate-200 bg-white/82 p-5 shadow-sm transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_42px_rgba(15,23,42,0.10)]"
+                  className="group flex h-full min-h-[240px] sm:min-h-[280px] lg:min-h-[330px] flex-col rounded-lg border border-slate-200 bg-white/82 px-5 py-7 shadow-sm transition hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_42px_rgba(15,23,42,0.10)]"
                 >
                   <div className="mb-5 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">

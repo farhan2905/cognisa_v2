@@ -6,7 +6,6 @@ import {
   CheckCircle2,
   Users,
 } from 'lucide-react';
-import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import PageCTA from '@/components/shared/PageCTA';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
@@ -60,7 +59,7 @@ export default function AboutPage() {
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' });
 
   return (
-    <SubPageShell showFooter={false}>
+    <>
       {/* Hero */}
       <div className="relative">
         <MiniNeuralConstellation className="z-10 opacity-40" />
@@ -241,6 +240,6 @@ export default function AboutPage() {
         titleAccent="together?"
         description="Let's discuss how Cognisa can help transform your business with custom software and AI-driven solutions."
       />
-    </SubPageShell>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import type { CSSProperties, ElementType } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -29,6 +29,10 @@ const capabilities: Record<CapabilityKey, {
   tint: string;
   signals: string[];
   outcomes: string[];
+  steps: {
+    label: string;
+    text: string;
+  }[];
 }> = {
   vision: {
     label: 'Vision',
@@ -40,6 +44,11 @@ const capabilities: Record<CapabilityKey, {
     tint: 'from-cyan-500/18 to-sky-500/10',
     signals: ['Screenshot review', 'Object detection', 'Visual QA'],
     outcomes: ['Faster triage', 'Less manual inspection', 'Clearer evidence'],
+    steps: [
+      { label: 'Frame Capture', text: 'Grabs screenshot or camera viewport' },
+      { label: 'Layout Analysis', text: 'Identifies buttons, forms, and visual coordinates' },
+      { label: 'Action Trigger', text: 'Fires browser click event or extracts visual text' },
+    ],
   },
   documents: {
     label: 'Documents',
@@ -49,8 +58,13 @@ const capabilities: Record<CapabilityKey, {
     icon: FileText,
     accent: '#10b981',
     tint: 'from-emerald-500/18 to-teal-500/10',
-    signals: ['Invoice parsing', 'Contract notes', 'Form intake'],
+    signals: ['Invoice parsing', 'Form intake', 'Contract review'],
     outcomes: ['Cleaner data', 'Audit history', 'Human approval'],
+    steps: [
+      { label: 'PDF Intake', text: 'Receives invoice, contract, or form file' },
+      { label: 'Schema Parse', text: 'Extracts tables, numbers, and key-value fields' },
+      { label: 'Review Sync', text: 'Flags discrepancies and pushes to CRM/ERP' },
+    ],
   },
   voice: {
     label: 'Voice',
@@ -62,6 +76,11 @@ const capabilities: Record<CapabilityKey, {
     tint: 'from-teal-500/18 to-cyan-500/10',
     signals: ['Call summary', 'Intent capture', 'Follow-up draft'],
     outcomes: ['Faster response', 'Better handoffs', 'Less admin'],
+    steps: [
+      { label: 'Audio Stream', text: 'Captures microphone input or call recording' },
+      { label: 'Intent Capture', text: 'Transcribes speech and categorizes caller intent' },
+      { label: 'CRM Update', text: 'Drafts response email and logs follow-up actions' },
+    ],
   },
   routing: {
     label: 'Model routing',
@@ -73,6 +92,11 @@ const capabilities: Record<CapabilityKey, {
     tint: 'from-blue-500/18 to-cyan-500/10',
     signals: ['Task router', 'Tool calls', 'Fallback logic'],
     outcomes: ['Lower risk', 'Better accuracy', 'Cost control'],
+    steps: [
+      { label: 'Complex Query', text: 'User submits unstructured, multi-step prompt' },
+      { label: 'Dynamic Routing', text: 'Dispatches task between fast or reasoning LLMs' },
+      { label: 'Tool Orchestrate', text: 'Combines LLM outputs, executes code, returns final data' },
+    ],
   },
 };
 
@@ -90,7 +114,7 @@ function CapabilityPreview({ active }: { active: CapabilityKey }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: -18, scale: 0.985 }}
         transition={{ duration: 0.36, ease: 'easeOut' }}
-        className="relative min-h-[520px] overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_24px_80px_rgba(15,23,42,0.10)] sm:p-6"
+        className="relative min-h-[580px] overflow-hidden rounded-[1.35rem] border border-slate-200 bg-white p-5 shadow-[0_24px_80px_rgba(15,23,42,0.10)] sm:p-6"
       >
         <div className={`absolute inset-0 bg-gradient-to-br ${item.tint}`} />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,23,42,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(15,23,42,0.035)_1px,transparent_1px)] bg-[size:42px_42px] opacity-40" />
@@ -150,30 +174,131 @@ function CapabilityPreview({ active }: { active: CapabilityKey }) {
                 </div>
 
                 <div className="grid gap-4">
-                  <div className="relative min-h-[210px] overflow-hidden rounded-xl border border-white/10 bg-white/[0.06] p-4">
+                  {/* Dynamic Visual Mockup Panel based on Capability Domain */}
+                  <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.06] p-4 min-h-[140px] flex flex-col justify-center">
                     <div className="absolute inset-x-6 top-8 h-24 rounded-full blur-3xl" style={{ backgroundColor: `${item.accent}2b` }} />
-                    <div className="scan-sweep absolute left-0 right-0 top-0 h-16 bg-gradient-to-b from-cyan-200/0 via-cyan-200/24 to-cyan-200/0" />
-                    <div className="relative z-10 grid h-full gap-3 sm:grid-cols-3">
-                      {['input', 'reason', 'action'].map((node, index) => (
+                    
+                    {active === 'vision' && (
+                      <div className="relative w-full flex flex-col justify-center py-2">
                         <motion.div
-                          key={node}
-                          initial={{ opacity: 0, y: 12 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.08, duration: 0.32 }}
-                          className="flex min-h-36 flex-col justify-between rounded-lg border border-white/10 bg-white/[0.08] p-4"
-                        >
-                          <span className="font-mono text-[10px] font-black uppercase text-white/40">0{index + 1}</span>
-                          <div>
-                            <p className="text-lg font-black capitalize text-white">{node}</p>
-                            <p className="mt-2 text-xs font-semibold leading-5 text-white/55">
-                              {index === 0 && 'Capture business signal'}
-                              {index === 1 && 'Route to model/tool'}
-                              {index === 2 && 'Return governed output'}
-                            </p>
+                          animate={{ y: [-15, 60, -15] }}
+                          transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
+                          className="absolute inset-x-0 h-0.5 bg-cyan-400 shadow-[0_0_8px_#06b6d4] z-20"
+                        />
+                        <div className="flex gap-3 justify-center items-center relative z-10">
+                          <div className="relative border border-cyan-400/50 bg-cyan-500/10 px-2.5 py-1.5 rounded text-[9px] font-mono text-cyan-300">
+                            Hero_Header
+                            <span className="absolute -top-2 left-0 text-[6px] bg-cyan-500 text-white px-1 rounded-sm uppercase">Header 98%</span>
                           </div>
-                        </motion.div>
-                      ))}
-                    </div>
+                          <div className="relative border border-amber-400/50 bg-amber-500/10 px-2.5 py-1.5 rounded text-[9px] font-mono text-amber-300">
+                            CTA_Button
+                            <span className="absolute -top-2 left-0 text-[6px] bg-amber-500 text-white px-1 rounded-sm uppercase">Button 99%</span>
+                          </div>
+                          <div className="relative border border-red-400/50 bg-red-500/10 px-2.5 py-1.5 rounded text-[9px] font-mono text-red-300">
+                            Sidebar_Nav
+                            <span className="absolute -top-2 left-0 text-[6px] bg-red-500 text-white px-1 rounded-sm uppercase">Nav 95%</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {active === 'documents' && (
+                      <div className="relative w-full flex flex-col justify-between font-mono text-[9px] gap-2 py-1.5">
+                        <div className="border-b border-white/10 pb-1.5 flex justify-between items-center text-white/50 text-[7px] tracking-wider">
+                          <span>DOC_TYPE: INVOICE_PDF</span>
+                          <span className="text-emerald-400">SCHEMA_MATCH: 100%</span>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10">
+                            <span className="text-white/60">vendor_name</span>
+                            <span className="text-emerald-300 font-bold">"Bhairav Steel"</span>
+                          </div>
+                          <div className="flex justify-between items-center bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10">
+                            <span className="text-white/60">invoice_total</span>
+                            <span className="text-emerald-300 font-bold">$14,250.00</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {active === 'voice' && (
+                      <div className="relative w-full flex items-center justify-between gap-4 py-1">
+                        <div className="flex-1 flex flex-col justify-center gap-1 font-mono text-[9px]">
+                          <div className="text-white/40 text-[7px] uppercase tracking-wider">TRANSCRIPT_LIVE:</div>
+                          <div className="text-teal-300 font-bold truncate">"I need to adjust my shipping address..."</div>
+                          <div className="text-white/60 text-[8px]">Intent: <span className="text-cyan-300 uppercase font-black">address_change</span></div>
+                        </div>
+                        <div className="flex items-center gap-1 h-10 px-2 border-l border-white/10 shrink-0">
+                          {[0.4, 0.9, 0.5, 0.7, 0.3, 0.8, 0.6, 0.9, 0.4, 0.7, 0.3, 0.5].map((scaleVal, i) => (
+                            <motion.div
+                              key={i}
+                              animate={{ scaleY: [1, scaleVal * 1.8, 1] }}
+                              transition={{
+                                repeat: Infinity,
+                                duration: 1.2 + (i % 3) * 0.2,
+                                ease: 'easeInOut',
+                                delay: i * 0.05,
+                              }}
+                              className="w-0.5 bg-teal-400 rounded-full origin-center"
+                              style={{ height: '20px' }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {active === 'routing' && (
+                      <div className="relative w-full flex items-center justify-between font-mono text-[9px] py-1.5">
+                        <div className="flex flex-col items-center justify-center border border-white/15 bg-white/5 rounded px-2 py-1 shrink-0 z-10">
+                          <span className="text-white font-bold">Query</span>
+                          <span className="text-white/40 text-[6px] uppercase tracking-wider">Router</span>
+                        </div>
+                        
+                        <div className="flex-1 relative h-full flex flex-col justify-between py-1 px-4">
+                          <div className="absolute inset-0 flex flex-col justify-between py-2">
+                            <div className="h-0.5 w-full bg-gradient-to-r from-blue-500/20 via-blue-500 to-blue-500/20 animate-pulse" />
+                            <div className="h-0.5 w-full bg-gradient-to-r from-emerald-500/20 via-emerald-500 to-emerald-500/20 animate-pulse" />
+                            <div className="h-0.5 w-full bg-gradient-to-r from-purple-500/20 via-purple-500 to-purple-500/20 animate-pulse" />
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col justify-between h-full shrink-0 text-[7px] gap-1">
+                          <div className="border border-blue-500/30 bg-blue-500/10 text-blue-300 px-1.5 py-0.5 rounded flex items-center gap-1">
+                            <span>Haiku</span>
+                            <span className="text-white/40">(Fast)</span>
+                          </div>
+                          <div className="border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 px-1.5 py-0.5 rounded flex items-center gap-1">
+                            <span>Sonnet</span>
+                            <span className="text-white/40">(Deep)</span>
+                          </div>
+                          <div className="border border-purple-500/30 bg-purple-500/10 text-purple-300 px-1.5 py-0.5 rounded flex items-center gap-1">
+                            <span>Tools</span>
+                            <span className="text-white/40">(Python)</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Flow Nodes Row */}
+                  <div className="relative z-10 grid gap-3 sm:grid-cols-3">
+                    {item.steps.map((node, index) => (
+                      <motion.div
+                        key={node.label}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.08, duration: 0.32 }}
+                        className="flex min-h-[96px] flex-col justify-between rounded-lg border border-white/10 bg-white/[0.04] p-3"
+                      >
+                        <span className="font-mono text-[9px] font-black uppercase text-white/40">0{index + 1}</span>
+                        <div>
+                          <p className="text-xs font-black capitalize text-white">{node.label}</p>
+                          <p className="mt-1 text-[10px] font-semibold leading-4 text-white/55">
+                            {node.text}
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-3">
@@ -220,7 +345,7 @@ export default function MultimodalShowcase() {
         const keys = capabilityEntries.map(([key]) => key);
         return keys[(keys.indexOf(current) + 1) % keys.length];
       });
-    }, 6200);
+    }, 10000); // Slow down transition speed to 10 seconds
     return () => window.clearInterval(timer);
   }, [autoPlay]);
 
@@ -277,7 +402,7 @@ export default function MultimodalShowcase() {
                   </span>
                   {isActive && autoPlay && (
                     <span className="absolute inset-x-4 bottom-2 h-0.5 overflow-hidden rounded-full bg-white/12">
-                      <span className="block h-full bg-cyan-300 progress-bar-fill" style={{ '--duration': '6.2s' } as CSSProperties} />
+                      <span className="block h-full bg-cyan-300 progress-bar-fill" style={{ '--duration': '10s' } as CSSProperties} />
                     </span>
                   )}
                 </button>

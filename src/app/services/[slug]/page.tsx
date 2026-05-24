@@ -5,7 +5,6 @@ import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import MiniNeuralConstellation from '@/components/shared/fragments/MiniNeuralConstellation';
 import RelatedContent from '@/components/shared/fragments/RelatedContent';
 import LiveMetric from '@/components/shared/LiveMetric';
-import RadarScanner from '@/components/shared/RadarScanner';
 import { CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import ServiceInteractiveShowcase from '@/components/shared/ServiceInteractiveShowcase';

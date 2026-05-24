@@ -18,7 +18,6 @@ import {
   UserCheck,
   AlertCircle
 } from 'lucide-react';
-import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import SectionTag from '@/components/shared/SectionTag';
@@ -149,7 +148,7 @@ export default function CapabilitiesPage() {
   };
 
   return (
-    <SubPageShell showFooter={false}>
+    <>
       {/* Hero */}
       <PageHero
         tagText="HOW WE HELP"
@@ -168,7 +167,7 @@ export default function CapabilitiesPage() {
             <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mt-6 tracking-tight">
               See how a governed AI process works
             </h2>
-            <p className="mt-4 text-slate-650 max-w-2xl font-medium text-base">
+            <p className="mt-4 text-slate-600 max-w-2xl font-medium text-base">
               Click through the steps below to see how our systems capture an email, extract client requests, prepare updates, request human approval, and log the action.
             </p>
           </div>
@@ -193,7 +192,7 @@ export default function CapabilitiesPage() {
                       isCurrent
                         ? 'border-slate-900 bg-slate-950 text-white shadow-md'
                         : isPassed
-                          ? 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-350'
+                          ? 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'
                           : 'border-slate-200/50 bg-white/50 text-slate-400 cursor-not-allowed'
                     }`}
                     disabled={idx > activeStep && !approvedAction}
@@ -201,7 +200,7 @@ export default function CapabilitiesPage() {
                     <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${
                       isCurrent 
                         ? 'border-slate-800 bg-slate-900 text-white' 
-                        : 'border-slate-250 bg-white text-slate-600'
+                        : 'border-slate-200 bg-white text-slate-600'
                     }`}>
                       <StepIcon className="h-4.5 w-4.5" />
                     </div>
@@ -219,7 +218,7 @@ export default function CapabilitiesPage() {
                 {activeStep < SIMULATOR_STEPS.length - 2 && (
                   <button
                     onClick={handleNextStep}
-                    className="flex-1 inline-flex justify-center items-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-xs font-black text-white shadow-sm hover:bg-slate-850"
+                    className="flex-1 inline-flex justify-center items-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-xs font-black text-white shadow-sm hover:bg-slate-800"
                   >
                     Next Step
                     <ArrowRight className="h-3.5 w-3.5" />
@@ -249,7 +248,7 @@ export default function CapabilitiesPage() {
                     Simulator Terminal
                   </span>
                 </div>
-                <span className="rounded-full bg-cyan-50 border border-cyan-150 px-2 py-0.5 text-[9px] font-mono font-bold text-cyan-700">
+                <span className="rounded-full bg-cyan-50 border border-cyan-200 px-2 py-0.5 text-[9px] font-mono font-bold text-cyan-700">
                   {SIMULATOR_STEPS[activeStep].subtitle.toUpperCase()}
                 </span>
               </div>
@@ -295,11 +294,11 @@ export default function CapabilitiesPage() {
                         <p className="text-slate-450 font-bold">API PAYLOAD DRAFT:</p>
                         <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 space-y-2">
                           <p className="font-bold text-slate-800">1. ERP DB Payload Drafted:</p>
-                          <p className="bg-slate-200/65 px-2 py-1 rounded text-[11px] text-slate-650">
+                          <p className="bg-slate-200/65 px-2 py-1 rounded text-[11px] text-slate-600">
                             {SIMULATOR_STEPS[2].visual.apiPayload}
                           </p>
                           <p className="font-bold text-slate-800 mt-2">2. Billing Ledger Drafted:</p>
-                          <p className="bg-slate-200/65 px-2 py-1 rounded text-[11px] text-slate-650">
+                          <p className="bg-slate-200/65 px-2 py-1 rounded text-[11px] text-slate-600">
                             {SIMULATOR_STEPS[2].visual.invoiceDraft}
                           </p>
                         </div>
@@ -308,7 +307,7 @@ export default function CapabilitiesPage() {
 
                     {activeStep === 3 && (
                       <div className="space-y-3">
-                        <div className="flex items-start gap-2 text-amber-600 bg-amber-50 border border-amber-250 p-2.5 rounded-lg font-sans">
+                        <div className="flex items-start gap-2 text-amber-600 bg-amber-50 border border-amber-200 p-2.5 rounded-lg font-sans">
                           <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
                           <p className="text-xs font-bold leading-normal">
                             System Gate: Human verification required before updating billing ledger and updating CRM seats.
@@ -326,7 +325,7 @@ export default function CapabilitiesPage() {
                               className={`flex-1 inline-flex justify-center items-center gap-1.5 rounded-lg px-4 py-2.5 text-xs font-black text-white transition-all shadow-sm ${
                                 approvedAction 
                                   ? 'bg-emerald-600 cursor-not-allowed'
-                                  : 'bg-slate-950 hover:bg-slate-850'
+                                  : 'bg-slate-950 hover:bg-slate-800'
                               }`}
                             >
                               {approvedAction ? (
@@ -394,7 +393,7 @@ export default function CapabilitiesPage() {
             <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mt-6 tracking-tight">
               Plan your discovery meetup
             </h2>
-            <p className="mt-4 text-slate-650 max-w-xl mx-auto font-medium text-base">
+            <p className="mt-4 text-slate-600 max-w-xl mx-auto font-medium text-base">
               Select your biggest operational bottleneck below. We will customize a 30-minute founder-led meetup agenda specifically around your tools.
             </p>
           </div>
@@ -411,7 +410,7 @@ export default function CapabilitiesPage() {
                     className={`p-5 rounded-2xl border text-left transition-all ${
                       isSelected
                         ? 'border-slate-900 bg-white shadow-md scale-[1.01]'
-                        : 'border-slate-200 bg-white/60 hover:border-slate-350 shadow-sm'
+                        : 'border-slate-200 bg-white/60 hover:border-slate-300 shadow-sm'
                     }`}
                   >
                     <h3 className="text-base font-bold text-slate-900 tracking-tight flex items-center justify-between">
@@ -439,14 +438,14 @@ export default function CapabilitiesPage() {
                 <h3 className="text-xl font-bold text-slate-900 tracking-tight leading-snug">
                   Workshop focus: {activeTopic.title}
                 </h3>
-                <p className="text-sm text-slate-650 leading-relaxed mt-2 font-medium">
+                <p className="text-sm text-slate-600 leading-relaxed mt-2 font-medium">
                   Here is what we will walk through during our 30-minute developer call:
                 </p>
 
                 <div className="mt-6 space-y-4 border-l border-slate-100 pl-4">
                   {activeTopic.agenda.map((item, index) => (
                     <div key={index} className="relative">
-                      <div className="absolute -left-[21px] top-1.5 h-2 w-2 rounded-full border border-slate-250 bg-white" />
+                      <div className="absolute -left-[21px] top-1.5 h-2 w-2 rounded-full border border-slate-200 bg-white" />
                       <p className="text-xs text-slate-700 font-semibold leading-relaxed">
                         {item}
                       </p>
@@ -465,7 +464,7 @@ export default function CapabilitiesPage() {
 
                 <EnterpriseButton
                   href={`/contact?topic=${activeTopic.id}`}
-                  className="inline-flex justify-center items-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-xs font-black text-white shadow-sm hover:bg-slate-850"
+                  className="inline-flex justify-center items-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-xs font-black text-white shadow-sm hover:bg-slate-800"
                 >
                   Schedule Meetup
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -482,6 +481,6 @@ export default function CapabilitiesPage() {
         titleAccent="your operations?"
         description="Let's build a safe, governed system. Book your discovery session with the founder today."
       />
-    </SubPageShell>
+    </>
   );
 }

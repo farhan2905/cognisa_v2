@@ -213,7 +213,7 @@ export default function ProcessPlaybackConsole({
         })}
       </div>
 
-      <div className="relative flex h-64 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
+      <div className="relative flex h-80 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
         <div className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">

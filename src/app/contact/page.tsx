@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { CheckCircle2, Mail, MapPin, Clock, ArrowUpRight } from 'lucide-react';
-import SubPageShell from '@/components/shared/SubPageShell';
 import PageHero from '@/components/shared/PageHero';
 import GlassContentBlock from '@/components/shared/GlassContentBlock';
 import ContactForm from '@/components/shared/ContactForm';
@@ -29,7 +28,7 @@ const faqs = [
 
 export default function ContactPage() {
   return (
-    <SubPageShell>
+    <>
       {/* Hero */}
       <div className="relative overflow-hidden">
         <IridescentBlobBackground size="xl" opacity={0.4} className="top-0 right-[-20%]" />
@@ -132,6 +131,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </SubPageShell>
+    </>
   );
 }

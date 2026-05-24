@@ -74,7 +74,7 @@ export default function Solutions() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-90px' }}
                 transition={{ duration: 0.55, delay: index * 0.1 }}
-                className="relative flex min-h-[430px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
+                className="relative flex min-h-[380px] sm:min-h-[430px] lg:min-h-[500px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white px-6 py-8 shadow-sm"
               >
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-400 via-teal-500 to-emerald-400 opacity-80" />
                 <div className="mb-7 flex items-center justify-between gap-4">

@@ -23,7 +23,7 @@ function InsightCard({ article, index }: { article: (typeof insightsData)[number
     <motion.article custom={index} variants={cardVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
       <Link
         href={`/insights/${article.slug}`}
-        className="group relative flex h-full min-h-[330px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)] sm:p-6"
+        className="group relative flex h-full min-h-[300px] sm:min-h-[330px] lg:min-h-[390px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white px-5 py-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)] sm:px-6 sm:py-8"
       >
         <div
           className="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full blur-3xl"

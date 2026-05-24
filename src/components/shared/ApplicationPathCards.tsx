@@ -96,7 +96,7 @@ function ApplicationPathCard({
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-    className="enterprise-ice-card group relative flex h-full min-h-[360px] flex-col overflow-hidden rounded-[1.2rem] p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_22px_58px_rgba(15,23,42,0.11)]"
+    className="enterprise-ice-card group relative flex h-full min-h-[350px] sm:min-h-[380px] lg:min-h-[440px] flex-col overflow-hidden rounded-[1.2rem] px-6 py-8 transition duration-300 hover:-translate-y-1 hover:border-cyan-200 hover:shadow-[0_22px_58px_rgba(15,23,42,0.11)]"
       >
         {isHovered && (
           <span

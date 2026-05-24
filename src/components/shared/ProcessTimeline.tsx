@@ -119,7 +119,7 @@ function PhaseCard({
   return (
     <div 
       onClick={onClick}
-      className={`flex-1 relative overflow-hidden p-6 md:p-8 lg:p-10 rounded-[2rem] border transition-all duration-500 cursor-pointer group ${
+      className={`flex-1 relative overflow-hidden px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12 rounded-[2rem] border transition-all duration-500 cursor-pointer group ${
         isActive 
           ? 'bg-white border-slate-900 shadow-md scale-[1.01]' 
           : 'bg-white border-slate-200 shadow-sm hover:border-slate-350 hover:shadow-md'

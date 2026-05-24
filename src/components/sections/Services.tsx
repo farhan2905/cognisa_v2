@@ -117,7 +117,7 @@ function ServiceCard({
       viewport={{ once: true, margin: '-80px' }}
       onClick={onSelect}
       className={cn(
-        'group relative flex h-full min-h-[260px] flex-col overflow-hidden rounded-lg border bg-white p-5 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]',
+        'group relative flex h-full min-h-[240px] sm:min-h-[260px] lg:min-h-[320px] flex-col overflow-hidden rounded-lg border bg-white px-5 py-7 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_18px_48px_rgba(15,23,42,0.08)]',
         active ? 'border-slate-300 shadow-[0_20px_55px_rgba(15,23,42,0.10)]' : 'border-slate-200'
       )}
     >
@@ -180,7 +180,7 @@ function ActiveServicePreview({ service }: { service: Service }) {
           style={{ backgroundColor: service.glow }}
         />
 
-        <div className="relative z-10 flex flex-col gap-8">
+        <div className="relative z-10 flex flex-col gap-6">
           <div className="flex items-start justify-between gap-5">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-3 py-1.5 text-xs font-black uppercase text-cyan-100">
@@ -195,20 +195,139 @@ function ActiveServicePreview({ service }: { service: Service }) {
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          {/* Domain-specific visual diagram */}
+          {service.slug === 'web-development' && (
+            <div className="relative h-32 w-full rounded-lg border border-white/10 bg-white/[0.03] overflow-hidden p-3 flex flex-col font-mono text-[9px]">
+              <div className="flex items-center gap-1.5 border-b border-white/10 pb-2 mb-2 shrink-0">
+                <div className="flex gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-red-500/60" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-yellow-500/60" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-500/60" />
+                </div>
+                <div className="bg-white/5 rounded px-2 py-0.5 text-white/30 text-[7px] truncate flex-1 max-w-[150px]">
+                  cognisa.ai/dashboard
+                </div>
+              </div>
+              <div className="flex-1 grid grid-cols-3 gap-2">
+                <div className="border border-white/10 bg-white/5 rounded p-2 flex flex-col justify-between">
+                  <span className="text-white/45 text-[7px] uppercase">users</span>
+                  <span className="text-xs font-black text-white">12,450</span>
+                </div>
+                <div className="border border-white/10 bg-white/5 rounded p-2 flex flex-col justify-between">
+                  <span className="text-white/45 text-[7px] uppercase">sales</span>
+                  <span className="text-xs font-black text-cyan-300">$48.2k</span>
+                </div>
+                <div className="border border-white/10 bg-white/5 rounded p-2 flex flex-col justify-between">
+                  <span className="text-white/45 text-[7px] uppercase">uptime</span>
+                  <span className="text-xs font-black text-emerald-300">99.98%</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {service.slug === 'ai-automation' && (
+            <div className="relative h-32 w-full rounded-lg border border-white/10 bg-white/[0.03] overflow-hidden p-3 flex items-center justify-between font-mono text-[9px]">
+              <div className="flex flex-col items-center justify-center border border-white/10 bg-white/5 rounded p-2 text-center shrink-0">
+                <span className="text-white font-bold">Email Intake</span>
+                <span className="text-white/45 text-[6px] uppercase mt-0.5">Triggers</span>
+              </div>
+              
+              <div className="flex-1 relative h-full flex items-center justify-center px-4">
+                <div className="absolute inset-x-0 h-0.5 bg-white/10" />
+                <motion.div
+                  animate={{ x: [-40, 40] }}
+                  transition={{ repeat: Infinity, duration: 2.5, ease: 'linear' }}
+                  className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]"
+                />
+              </div>
+
+              <div className="flex flex-col items-center justify-center border border-emerald-500/20 bg-emerald-500/10 rounded p-2 text-center shrink-0">
+                <span className="text-emerald-300 font-bold">AI Agent</span>
+                <span className="text-emerald-400/80 text-[6px] uppercase mt-0.5">Router</span>
+              </div>
+
+              <div className="flex-1 relative h-full flex items-center justify-center px-4">
+                <div className="absolute inset-x-0 h-0.5 bg-white/10" />
+                <motion.div
+                  animate={{ x: [-40, 40] }}
+                  transition={{ repeat: Infinity, duration: 2.5, ease: 'linear', delay: 1.25 }}
+                  className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981]"
+                />
+              </div>
+
+              <div className="flex flex-col items-center justify-center border border-white/10 bg-white/5 rounded p-2 text-center shrink-0">
+                <span className="text-white font-bold">ERP Sync</span>
+                <span className="text-white/45 text-[6px] uppercase mt-0.5">Actions</span>
+              </div>
+            </div>
+          )}
+
+          {service.slug === 'system-architecture' && (
+            <div className="relative h-32 w-full rounded-lg border border-white/10 bg-white/[0.03] overflow-hidden p-3 flex flex-col justify-between font-mono text-[9px]">
+              <div className="border-b border-white/10 pb-1 flex justify-between items-center text-white/50 text-[7px] tracking-wider shrink-0">
+                <span>SYSTEM SCHEMA: CORE_DB</span>
+                <span className="text-amber-400">STATUS: SYNCED</span>
+              </div>
+              <div className="flex-1 grid grid-cols-2 gap-3 py-1 items-center">
+                <div className="border border-white/10 bg-white/5 rounded p-1.5 text-slate-300">
+                  <div className="font-bold text-white border-b border-white/10 pb-0.5 mb-1 text-[7px] uppercase tracking-wide">users</div>
+                  <div>id: SERIAL (PK)</div>
+                  <div>email: VARCHAR</div>
+                </div>
+                <div className="border border-white/10 bg-white/5 rounded p-1.5 text-slate-300">
+                  <div className="font-bold text-white border-b border-white/10 pb-0.5 mb-1 text-[7px] uppercase tracking-wide">orders</div>
+                  <div>id: UUID (PK)</div>
+                  <div>total: NUMERIC</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {service.slug === 'cloud-infrastructure' && (
+            <div className="relative h-32 w-full rounded-lg border border-white/10 bg-white/[0.03] overflow-hidden p-3 flex flex-col justify-between font-mono text-[9px]">
+              <div className="border-b border-white/10 pb-1 flex justify-between items-center text-white/50 text-[7px] tracking-wider shrink-0">
+                <span>INFRA: AWS CLOUD</span>
+                <span className="text-teal-400 flex items-center gap-1">
+                  <span className="h-1 w-1 rounded-full bg-teal-400 animate-ping" />
+                  ONLINE
+                </span>
+              </div>
+              <div className="flex-1 flex justify-between items-center gap-2 py-1">
+                <div className="flex-1 border border-white/10 bg-white/5 rounded p-1.5 text-slate-300 flex flex-col gap-1">
+                  <span className="text-white/45 text-[7px] uppercase">CPU Load</span>
+                  <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full bg-teal-400 rounded-full" style={{ width: '42%' }} />
+                  </div>
+                  <span className="text-white text-[8px] font-bold">42%</span>
+                </div>
+                <div className="flex-1 border border-white/10 bg-white/5 rounded p-1.5 text-slate-300 flex flex-col gap-1">
+                  <span className="text-white/45 text-[7px] uppercase">Memory</span>
+                  <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full bg-teal-400 rounded-full" style={{ width: '68%' }} />
+                  </div>
+                  <span className="text-white text-[8px] font-bold">68%</span>
+                </div>
+                <div className="flex-1 border border-white/10 bg-white/5 rounded p-1.5 text-slate-300 flex flex-col justify-center">
+                  <span className="text-white/45 text-[7px] uppercase">Traffic</span>
+                  <span className="text-white text-[9px] font-black mt-0.5">1.2k/s</span>
+                  <span className="text-white/45 text-[6px]">req rate</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Cleaned Inline subservices (removed Capability repetition) */}
+          <div className="grid gap-2 sm:grid-cols-2">
             {service.subservices.map((item, index) => (
               <motion.div
                 key={item}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
-                className="rounded-lg border border-white/10 bg-white/[0.06] p-4"
+                className="flex items-center gap-2.5 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-slate-300"
               >
-                <div className="mb-3 flex items-center gap-2">
-                  <span className={cn('h-2 w-2 rounded-full', service.dot)} />
-                  <span className="text-xs font-black uppercase text-white/50">Capability</span>
-                </div>
-                <p className="text-sm font-bold text-white">{item}</p>
+                <span className={cn('h-1.5 w-1.5 rounded-full shrink-0', service.dot)} />
+                <span className="text-xs font-bold text-white/90">{item}</span>
               </motion.div>
             ))}
           </div>
